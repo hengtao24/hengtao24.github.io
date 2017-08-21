@@ -6,14 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2017 | hengtao</title>
+  <title>code | hengtao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="hengtao">
-<meta property="og:url" content="http://yoursite.com/archives/2017/index.html">
+  <meta name="description" content="private void ExportFromExecl_Click(object sender, EventArgs e)
+{
+    //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  
+    string connString = &amp;quot;server=localhost;User Id=root;password=s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="code">
+<meta property="og:url" content="http://yoursite.com/2017/08/21/code/index.html">
 <meta property="og:site_name" content="hengtao">
+<meta property="og:description" content="private void ExportFromExecl_Click(object sender, EventArgs e)
+{
+    //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  
+    string connString = &amp;quot;server=localhost;User Id=root;password=s">
+<meta property="og:updated_time" content="2017-08-21T15:03:24.371Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hengtao">
+<meta name="twitter:title" content="code">
+<meta name="twitter:description" content="private void ExportFromExecl_Click(object sender, EventArgs e)
+{
+    //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  
+    string connString = &amp;quot;server=localhost;User Id=root;password=s">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -145,76 +158,350 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-code" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      code
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/21/code/" class="archive-article-date">
+
+        
+        <a href="/2017/08/21/code/" class="archive-article-date">
   	<time datetime="2017-08-21T15:02:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-21</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/21/code/">code</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>private void ExportFromExecl_Click(object sender, EventArgs e)
+{
+    //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  
+    string connString = &quot;server=localhost;User Id=root;password=shtt960421?;Database=testofbme&quot;;
 
-        <div class="article-info info-on-right">
-          
-          
+    System.Windows.Forms.OpenFileDialog fd = new OpenFileDialog();
+    fd.Filter = &quot;所有文件(*.*)|*.*|工作薄(*.xls)|*.xls|工作薄(*.xlsx)|*.xlsx&quot;;
+    if (fd.ShowDialog() == DialogResult.OK)
+    {
+        string FilePath = fd.FileName.Substring(0, fd.FileName.LastIndexOf(&quot;\\&quot;));   //获取文件路径，不带文件名，如C:\等
+        string fileNameExt = &quot;&quot;;
+        int i = fd.FileName.Length;
+        int j = FilePath.Length;
+        if (fd.FileName.EndsWith(&quot;xls&quot;))
+        {
+            fileNameExt = fd.FileName.Substring(fd.FileName.LastIndexOf(&quot;\\&quot;) + 1, i - j - 5); //获取文件名，不带路径，如123.xls  -5
+            TransferData(fd.FileName, &quot;Sheet1&quot;, connString, fileNameExt);  //将名字为fileNameExt的excel文件的sheet1表导入到数据库中
+        }
 
+        else if (fd.FileName.EndsWith(&quot;xlsx&quot;))
+        {
+            fileNameExt = fd.FileName.Substring(fd.FileName.LastIndexOf(&quot;\\&quot;) + 1, i - j - 6); //获取文件名，不带路径，如123.xlsx -6
+            TransferData(fd.FileName, &quot;Sheet1&quot;, connString, fileNameExt);  //将名字为fileNameExt的excel文件的sheet1表导入到数据库中
+        }
+        else
+        {
+            MessageBox.Show(&quot;您选择的不是Excel文档，请重新导入&quot;);
+        }
+    } 
+}
+
+public void TransferData(string excelFile, string sheetName, string connectionString, string tableName)
+{
+    DataSet ds = new DataSet();
+    try
+    {
+        //获取全部数据     
+        string strConn = &quot;Provider = Microsoft.ACE.OLEDB.12.0;&quot; + &quot;Data Source=&quot; + excelFile + &quot;;&quot; + &quot;Extended Properties = Excel 12.0;&quot;;
+        OleDbConnection conn = new OleDbConnection(strConn);
+        conn.Open();
+        string strExcel = &quot;&quot;;
+        OleDbDataAdapter myCommand = null;
+        strExcel = &quot;select * from [sheet1$]&quot;; //[&quot; +sheetName + &quot;$]&quot;;  //string.Format参数设定  将sheetName即sheet1传到$符前面
+
+        myCommand = new OleDbDataAdapter(strExcel, strConn);
+        myCommand.Fill(ds, tableName);  //tablename为dataset的名字   //之前版本是sheetname
+        DataTable dt = ds.Tables[0];
+        dt.TableName = tableName;
+</code></pre><p>//                 dataGridView1.DataSource = dt; // 将datatable显示在datagridview中</p>
+<pre><code>        string str;
+        str = &quot;1&quot;;
+
+        string Sql = &quot;SELECT * FROM &quot; + tableName;
+        MySqlConnection connect = new MySqlConnection(&quot;server=localhost;User Id=root;password=shtt960421?;Database=testofbme&quot;);
+        connect.Open();
+        MySqlCommand cmd = new MySqlCommand(Sql, connect);
+        try
+        {
+            str = Convert.ToString(cmd.ExecuteScalar());
+        }
+        catch (MySqlException f)
+        {
+            str = &quot;0&quot;;  //不存在表
+        }
+        finally
+        {
+            conn.Close();
+        }
+
+        string strSql = &quot;&quot;;
+        if (str == &quot;0&quot;)  //如果目标表不存在则创建,excel文件的第一行为列标题,从第二行开始全部都是数据记录
+        {
+            strSql = &quot;create table &quot; + tableName + &quot; (&quot;;   //以excelFile为表名，即excel的名字
+            foreach (System.Data.DataColumn c in ds.Tables[0].Columns)
+            {
+                strSql += c.ColumnName;
+                strSql += &quot;  varchar(30),&quot;;
+            }
+
+            strSql = strSql.Trim(&apos;,&apos;) + &quot;)&quot;;
+
+            using (MySqlConnection sqlconn = new MySqlConnection(connectionString))
+            {
+                sqlconn.Open();
+                MySqlCommand command = sqlconn.CreateCommand();
+                command.CommandText = strSql;
+                command.ExecuteNonQuery();
+                sqlconn.Close();
+            }
+
+        }
+        else
+        {
+            DialogResult cunzai = MessageBox.Show(&quot;数据库中已经存在该表，是否覆盖？&quot;, &quot;提示&quot;, MessageBoxButtons.OKCancel);
+            if (cunzai == DialogResult.OK)
+            {
+                strSql = &quot;Drop table &quot; + tableName + &quot;; create table &quot; + tableName + &quot; (&quot;;   //以excelFile为表名，即excel的名字
+                foreach (System.Data.DataColumn c in ds.Tables[0].Columns)
+                {
+                    strSql += c.ColumnName;
+                    strSql += &quot; varchar(30),&quot;;
+                }
+
+                strSql = strSql.Trim(&apos;,&apos;) + &quot;)&quot;;
+
+
+                using (MySqlConnection sqlconn = new MySqlConnection(connectionString))
+                {
+                    sqlconn.Open();
+                    MySqlCommand command = sqlconn.CreateCommand();
+                    command.CommandText = strSql;
+                    command.ExecuteNonQuery();
+                    sqlconn.Close();
+                }
+                MessageBox.Show(&quot;数据已覆盖&quot;);
+            }
+            else if (cunzai == DialogResult.Cancel)
+            {
+                MessageBox.Show(&quot;操作已取消&quot;);
+            }
+        }
+        MessageBox.Show(Convert.ToString(BulkInsert(dt)) + &quot;条记录已发生改变&quot;);
+    }
+    catch (Exception ex)
+    {
+        System.Windows.Forms.MessageBox.Show(ex.Message);
+    }
+    finally
+    {
+
+    }
+}
+
+private static string DataTableToCsv(DataTable table)
+{
+    //以半角逗号（即,）作分隔符，列为空也要表达其存在。
+    //列内容如存在半角逗号（即,）则用半角引号（即&quot;&quot;）将该字段值包含起来。
+    //列内容如存在半角引号（即&quot;）则应替换成半角双引号（&quot;&quot;）转义，并用半角引号（即&quot;&quot;）将该字段值包含起来。
+    StringBuilder sb = new StringBuilder();
+    DataColumn colum;
+    foreach (DataRow row in table.Rows)
+    {
+        for (int i = 0; i &lt; table.Columns.Count; i++)
+        {
+            colum = table.Columns[i];
+            if (i != 0) sb.Append(&quot;,&quot;);
+            if (colum.DataType == typeof(string) &amp;&amp; row[colum].ToString().Contains(&quot;,&quot;))
+            {
+                sb.Append(&quot;\&quot;&quot; + row[colum].ToString().Replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;) + &quot;\&quot;&quot;);
+            }
+            else sb.Append(row[colum].ToString());
+        }
+        sb.AppendLine();
+    }
+
+    return sb.ToString();
+}
+
+public static int BulkInsert(DataTable table)
+{
+    if (string.IsNullOrEmpty(table.TableName)) throw new Exception(&quot;请给DataTable的TableName属性附上表名称&quot;);
+    if (table.Rows.Count == 0) return 0;
+    int insertCount = 0;
+    string tmpPath = Path.GetTempFileName();  //???
+    string csv = DataTableToCsv(table);
+    File.WriteAllText(tmpPath, csv);
+    using (MySqlConnection conn = new MySqlConnection(&quot;server=localhost;User Id=root;password=shtt960421?;Database=testofbme&quot;))
+    {
+        MySqlTransaction tran = null;
+        try
+        {
+            conn.Open();
+            tran = conn.BeginTransaction();
+            MySqlBulkLoader bulk = new MySqlBulkLoader(conn)
+            {
+                FieldTerminator = &quot;,&quot;,
+                FieldQuotationCharacter = &apos;&quot;&apos;,
+                EscapeCharacter = &apos;&quot;&apos;,
+                LineTerminator = &quot;\r\n&quot;,
+                FileName = tmpPath,
+                NumberOfLinesToSkip = 0,
+                TableName = table.TableName,
+            };
+            List&lt;string&gt; list = table.Columns.Cast&lt;DataColumn&gt;().Select(colum =&gt; colum.ColumnName).ToList();
+            bulk.Columns.AddRange(table.Columns.Cast&lt;DataColumn&gt;().Select(colum =&gt; colum.ColumnName).ToList().ToArray());
+            insertCount = bulk.Load();
+            tran.Commit();
+        }
+        catch (MySqlException ex)
+        {
+            if (tran != null) tran.Rollback();
+            throw ex;
+        }
+    }
+    File.Delete(tmpPath);
+    return insertCount;
+}
+</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/08/21/code/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/19/Android-Toolbar-Style/" class="archive-article-date">
-  	<time datetime="2017-08-19T03:12:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/19/Android-Toolbar-Style/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android Toolbar Style</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/19/Android-Toolbar-Style/">Android Toolbar Style</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -237,8 +524,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
