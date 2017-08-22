@@ -20,7 +20,7 @@
 {
     //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  
     string connString = &amp;quot;server=localhost;User Id=root;password=s">
-<meta property="og:updated_time" content="2017-08-21T15:03:24.371Z">
+<meta property="og:updated_time" content="2017-08-22T15:03:04.919Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="code">
 <meta name="twitter:description" content="private void ExportFromExecl_Click(object sender, EventArgs e)
@@ -226,8 +226,8 @@ public void TransferData(string excelFile, string sheetName, string connectionSt
         myCommand.Fill(ds, tableName);  //tablename为dataset的名字   //之前版本是sheetname
         DataTable dt = ds.Tables[0];
         dt.TableName = tableName;
-</code></pre><p>//                 dataGridView1.DataSource = dt; // 将datatable显示在datagridview中</p>
-<pre><code>        string str;
+
+        string str;
         str = &quot;1&quot;;
 
         string Sql = &quot;SELECT * FROM &quot; + tableName;
@@ -311,31 +311,6 @@ public void TransferData(string excelFile, string sheetName, string connectionSt
     }
 }
 
-private static string DataTableToCsv(DataTable table)
-{
-    //以半角逗号（即,）作分隔符，列为空也要表达其存在。
-    //列内容如存在半角逗号（即,）则用半角引号（即&quot;&quot;）将该字段值包含起来。
-    //列内容如存在半角引号（即&quot;）则应替换成半角双引号（&quot;&quot;）转义，并用半角引号（即&quot;&quot;）将该字段值包含起来。
-    StringBuilder sb = new StringBuilder();
-    DataColumn colum;
-    foreach (DataRow row in table.Rows)
-    {
-        for (int i = 0; i &lt; table.Columns.Count; i++)
-        {
-            colum = table.Columns[i];
-            if (i != 0) sb.Append(&quot;,&quot;);
-            if (colum.DataType == typeof(string) &amp;&amp; row[colum].ToString().Contains(&quot;,&quot;))
-            {
-                sb.Append(&quot;\&quot;&quot; + row[colum].ToString().Replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;) + &quot;\&quot;&quot;);
-            }
-            else sb.Append(row[colum].ToString());
-        }
-        sb.AppendLine();
-    }
-
-    return sb.ToString();
-}
-
 public static int BulkInsert(DataTable table)
 {
     if (string.IsNullOrEmpty(table.TableName)) throw new Exception(&quot;请给DataTable的TableName属性附上表名称&quot;);
@@ -374,6 +349,31 @@ public static int BulkInsert(DataTable table)
     }
     File.Delete(tmpPath);
     return insertCount;
+}
+
+ private static string DataTableToCsv(DataTable table)
+{
+    //以半角逗号（即,）作分隔符，列为空也要表达其存在。
+    //列内容如存在半角逗号（即,）则用半角引号（即&quot;&quot;）将该字段值包含起来。
+    //列内容如存在半角引号（即&quot;）则应替换成半角双引号（&quot;&quot;）转义，并用半角引号（即&quot;&quot;）将该字段值包含起来。
+    StringBuilder sb = new StringBuilder();
+    DataColumn colum;
+    foreach (DataRow row in table.Rows)
+    {
+        for (int i = 0; i &lt; table.Columns.Count; i++)
+        {
+            colum = table.Columns[i];
+            if (i != 0) sb.Append(&quot;,&quot;);
+            if (colum.DataType == typeof(string) &amp;&amp; row[colum].ToString().Contains(&quot;,&quot;))
+            {
+                sb.Append(&quot;\&quot;&quot; + row[colum].ToString().Replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;) + &quot;\&quot;&quot;);
+            }
+            else sb.Append(row[colum].ToString());
+        }
+        sb.AppendLine();
+    }
+
+    return sb.ToString();
 }
 </code></pre>
       
