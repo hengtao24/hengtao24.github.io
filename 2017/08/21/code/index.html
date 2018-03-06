@@ -20,7 +20,7 @@
 {
     //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  
     string connString = &amp;quot;server=localhost;User Id=root;password=s">
-<meta property="og:updated_time" content="2017-08-22T15:03:04.919Z">
+<meta property="og:updated_time" content="2018-03-06T15:06:22.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="code">
 <meta name="twitter:description" content="private void ExportFromExecl_Click(object sender, EventArgs e)
@@ -208,8 +208,8 @@
         }
     } 
 }
-
-public void TransferData(string excelFile, string sheetName, string connectionString, string tableName)
+</code></pre><a id="more"></a>        
+<pre><code>public void TransferData(string excelFile, string sheetName, string connectionString, string tableName)
 {
     DataSet ds = new DataSet();
     try
@@ -404,6 +404,17 @@ public static int BulkInsert(DataTable table)
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -612,6 +623,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>

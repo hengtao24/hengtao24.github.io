@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>hengtao</title>
+  <title>Tag: Android | hengtao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="hengtao">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/tags/Android/index.html">
 <meta property="og:site_name" content="hengtao">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hengtao">
@@ -147,164 +147,34 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/21/code/">code</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/21/code/" class="archive-article-date">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/08/21/code/" class="archive-article-date">
   	<time datetime="2017-08-21T15:02:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-21</time>
 </a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <pre><code>private void ExportFromExecl_Click(object sender, EventArgs e)
-{
-    //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  
-    string connString = &quot;server=localhost;User Id=root;password=shtt960421?;Database=testofbme&quot;;
-
-    System.Windows.Forms.OpenFileDialog fd = new OpenFileDialog();
-    fd.Filter = &quot;所有文件(*.*)|*.*|工作薄(*.xls)|*.xls|工作薄(*.xlsx)|*.xlsx&quot;;
-    if (fd.ShowDialog() == DialogResult.OK)
-    {
-        string FilePath = fd.FileName.Substring(0, fd.FileName.LastIndexOf(&quot;\\&quot;));   //获取文件路径，不带文件名，如C:\等
-        string fileNameExt = &quot;&quot;;
-        int i = fd.FileName.Length;
-        int j = FilePath.Length;
-        if (fd.FileName.EndsWith(&quot;xls&quot;))
-        {
-            fileNameExt = fd.FileName.Substring(fd.FileName.LastIndexOf(&quot;\\&quot;) + 1, i - j - 5); //获取文件名，不带路径，如123.xls  -5
-            TransferData(fd.FileName, &quot;Sheet1&quot;, connString, fileNameExt);  //将名字为fileNameExt的excel文件的sheet1表导入到数据库中
-        }
-
-        else if (fd.FileName.EndsWith(&quot;xlsx&quot;))
-        {
-            fileNameExt = fd.FileName.Substring(fd.FileName.LastIndexOf(&quot;\\&quot;) + 1, i - j - 6); //获取文件名，不带路径，如123.xlsx -6
-            TransferData(fd.FileName, &quot;Sheet1&quot;, connString, fileNameExt);  //将名字为fileNameExt的excel文件的sheet1表导入到数据库中
-        }
-        else
-        {
-            MessageBox.Show(&quot;您选择的不是Excel文档，请重新导入&quot;);
-        }
-    } 
-}
-</code></pre>
-        
-          <a class="article-more-a" href="/2017/08/21/code/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/21/code/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Android-Toolbar-Style" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+    	 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/19/Android-Toolbar-Style/">Android Toolbar Style</a>
+      <a class="archive-article-title" href="/2017/08/21/code/">code</a>
     </h1>
   
 
-        
-        <a href="/2017/08/19/Android-Toolbar-Style/" class="archive-article-date">
-  	<time datetime="2017-08-19T03:12:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <pre><code>&lt;!-- toolbar style--&gt;
-&lt;style name=&quot;ToolbarTheme&quot; parent=&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;&gt;
-    &lt;item name=&quot;actionMenuTextColor&quot;&gt;@color/white&lt;/item&gt;
-    &lt;item name=&quot;android:textSize&quot;&gt;18sp&lt;/item&gt;
-    &lt;item name=&quot;actionMenuTextAppearance&quot;&gt;@style/AppTheme.actionMenuTextSize&lt;/item&gt;
-    &lt;item name=&quot;popupTheme&quot;&gt;@style/PopupMenuStyle&lt;/item&gt;
-&lt;/style&gt;
-
-&lt;style name=&quot;AppTheme.actionMenuTextSize&quot; parent=&quot;Base.TextAppearance.AppCompat.Widget.ActionBar.Menu&quot;&gt;
-    &lt;item name=&quot;android:textSize&quot;&gt;18sp&lt;/item&gt;
-    &lt;item name=&quot;android:textStyle&quot;&gt;normal&lt;/item&gt;
-&lt;/style&gt;
-
-&lt;!-- toolbar popupmenu --&gt;
-&lt;style name=&quot;PopupMenuStyle&quot; parent=&quot;ThemeOverlay.AppCompat.Dark&quot;&gt;
-    &lt;item name=&quot;android:colorBackground&quot;&gt;@color/colorPrimary&lt;/item&gt;
-    &lt;item name=&quot;android:textColor&quot;&gt;@color/white&lt;/item&gt;
-    &lt;item name=&quot;actionOverflowMenuStyle&quot;&gt;@style/OverflowMenuStyle&lt;/item&gt; &lt;!--新增一个item，用于控制menu--&gt;
-&lt;/style&gt;
-
-&lt;!-- popupmenu style --&gt;
-&lt;style name=&quot;OverflowMenuStyle&quot; parent=&quot;Widget.AppCompat.Light.PopupMenu.Overflow&quot;&gt;
-    &lt;item name=&quot;overlapAnchor&quot;&gt;false&lt;/item&gt;
-&lt;/style&gt;
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -316,41 +186,57 @@
 		</ul>
 	</div>
 
-      
+          
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/19/Android-Toolbar-Style/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/08/19/Android-Toolbar-Style/" class="archive-article-date">
+  	<time datetime="2017-08-19T03:12:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-19</time>
+</a>
         </div>
-        
-        
-    </div>
-</aside>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/19/Android-Toolbar-Style/">Android Toolbar Style</a>
+    </h1>
+  
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
+          
 
-
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
   
   
+    </div></section>
+  
+
+    
 
 
           </div>
@@ -372,10 +258,10 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
