@@ -8,25 +8,16 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>code | hengtao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="private void ExportFromExecl_Click(object sender, EventArgs e)
-{
-    //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  
-    string connString = &amp;quot;server=localhost;User Id=root;password=s">
+  <meta name="description" content="123456789101112131415161718192021222324252627282930private void ExportFromExecl_Click(object sender, EventArgs e)      &amp;#123;          //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建">
 <meta property="og:type" content="article">
 <meta property="og:title" content="code">
 <meta property="og:url" content="http://yoursite.com/2017/08/21/code/index.html">
 <meta property="og:site_name" content="hengtao">
-<meta property="og:description" content="private void ExportFromExecl_Click(object sender, EventArgs e)
-{
-    //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  
-    string connString = &amp;quot;server=localhost;User Id=root;password=s">
-<meta property="og:updated_time" content="2018-03-06T15:06:22.037Z">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930private void ExportFromExecl_Click(object sender, EventArgs e)      &amp;#123;          //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建">
+<meta property="og:updated_time" content="2018-03-07T15:23:04.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="code">
-<meta name="twitter:description" content="private void ExportFromExecl_Click(object sender, EventArgs e)
-{
-    //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  
-    string connString = &amp;quot;server=localhost;User Id=root;password=s">
+<meta name="twitter:description" content="123456789101112131415161718192021222324252627282930private void ExportFromExecl_Click(object sender, EventArgs e)      &amp;#123;          //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -176,88 +167,59 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <pre><code>private void ExportFromExecl_Click(object sender, EventArgs e)
-{
-    //测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  
-    string connString = &quot;server=localhost;User Id=root;password=shtt960421?;Database=testofbme&quot;;
-
-    System.Windows.Forms.OpenFileDialog fd = new OpenFileDialog();
-    fd.Filter = &quot;所有文件(*.*)|*.*|工作薄(*.xls)|*.xls|工作薄(*.xlsx)|*.xlsx&quot;;
-    if (fd.ShowDialog() == DialogResult.OK)
+        <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ExportFromExecl_Click</span><span class="params">(object sender, EventArgs e)</span></span></div><div class="line">      &#123;</div><div class="line">          <span class="comment">//测试，将excel中的student导入到sqlserver的db_test中，如果sql中的数据表不存在则创建  </span></div><div class="line">          <span class="built_in">string</span> connString = <span class="string">"server=localhost;User Id=root;password=shtt960421?;Database=testofbme"</span>;</div><div class="line"></div><div class="line">          System.Windows.Forms.OpenFileDialog fd = <span class="keyword">new</span> OpenFileDialog();</div><div class="line">          fd.Filter = <span class="string">"所有文件(*.*)|*.*|工作薄(*.xls)|*.xls|工作薄(*.xlsx)|*.xlsx"</span>;</div><div class="line">          <span class="keyword">if</span> (fd.ShowDialog() == DialogResult.OK)</div><div class="line">          &#123;</div><div class="line">              <span class="built_in">string</span> FilePath = fd.FileName.Substring(<span class="number">0</span>, fd.FileName.LastIndexOf(<span class="string">"\\"</span>));   <span class="comment">//获取文件路径，不带文件名，如C:\等</span></div><div class="line">              <span class="built_in">string</span> fileNameExt = <span class="string">""</span>;</div><div class="line">              <span class="keyword">int</span> i = fd.FileName.Length;</div><div class="line">              <span class="keyword">int</span> j = FilePath.Length;</div><div class="line">              <span class="keyword">if</span> (fd.FileName.EndsWith(<span class="string">"xls"</span>))</div><div class="line">              &#123;</div><div class="line">                  fileNameExt = fd.FileName.Substring(fd.FileName.LastIndexOf(<span class="string">"\\"</span>) + <span class="number">1</span>, i - j - <span class="number">5</span>); <span class="comment">//获取文件名，不带路径，如123.xls  -5</span></div><div class="line">                  TransferData(fd.FileName, <span class="string">"Sheet1"</span>, connString, fileNameExt);  <span class="comment">//将名字为fileNameExt的excel文件的sheet1表导入到数据库中</span></div><div class="line">              &#125;</div><div class="line"></div><div class="line">              <span class="keyword">else</span> <span class="keyword">if</span> (fd.FileName.EndsWith(<span class="string">"xlsx"</span>))</div><div class="line">              &#123;</div><div class="line">                  fileNameExt = fd.FileName.Substring(fd.FileName.LastIndexOf(<span class="string">"\\"</span>) + <span class="number">1</span>, i - j - <span class="number">6</span>); <span class="comment">//获取文件名，不带路径，如123.xlsx -6</span></div><div class="line">                  TransferData(fd.FileName, <span class="string">"Sheet1"</span>, connString, fileNameExt);  <span class="comment">//将名字为fileNameExt的excel文件的sheet1表导入到数据库中</span></div><div class="line">              &#125;</div><div class="line">              <span class="keyword">else</span></div><div class="line">              &#123;</div><div class="line">                  MessageBox.Show(<span class="string">"您选择的不是Excel文档，请重新导入"</span>);</div><div class="line">              &#125;</div><div class="line">          &#125; </div><div class="line">      &#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<pre><code class="C++"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TransferData</span><span class="params">(<span class="built_in">string</span> excelFile, <span class="built_in">string</span> sheetName, <span class="built_in">string</span> connectionString, <span class="built_in">string</span> tableName)</span>
+</span>{
+    DataSet ds = <span class="keyword">new</span> DataSet();
+    <span class="keyword">try</span>
     {
-        string FilePath = fd.FileName.Substring(0, fd.FileName.LastIndexOf(&quot;\\&quot;));   //获取文件路径，不带文件名，如C:\等
-        string fileNameExt = &quot;&quot;;
-        int i = fd.FileName.Length;
-        int j = FilePath.Length;
-        if (fd.FileName.EndsWith(&quot;xls&quot;))
-        {
-            fileNameExt = fd.FileName.Substring(fd.FileName.LastIndexOf(&quot;\\&quot;) + 1, i - j - 5); //获取文件名，不带路径，如123.xls  -5
-            TransferData(fd.FileName, &quot;Sheet1&quot;, connString, fileNameExt);  //将名字为fileNameExt的excel文件的sheet1表导入到数据库中
-        }
-
-        else if (fd.FileName.EndsWith(&quot;xlsx&quot;))
-        {
-            fileNameExt = fd.FileName.Substring(fd.FileName.LastIndexOf(&quot;\\&quot;) + 1, i - j - 6); //获取文件名，不带路径，如123.xlsx -6
-            TransferData(fd.FileName, &quot;Sheet1&quot;, connString, fileNameExt);  //将名字为fileNameExt的excel文件的sheet1表导入到数据库中
-        }
-        else
-        {
-            MessageBox.Show(&quot;您选择的不是Excel文档，请重新导入&quot;);
-        }
-    } 
-}
-</code></pre><a id="more"></a>        
-<pre><code>public void TransferData(string excelFile, string sheetName, string connectionString, string tableName)
-{
-    DataSet ds = new DataSet();
-    try
-    {
-        //获取全部数据     
-        string strConn = &quot;Provider = Microsoft.ACE.OLEDB.12.0;&quot; + &quot;Data Source=&quot; + excelFile + &quot;;&quot; + &quot;Extended Properties = Excel 12.0;&quot;;
-        OleDbConnection conn = new OleDbConnection(strConn);
+        <span class="comment">//获取全部数据     </span>
+        <span class="built_in">string</span> strConn = <span class="string">"Provider = Microsoft.ACE.OLEDB.12.0;"</span> + <span class="string">"Data Source="</span> + excelFile + <span class="string">";"</span> + <span class="string">"Extended Properties = Excel 12.0;"</span>;
+        OleDbConnection conn = <span class="keyword">new</span> OleDbConnection(strConn);
         conn.Open();
-        string strExcel = &quot;&quot;;
+        <span class="built_in">string</span> strExcel = <span class="string">""</span>;
         OleDbDataAdapter myCommand = null;
-        strExcel = &quot;select * from [sheet1$]&quot;; //[&quot; +sheetName + &quot;$]&quot;;  //string.Format参数设定  将sheetName即sheet1传到$符前面
+        strExcel = <span class="string">"select * from [sheet1$]"</span>; <span class="comment">//[" +sheetName + "$]";  //string.Format参数设定  将sheetName即sheet1传到$符前面</span>
 
-        myCommand = new OleDbDataAdapter(strExcel, strConn);
-        myCommand.Fill(ds, tableName);  //tablename为dataset的名字   //之前版本是sheetname
-        DataTable dt = ds.Tables[0];
+        myCommand = <span class="keyword">new</span> OleDbDataAdapter(strExcel, strConn);
+        myCommand.Fill(ds, tableName);  <span class="comment">//tablename为dataset的名字   //之前版本是sheetname</span>
+        DataTable dt = ds.Tables[<span class="number">0</span>];
         dt.TableName = tableName;
 
-        string str;
-        str = &quot;1&quot;;
+        <span class="built_in">string</span> str;
+        str = <span class="string">"1"</span>;
 
-        string Sql = &quot;SELECT * FROM &quot; + tableName;
-        MySqlConnection connect = new MySqlConnection(&quot;server=localhost;User Id=root;password=shtt960421?;Database=testofbme&quot;);
+        <span class="built_in">string</span> Sql = <span class="string">"SELECT * FROM "</span> + tableName;
+        MySqlConnection connect = <span class="keyword">new</span> MySqlConnection(<span class="string">"server=localhost;User Id=root;password=shtt960421?;Database=testofbme"</span>);
         connect.Open();
-        MySqlCommand cmd = new MySqlCommand(Sql, connect);
-        try
+        MySqlCommand cmd = <span class="keyword">new</span> MySqlCommand(Sql, connect);
+        <span class="keyword">try</span>
         {
             str = Convert.ToString(cmd.ExecuteScalar());
         }
-        catch (MySqlException f)
+        <span class="keyword">catch</span> (MySqlException f)
         {
-            str = &quot;0&quot;;  //不存在表
+            str = <span class="string">"0"</span>;  <span class="comment">//不存在表</span>
         }
         finally
         {
             conn.Close();
         }
 
-        string strSql = &quot;&quot;;
-        if (str == &quot;0&quot;)  //如果目标表不存在则创建,excel文件的第一行为列标题,从第二行开始全部都是数据记录
+        <span class="built_in">string</span> strSql = <span class="string">""</span>;
+        <span class="keyword">if</span> (str == <span class="string">"0"</span>)  <span class="comment">//如果目标表不存在则创建,excel文件的第一行为列标题,从第二行开始全部都是数据记录</span>
         {
-            strSql = &quot;create table &quot; + tableName + &quot; (&quot;;   //以excelFile为表名，即excel的名字
-            foreach (System.Data.DataColumn c in ds.Tables[0].Columns)
+            strSql = <span class="string">"create table "</span> + tableName + <span class="string">" ("</span>;   <span class="comment">//以excelFile为表名，即excel的名字</span>
+            foreach (System.Data.DataColumn c in ds.Tables[<span class="number">0</span>].Columns)
             {
                 strSql += c.ColumnName;
-                strSql += &quot;  varchar(30),&quot;;
+                strSql += <span class="string">"  varchar(30),"</span>;
             }
 
-            strSql = strSql.Trim(&apos;,&apos;) + &quot;)&quot;;
+            strSql = strSql.Trim(<span class="string">','</span>) + <span class="string">")"</span>;
 
-            using (MySqlConnection sqlconn = new MySqlConnection(connectionString))
+            <span class="keyword">using</span> (MySqlConnection sqlconn = <span class="keyword">new</span> MySqlConnection(connectionString))
             {
                 sqlconn.Open();
                 MySqlCommand command = sqlconn.CreateCommand();
@@ -267,22 +229,22 @@
             }
 
         }
-        else
+        <span class="keyword">else</span>
         {
-            DialogResult cunzai = MessageBox.Show(&quot;数据库中已经存在该表，是否覆盖？&quot;, &quot;提示&quot;, MessageBoxButtons.OKCancel);
-            if (cunzai == DialogResult.OK)
+            DialogResult cunzai = MessageBox.Show(<span class="string">"数据库中已经存在该表，是否覆盖？"</span>, <span class="string">"提示"</span>, MessageBoxButtons.OKCancel);
+            <span class="keyword">if</span> (cunzai == DialogResult.OK)
             {
-                strSql = &quot;Drop table &quot; + tableName + &quot;; create table &quot; + tableName + &quot; (&quot;;   //以excelFile为表名，即excel的名字
-                foreach (System.Data.DataColumn c in ds.Tables[0].Columns)
+                strSql = <span class="string">"Drop table "</span> + tableName + <span class="string">"; create table "</span> + tableName + <span class="string">" ("</span>;   <span class="comment">//以excelFile为表名，即excel的名字</span>
+                foreach (System.Data.DataColumn c in ds.Tables[<span class="number">0</span>].Columns)
                 {
                     strSql += c.ColumnName;
-                    strSql += &quot; varchar(30),&quot;;
+                    strSql += <span class="string">" varchar(30),"</span>;
                 }
 
-                strSql = strSql.Trim(&apos;,&apos;) + &quot;)&quot;;
+                strSql = strSql.Trim(<span class="string">','</span>) + <span class="string">")"</span>;
 
 
-                using (MySqlConnection sqlconn = new MySqlConnection(connectionString))
+                <span class="keyword">using</span> (MySqlConnection sqlconn = <span class="keyword">new</span> MySqlConnection(connectionString))
                 {
                     sqlconn.Open();
                     MySqlCommand command = sqlconn.CreateCommand();
@@ -290,16 +252,16 @@
                     command.ExecuteNonQuery();
                     sqlconn.Close();
                 }
-                MessageBox.Show(&quot;数据已覆盖&quot;);
+                MessageBox.Show(<span class="string">"数据已覆盖"</span>);
             }
-            else if (cunzai == DialogResult.Cancel)
+            <span class="keyword">else</span> <span class="keyword">if</span> (cunzai == DialogResult.Cancel)
             {
-                MessageBox.Show(&quot;操作已取消&quot;);
+                MessageBox.Show(<span class="string">"操作已取消"</span>);
             }
         }
-        MessageBox.Show(Convert.ToString(BulkInsert(dt)) + &quot;条记录已发生改变&quot;);
+        MessageBox.Show(Convert.ToString(BulkInsert(dt)) + <span class="string">"条记录已发生改变"</span>);
     }
-    catch (Exception ex)
+    <span class="keyword">catch</span> (Exception ex)
     {
         System.Windows.Forms.MessageBox.Show(ex.Message);
     }
@@ -309,71 +271,72 @@
     }
 }
 
-public static int BulkInsert(DataTable table)
-{
-    if (string.IsNullOrEmpty(table.TableName)) throw new Exception(&quot;请给DataTable的TableName属性附上表名称&quot;);
-    if (table.Rows.Count == 0) return 0;
-    int insertCount = 0;
-    string tmpPath = Path.GetTempFileName();  //???
-    string csv = DataTableToCsv(table);
+<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">BulkInsert</span><span class="params">(DataTable table)</span>
+</span>{
+    <span class="keyword">if</span> (<span class="built_in">string</span>.IsNullOrEmpty(table.TableName)) <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"请给DataTable的TableName属性附上表名称"</span>);
+    <span class="keyword">if</span> (table.Rows.Count == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;
+    <span class="keyword">int</span> insertCount = <span class="number">0</span>;
+    <span class="built_in">string</span> tmpPath = Path.GetTempFileName();  <span class="comment">//???</span>
+    <span class="built_in">string</span> csv = DataTableToCsv(table);
     File.WriteAllText(tmpPath, csv);
-    using (MySqlConnection conn = new MySqlConnection(&quot;server=localhost;User Id=root;password=shtt960421?;Database=testofbme&quot;))
+    <span class="keyword">using</span> (MySqlConnection conn = <span class="keyword">new</span> MySqlConnection(<span class="string">"server=localhost;User Id=root;password=shtt960421?;Database=testofbme"</span>))
     {
         MySqlTransaction tran = null;
-        try
+        <span class="keyword">try</span>
         {
             conn.Open();
             tran = conn.BeginTransaction();
-            MySqlBulkLoader bulk = new MySqlBulkLoader(conn)
+            MySqlBulkLoader bulk = <span class="keyword">new</span> MySqlBulkLoader(conn)
             {
-                FieldTerminator = &quot;,&quot;,
-                FieldQuotationCharacter = &apos;&quot;&apos;,
-                EscapeCharacter = &apos;&quot;&apos;,
-                LineTerminator = &quot;\r\n&quot;,
+                FieldTerminator = <span class="string">","</span>,
+                FieldQuotationCharacter = <span class="string">'"'</span>,
+                EscapeCharacter = <span class="string">'"'</span>,
+                LineTerminator = <span class="string">"\r\n"</span>,
                 FileName = tmpPath,
-                NumberOfLinesToSkip = 0,
+                NumberOfLinesToSkip = <span class="number">0</span>,
                 TableName = table.TableName,
             };
-            List&lt;string&gt; list = table.Columns.Cast&lt;DataColumn&gt;().Select(colum =&gt; colum.ColumnName).ToList();
+            List&lt;<span class="built_in">string</span>&gt; <span class="built_in">list</span> = table.Columns.Cast&lt;DataColumn&gt;().Select(colum =&gt; colum.ColumnName).ToList();
             bulk.Columns.AddRange(table.Columns.Cast&lt;DataColumn&gt;().Select(colum =&gt; colum.ColumnName).ToList().ToArray());
             insertCount = bulk.Load();
             tran.Commit();
         }
-        catch (MySqlException ex)
+        <span class="keyword">catch</span> (MySqlException ex)
         {
-            if (tran != null) tran.Rollback();
-            throw ex;
+            <span class="keyword">if</span> (tran != null) tran.Rollback();
+            <span class="keyword">throw</span> ex;
         }
     }
     File.Delete(tmpPath);
-    return insertCount;
+    <span class="keyword">return</span> insertCount;
 }
 
- private static string DataTableToCsv(DataTable table)
-{
-    //以半角逗号（即,）作分隔符，列为空也要表达其存在。
-    //列内容如存在半角逗号（即,）则用半角引号（即&quot;&quot;）将该字段值包含起来。
-    //列内容如存在半角引号（即&quot;）则应替换成半角双引号（&quot;&quot;）转义，并用半角引号（即&quot;&quot;）将该字段值包含起来。
-    StringBuilder sb = new StringBuilder();
+ <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">DataTableToCsv</span><span class="params">(DataTable table)</span>
+</span>{
+    <span class="comment">//以半角逗号（即,）作分隔符，列为空也要表达其存在。</span>
+    <span class="comment">//列内容如存在半角逗号（即,）则用半角引号（即""）将该字段值包含起来。</span>
+    <span class="comment">//列内容如存在半角引号（即"）则应替换成半角双引号（""）转义，并用半角引号（即""）将该字段值包含起来。</span>
+    StringBuilder sb = <span class="keyword">new</span> StringBuilder();
     DataColumn colum;
     foreach (DataRow row in table.Rows)
     {
-        for (int i = 0; i &lt; table.Columns.Count; i++)
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; table.Columns.Count; i++)
         {
             colum = table.Columns[i];
-            if (i != 0) sb.Append(&quot;,&quot;);
-            if (colum.DataType == typeof(string) &amp;&amp; row[colum].ToString().Contains(&quot;,&quot;))
+            <span class="keyword">if</span> (i != <span class="number">0</span>) sb.Append(<span class="string">","</span>);
+            <span class="keyword">if</span> (colum.DataType == typeof(<span class="built_in">string</span>) &amp;&amp; row[colum].ToString().Contains(<span class="string">","</span>))
             {
-                sb.Append(&quot;\&quot;&quot; + row[colum].ToString().Replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;) + &quot;\&quot;&quot;);
+                sb.Append(<span class="string">"\""</span> + row[colum].ToString().Replace(<span class="string">"\""</span>, <span class="string">"\"\""</span>) + <span class="string">"\""</span>);
             }
-            else sb.Append(row[colum].ToString());
+            <span class="keyword">else</span> sb.Append(row[colum].ToString());
         }
         sb.AppendLine();
     }
 
-    return sb.ToString();
+    <span class="keyword">return</span> sb.ToString();
 }
 </code></pre>
+
       
 
       
