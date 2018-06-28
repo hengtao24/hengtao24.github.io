@@ -177,36 +177,9 @@
 <li>什么是dp、dip、sp？他们之间的关系是什么？ </li>
 <li>什么是mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi？如何计算和区分？</li>
 </ul>
-<h2 id="屏幕尺寸"><a href="#屏幕尺寸" class="headerlink" title="屏幕尺寸"></a>屏幕尺寸</h2><ul>
-<li>指的是手机屏幕对角线的长度，单位是英寸，换算关系是1英寸=2.54厘米，比如我们常说的小米6的屏幕尺寸是5.15寸</li>
-</ul>
-<h2 id="屏幕分辨率"><a href="#屏幕分辨率" class="headerlink" title="屏幕分辨率"></a>屏幕分辨率</h2><ul>
-<li>指的是屏幕上物理像素的总数，单位px，比如小米6分辨率是1920*1080</li>
-<li>适配时不会直接使用分辨率；而只应关注通用尺寸和密度组指定的屏幕尺寸及密度</li>
-</ul>
-<h2 id="屏幕密度"><a href="#屏幕密度" class="headerlink" title="屏幕密度"></a>屏幕密度</h2><ul>
-<li>屏幕物理区域中的像素量；通常称为dpi（每英寸点数）,对角线每英寸的像素点的个数</li>
-<li>Android将所有屏幕密度分组为六种通用密度ldpi（低）,hdpi（高）,xhdpi（超高）,xxhdpi（超超高）,xxxhdpi（超超超高）</li>
-<li>计算公式如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\frac&#123;\sqrt&#123;(height^2 + width ^2)&#125;&#125;&#123;size&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>height和width即为长宽的像素，平方和即为对角线的像素个数，size即屏幕尺寸</p>
-<h2 id="密度无关像素-dp-dip"><a href="#密度无关像素-dp-dip" class="headerlink" title="密度无关像素 dp(dip)"></a>密度无关像素 dp(dip)</h2><ul>
-<li>dp也叫dip，是device independent pixels</li>
-<li>在定义UI布局时使用的虚拟像素单位，以密度无关方式表示布局位置</li>
-<li>dp单位转换为屏幕像素：px = dp * (dpi / 160)，例如，在240dpi屏幕上，1dp等于1.5px</li>
-</ul>
-<h2 id="sp"><a href="#sp" class="headerlink" title="sp"></a>sp</h2><ul>
-<li>sp，即scale-independent-pixels，与dp类似，但是可以根据文字大小首选项进行放缩，是设置字体大小的御用单位</li>
-</ul>
-<h2 id="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"><a href="#mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi" class="headerlink" title="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"></a>mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi</h2><ul>
-<li><p>修饰了drawable文件夹和value文件夹，用来区分不同像素图片和dimen值，不同像素图片需要放在不同文件夹下</p>
-<p>  名称  | dpi范围<br>  —|—<br>  mdpi| 120 ~ 160<br>  hdpi | 160 ~ 240<br>  xhdpi| 240 ~ 320<br>  xxhdpi | 320 ~ 480<br>  xxxhdpi| 480 ~ 640</p>
-<p>在设计图标时：对于五种主流像素密度(mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)<br>应按照(2:3:4:6:8)的比例进行缩放，(1x, 1.5x, 2x, 3x, 4x)</p>
-<p>例如：尺寸为48x48dp的图标，表示在mdpi的屏幕上其尺寸应为48x48px<br>在hdpi的屏幕上其实际大小是mdpi的1.5倍（72x72px）… 依此类推</p>
-</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2018/06/28/Android屏幕适配（一），相关概念/#more">more >></a>
+        
       
 
       
