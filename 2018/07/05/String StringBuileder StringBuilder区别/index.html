@@ -6,14 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://hengtao24.github.io">
-  <title>Tag: Java | hengtao</title>
+  <title>hengtao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="title: String StringBuileder StingBuilder区别.mddate: 2018-07-05 21:21:49tags:
+- Java
+
+String（字符串常量）Java将String类对象称为不可变字符串，String类的声明是publc final,String类没有提供用于修改字符串的方法。举例：12String greeting = &quot;Hello!&quot;;g">
+<meta property="og:type" content="article">
 <meta property="og:title" content="hengtao">
-<meta property="og:url" content="https://hengtao24.github.io/tags/Java/index.html">
+<meta property="og:url" content="https://hengtao24.github.io/2018/07/05/String StringBuileder StringBuilder区别/index.html">
 <meta property="og:site_name" content="hengtao">
+<meta property="og:description" content="title: String StringBuileder StingBuilder区别.mddate: 2018-07-05 21:21:49tags:
+- Java
+
+String（字符串常量）Java将String类对象称为不可变字符串，String类的声明是publc final,String类没有提供用于修改字符串的方法。举例：12String greeting = &quot;Hello!&quot;;g">
+<meta property="og:updated_time" content="2018-07-05T13:23:21.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hengtao">
+<meta name="twitter:description" content="title: String StringBuileder StingBuilder区别.mddate: 2018-07-05 21:21:49tags:
+- Java
+
+String（字符串常量）Java将String类对象称为不可变字符串，String类的声明是publc final,String类没有提供用于修改字符串的方法。举例：12String greeting = &quot;Hello!&quot;;g">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -155,60 +168,137 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-String StringBuileder StringBuilder区别" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title: String StringBuileder StingBuilder区别.md<br>date: 2018-07-05 21:21:49<br>tags:</p>
+<pre><code>- Java
+</code></pre><hr>
+<h2 id="String（字符串常量）"><a href="#String（字符串常量）" class="headerlink" title="String（字符串常量）"></a>String（字符串常量）</h2><p>Java将String类对象称为不可变字符串，String类的声明是<code>publc final</code>,String类没有提供用于修改字符串的方法。举例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String greeting = <span class="string">"Hello!"</span>;</div><div class="line">greeting = greeting.substring(<span class="number">0</span>,<span class="number">3</span>)+<span class="string">"p!"</span>;</div></pre></td></tr></table></figure></p>
+<p>以上为修改<code>greeting</code>的方法，只能通过让它引用另一个字符串的方式修改其内容。一旦要求改变字符串的值，就会开辟新的内存空间来保存新字符串，效率较低。<br>不可变字符串有一个优点：编译器让字符串共享。各种字符串放在公共的存储池中，字符串变量指向存储池中的位置。Java设计者认为共享的效率远高于字符串拼接的效率。</p>
+<h2 id="StringBuilder（字符串变量-非线程安全）"><a href="#StringBuilder（字符串变量-非线程安全）" class="headerlink" title="StringBuilder（字符串变量:非线程安全）"></a>StringBuilder（字符串变量:非线程安全）</h2><p>在JDK5.0中引人StringBuilder,前身是StringBuffer，适合在单线程中使用。<br>通过较短的字符串构建字符串，当我们采用字符串拼接的方法效率较低，每次拼接都会产生一个新String对象。使用StringBuilder可以避免此类现象。举例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">StringBuilder builder = <span class="keyword">new</span> StringBuilder();</div><div class="line">builder.append(<span class="string">"11111111"</span>);</div><div class="line">builder.append(<span class="string">"22222222"</span>);</div><div class="line">String str = builder.toString();</div></pre></td></tr></table></figure></p>
+<p>通过构建StringBuilder对象来添加内容，最后调用<code>toString()</code>方法得到一个String对象。</p>
+<h2 id="StringBuffer（字符串变量：线程安全）"><a href="#StringBuffer（字符串变量：线程安全）" class="headerlink" title="StringBuffer（字符串变量：线程安全）"></a>StringBuffer（字符串变量：线程安全）</h2><p>Java.lang.StringBuffer线程安全的可变字符序列，使用方法类似StringBuilder，效率略低，因为内部维护了同步锁。<br>主要操作是<code>append</code>和<code>insert</code>方法。<code>append</code>方法将字符添加到缓冲区的末端；而<code>insert</code>方法则在指定的位置添加字符。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于经常改变内容的字符串最好不要用String，因为每次生成对象都会对系统性能产生影响，特别当内存中无引用对象多了以后，JVM的GC就会开始工作，性能就会降低。  </p>
+<ul>
+<li>不要使用<code>+</code>来频繁拼接String对象，效率极低，应该使用StringBuilder或者StringBuffer</li>
+<li>构造StringBuilder或者StringBuffer时最好指定容量，默认容量是16</li>
+<li><p>StringBuilder用于局部，StringBuffer用于全局</p>
+</li>
+<li><p>String可以理解为常量，不可变字符串</p>
+</li>
+<li>StringBuffer对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的</li>
+<li>如果程序不是多线程的，那么使用StringBuilder效率高于StringBuffer</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/05/Java关键字static final this总结/" class="archive-article-date">
-  	<time datetime="2018-07-05T13:18:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/05/Java关键字static final this总结/">Java关键字static final this总结</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
-          
-
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://hengtao24.github.io/2018/07/05/String StringBuileder StringBuilder区别/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/07/05/Java关键字static final this总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java关键字static final this总结</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
 
 
           </div>
@@ -239,9 +329,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
