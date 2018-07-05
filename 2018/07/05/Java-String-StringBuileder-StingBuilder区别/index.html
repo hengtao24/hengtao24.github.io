@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="hengtao">
 <meta property="og:description" content="String（字符串常量）Java将String类对象称为不可变字符串，String类的声明是publc final,String类没有提供用于修改字符串的方法。举例：12String greeting = &quot;Hello!&quot;;greeting = greeting.substring(0,3)+&quot;p!&quot;;
 以上为修改greeting的方法，只能通过让它引用另一个字符串的方式修改其内容。一旦要求改变">
-<meta property="og:updated_time" content="2018-07-05T13:29:04.190Z">
+<meta property="og:updated_time" content="2018-07-05T13:41:15.220Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java String StringBuileder StingBuilder区别">
 <meta name="twitter:description" content="String（字符串常量）Java将String类对象称为不可变字符串，String类的声明是publc final,String类没有提供用于修改字符串的方法。举例：12String greeting = &quot;Hello!&quot;;greeting = greeting.substring(0,3)+&quot;p!&quot;;
@@ -192,10 +192,8 @@
 <ul>
 <li>不要使用<code>+</code>来频繁拼接String对象，效率极低，应该使用StringBuilder或者StringBuffer</li>
 <li>构造StringBuilder或者StringBuffer时最好指定容量，默认容量是16</li>
-<li><p>StringBuilder用于局部，StringBuffer用于全局</p>
-</li>
-<li><p>String可以理解为常量，不可变字符串</p>
-</li>
+<li>StringBuilder用于局部，StringBuffer用于全局</li>
+<li>String可以理解为常量，不可变字符串</li>
 <li>StringBuffer对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的</li>
 <li>如果程序不是多线程的，那么使用StringBuilder效率高于StringBuffer</li>
 </ul>
