@@ -20,7 +20,7 @@ String（字符串常量）Java将String类对象称为不可变字符串，Stri
 - Java
 
 String（字符串常量）Java将String类对象称为不可变字符串，String类的声明是publc final,String类没有提供用于修改字符串的方法。举例：12String greeting = &quot;Hello!&quot;;g">
-<meta property="og:updated_time" content="2018-07-05T13:23:21.801Z">
+<meta property="og:updated_time" content="2018-07-05T13:24:33.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hengtao">
 <meta name="twitter:description" content="title: String StringBuileder StingBuilder区别.mddate: 2018-07-05 21:21:49tags:
@@ -179,6 +179,7 @@ String（字符串常量）Java将String类对象称为不可变字符串，Stri
 </code></pre><hr>
 <h2 id="String（字符串常量）"><a href="#String（字符串常量）" class="headerlink" title="String（字符串常量）"></a>String（字符串常量）</h2><p>Java将String类对象称为不可变字符串，String类的声明是<code>publc final</code>,String类没有提供用于修改字符串的方法。举例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String greeting = <span class="string">"Hello!"</span>;</div><div class="line">greeting = greeting.substring(<span class="number">0</span>,<span class="number">3</span>)+<span class="string">"p!"</span>;</div></pre></td></tr></table></figure></p>
 <p>以上为修改<code>greeting</code>的方法，只能通过让它引用另一个字符串的方式修改其内容。一旦要求改变字符串的值，就会开辟新的内存空间来保存新字符串，效率较低。<br>不可变字符串有一个优点：编译器让字符串共享。各种字符串放在公共的存储池中，字符串变量指向存储池中的位置。Java设计者认为共享的效率远高于字符串拼接的效率。</p>
+<a id="more"></a>
 <h2 id="StringBuilder（字符串变量-非线程安全）"><a href="#StringBuilder（字符串变量-非线程安全）" class="headerlink" title="StringBuilder（字符串变量:非线程安全）"></a>StringBuilder（字符串变量:非线程安全）</h2><p>在JDK5.0中引人StringBuilder,前身是StringBuffer，适合在单线程中使用。<br>通过较短的字符串构建字符串，当我们采用字符串拼接的方法效率较低，每次拼接都会产生一个新String对象。使用StringBuilder可以避免此类现象。举例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">StringBuilder builder = <span class="keyword">new</span> StringBuilder();</div><div class="line">builder.append(<span class="string">"11111111"</span>);</div><div class="line">builder.append(<span class="string">"22222222"</span>);</div><div class="line">String str = builder.toString();</div></pre></td></tr></table></figure></p>
 <p>通过构建StringBuilder对象来添加内容，最后调用<code>toString()</code>方法得到一个String对象。</p>
 <h2 id="StringBuffer（字符串变量：线程安全）"><a href="#StringBuffer（字符串变量：线程安全）" class="headerlink" title="StringBuffer（字符串变量：线程安全）"></a>StringBuffer（字符串变量：线程安全）</h2><p>Java.lang.StringBuffer线程安全的可变字符序列，使用方法类似StringBuilder，效率略低，因为内部维护了同步锁。<br>主要操作是<code>append</code>和<code>insert</code>方法。<code>append</code>方法将字符添加到缓冲区的末端；而<code>insert</code>方法则在指定的位置添加字符。</p>

@@ -22,7 +22,7 @@ final类不能被继承，没有子类，final类中的方法默认是final的�
 final成员变量表示常量，只能被赋值一次，赋值后值不再改变。
 final方法不能被子类的方法覆盖，但可以被继承。
 final类不能被继承，没有子类，final类中的方法默认是final的。注意：父类的private成员方法是不能被子类方法覆盖的，因此private类型的方法默认是final类型的">
-<meta property="og:updated_time" content="2018-07-05T13:20:02.696Z">
+<meta property="og:updated_time" content="2018-07-05T13:24:27.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java关键字static final this总结">
 <meta name="twitter:description" content="一、final(终态)final有“无法改变”的含义，它可以修饰非抽象类、非抽象类成员方法和变量。
@@ -197,6 +197,7 @@ final类不能被继承，没有子类，final类中的方法默认是final的�
 <li>final方法不能被子类的方法覆盖，但可以被继承。</li>
 <li>final类不能被继承，没有子类，final类中的方法默认是final的。<br>注意：父类的private成员方法是不能被子类方法覆盖的，因此private类型的方法默认是final类型的。</li>
 </ul>
+<a id="more"></a>
 <h3 id="final参数"><a href="#final参数" class="headerlink" title="final参数"></a>final参数</h3><p>从代码规范化的角度说，函数的输入参数不能被改变时，应该用final修饰，函数体中无法改变该参数的值。</p>
 <h3 id="final变量"><a href="#final变量" class="headerlink" title="final变量"></a>final变量</h3><p>用final修饰的成员变量表示常量，值一旦给定就无法改变！可以将实例域定义为final，构建对象时必须初始化该域。final变量定义的时候，可以先声明，而不给初值，这种变量也称为final空白，无论什么情况，编译器都确保空白final在使用之前必须被初始化。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Employee</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String name;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h3 id="final方法"><a href="#final方法" class="headerlink" title="final方法"></a>final方法</h3><p>如果一个类不允许其子类覆盖某个方法，则可以把这个方法声明为final方法。使用final方法的原因有二：</p>
