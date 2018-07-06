@@ -20,7 +20,7 @@
 术语和概念
 什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ 
 什么是dp、dip、sp？他们之间的关系">
-<meta property="og:updated_time" content="2018-06-29T15:38:01.201Z">
+<meta property="og:updated_time" content="2018-07-06T01:21:19.678Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android屏幕适配（一），相关概念">
 <meta name="twitter:description" content="前言由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。
@@ -208,9 +208,8 @@
 <h2 id="屏幕密度"><a href="#屏幕密度" class="headerlink" title="屏幕密度"></a>屏幕密度</h2><ul>
 <li>屏幕物理区域中的像素量；通常称为dpi（每英寸点数）,对角线每英寸的像素点的个数</li>
 <li>Android将所有屏幕密度分组为六种通用密度ldpi（低）,hdpi（高）,xhdpi（超高）,xxhdpi（超超高）,xxxhdpi（超超超高）</li>
-<li>计算公式如下：</li>
+<li>计算公式如下：$\frac{\sqrt{(height^2 + width ^2)}}{size}$<br>height和width即为长宽的像素，平方和即为对角线的像素个数，size即屏幕尺寸</li>
 </ul>
-<script type="math/tex; mode=display">\frac{\sqrt{(height^2 + width ^2)}}{size}</script><p>height和width即为长宽的像素，平方和即为对角线的像素个数，size即屏幕尺寸</p>
 <h2 id="密度无关像素-dp-dip"><a href="#密度无关像素-dp-dip" class="headerlink" title="密度无关像素 dp(dip)"></a>密度无关像素 dp(dip)</h2><ul>
 <li>dp也叫dip，是device independent pixels</li>
 <li>在定义UI布局时使用的虚拟像素单位，以密度无关方式表示布局位置</li>
