@@ -21,7 +21,7 @@
 什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ 
 什么是dp、dip、sp？他们之间的关系">
 <meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/dpi-calculate.png">
-<meta property="og:updated_time" content="2018-07-12T12:56:33.292Z">
+<meta property="og:updated_time" content="2018-07-12T12:59:23.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android屏幕适配（一），相关概念">
 <meta name="twitter:description" content="前言由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。
@@ -203,44 +203,6 @@
 <h2 id="屏幕尺寸"><a href="#屏幕尺寸" class="headerlink" title="屏幕尺寸"></a>屏幕尺寸</h2><ul>
 <li>指的是手机屏幕对角线的长度，单位是英寸，换算关系是1英寸=2.54厘米，比如我们常说的小米6的屏幕尺寸是5.15寸</li>
 </ul>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">常量</th>
-<th style="text-align:center">值</th>
-<th style="text-align:center">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">UNSENT</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">open()尚未调用</td>
-</tr>
-<tr>
-<td style="text-align:center">OPENED</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">open()已经调用</td>
-</tr>
-<tr>
-<td style="text-align:center">HEADERS_RECEIVED</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">接收到头信息</td>
-</tr>
-<tr>
-<td style="text-align:center">LOADING</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">接收到响应主体</td>
-</tr>
-<tr>
-<td style="text-align:center">DONE</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">响应完成</td>
-</tr>
-</tbody>
-</table>
-</div>
 <h2 id="屏幕分辨率"><a href="#屏幕分辨率" class="headerlink" title="屏幕分辨率"></a>屏幕分辨率</h2><ul>
 <li>指的是屏幕上物理像素的总数，单位px，比如小米6分辨率是1920*1080</li>
 <li>适配时不会直接使用分辨率；而只应关注通用尺寸和密度组指定的屏幕尺寸及密度</li>
@@ -260,12 +222,41 @@
 <li>sp，即scale-independent-pixels，与dp类似，但是可以根据文字大小首选项进行放缩，是设置字体大小的御用单位</li>
 </ul>
 <h2 id="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"><a href="#mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi" class="headerlink" title="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"></a>mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi</h2><ul>
-<li><p>修饰了drawable文件夹和value文件夹，用来区分不同像素图片和dimen值，不同像素图片需要放在不同文件夹下</p>
-<p>  | 名称  | dpi范围 |<br>  | —-|—- |<br>  | mdpi| 120 ~ 160 |<br>  | hdpi | 160 ~ 240 |<br>  | xhdpi| 240 ~ 320 |<br>  | xxhdpi | 320 ~ 480 |<br>  | xxxhdpi| 480 ~ 640 |</p>
-<p>在设计图标时：对于五种主流像素密度(mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)<br>应按照(2:3:4:6:8)的比例进行缩放，(1x, 1.5x, 2x, 3x, 4x)</p>
-<p>例如：尺寸为48x48dp的图标，表示在mdpi的屏幕上其尺寸应为48x48px<br>在hdpi的屏幕上其实际大小是mdpi的1.5倍（72x72px）… 依此类推</p>
-</li>
+<li>修饰了drawable文件夹和value文件夹，用来区分不同像素图片和dimen值，不同像素图片需要放在不同文件夹下</li>
 </ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">dpi范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">mdpi</td>
+<td style="text-align:center">120 ~ 160</td>
+</tr>
+<tr>
+<td style="text-align:center">hdpi</td>
+<td style="text-align:center">160 ~ 240</td>
+</tr>
+<tr>
+<td style="text-align:center">xhdpi</td>
+<td style="text-align:center">240 ~ 320</td>
+</tr>
+<tr>
+<td style="text-align:center">xxhdpi</td>
+<td style="text-align:center">320 ~ 480</td>
+</tr>
+<tr>
+<td style="text-align:center">xxxhdpi</td>
+<td style="text-align:center">480 ~ 640</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>在设计图标时：对于五种主流像素密度(mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)应按照(2:3:4:6:8)的比例进行缩放，(1x, 1.5x, 2x, 3x, 4x)<br>例如：尺寸为48x48dp的图标，表示在mdpi的屏幕上其尺寸应为48x48px在hdpi的屏幕上其实际大小是mdpi的1.5倍（72x72px）… 依此类推</p>
 
       
 
