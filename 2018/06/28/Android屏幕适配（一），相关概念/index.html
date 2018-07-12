@@ -21,7 +21,7 @@
 什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ 
 什么是dp、dip、sp？他们之间的关系">
 <meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/dpi-calculate.png">
-<meta property="og:updated_time" content="2018-07-12T12:50:27.305Z">
+<meta property="og:updated_time" content="2018-07-12T12:51:20.449Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android屏幕适配（一），相关概念">
 <meta name="twitter:description" content="前言由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。
@@ -222,7 +222,8 @@
 <li>sp，即scale-independent-pixels，与dp类似，但是可以根据文字大小首选项进行放缩，是设置字体大小的御用单位</li>
 </ul>
 <h2 id="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"><a href="#mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi" class="headerlink" title="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"></a>mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi</h2><ul>
-<li><p>修饰了drawable文件夹和value文件夹，用来区分不同像素图片和dimen值，不同像素图片需要放在不同文件夹下<br>  名称  | dpi范围<br>  —-|—-<br>  mdpi| 120 ~ 160<br>  hdpi | 160 ~ 240<br>  xhdpi| 240 ~ 320<br>  xxhdpi | 320 ~ 480<br>  xxxhdpi| 480 ~ 640</p>
+<li><p>修饰了drawable文件夹和value文件夹，用来区分不同像素图片和dimen值，不同像素图片需要放在不同文件夹下</p>
+<p>  | 名称  | dpi范围 |<br>  | —-|—- |<br>  | mdpi| 120 ~ 160 |<br>  | hdpi | 160 ~ 240 |<br>  | xhdpi| 240 ~ 320 |<br>  | xxhdpi | 320 ~ 480 |<br>  | xxxhdpi| 480 ~ 640 |</p>
 <p>在设计图标时：对于五种主流像素密度(mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)<br>应按照(2:3:4:6:8)的比例进行缩放，(1x, 1.5x, 2x, 3x, 4x)</p>
 <p>例如：尺寸为48x48dp的图标，表示在mdpi的屏幕上其尺寸应为48x48px<br>在hdpi的屏幕上其实际大小是mdpi的1.5倍（72x72px）… 依此类推</p>
 <pre><code>| 常量 | 值 | 含义 |
