@@ -6,14 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://hengtao24.github.io">
-  <title>hengtao</title>
+  <title>Java 内部类 匿名类 匿名内部类 静态内部类 | hengtao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="hengtao">
-<meta property="og:url" content="https://hengtao24.github.io/index.html">
+  <meta name="description" content="内部类（inner class）内部类是指定义在另一个类中的类。
+访问外部类对象内部类方法可以访问该类定义所在的作用域中的变量，包括私有变量。12345678910111213141516171819public class A &amp;#123;    public int var;    private boolean isTrue;        ....        public class">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 内部类 匿名类 匿名内部类 静态内部类">
+<meta property="og:url" content="https://hengtao24.github.io/2018/07/13/Java-内部类-匿名类-匿名内部类-静态内部类/index.html">
 <meta property="og:site_name" content="hengtao">
+<meta property="og:description" content="内部类（inner class）内部类是指定义在另一个类中的类。
+访问外部类对象内部类方法可以访问该类定义所在的作用域中的变量，包括私有变量。12345678910111213141516171819public class A &amp;#123;    public int var;    private boolean isTrue;        ....        public class">
+<meta property="og:updated_time" content="2018-07-13T04:53:05.569Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hengtao">
+<meta name="twitter:title" content="Java 内部类 匿名类 匿名内部类 静态内部类">
+<meta name="twitter:description" content="内部类（inner class）内部类是指定义在另一个类中的类。
+访问外部类对象内部类方法可以访问该类定义所在的作用域中的变量，包括私有变量。12345678910111213141516171819public class A &amp;#123;    public int var;    private boolean isTrue;        ....        public class">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -155,16 +162,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Java-内部类-匿名类-匿名内部类-静态内部类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Java-内部类-匿名类-匿名内部类-静态内部类" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/13/Java-内部类-匿名类-匿名内部类-静态内部类/">Java 内部类 匿名类 匿名内部类 静态内部类</a>
+    <h1 class="article-title" itemprop="name">
+      Java 内部类 匿名类 匿名内部类 静态内部类
     </h1>
   
 
@@ -179,167 +184,36 @@
       
         <h1 id="内部类（inner-class）"><a href="#内部类（inner-class）" class="headerlink" title="内部类（inner class）"></a>内部类（inner class）</h1><p>内部类是指定义在另一个类中的类。</p>
 <h2 id="访问外部类对象"><a href="#访问外部类对象" class="headerlink" title="访问外部类对象"></a>访问外部类对象</h2><p>内部类方法可以访问该类定义所在的作用域中的变量，包括私有变量。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> var;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isTrue;</div><div class="line">    </div><div class="line">    ....</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;</div><div class="line">        </div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getVar</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span>(isTrue)</div><div class="line">                <span class="keyword">return</span> var;</div><div class="line">            <span class="keyword">else</span> </div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2018/07/13/Java-内部类-匿名类-匿名内部类-静态内部类/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/13/Java-内部类-匿名类-匿名内部类-静态内部类/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java-String-StringBuffer-StingBuilder区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/">Java String StringBuffer StingBuilder区别</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/" class="archive-article-date">
-  	<time datetime="2018-07-05T13:28:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="String（字符串常量）"><a href="#String（字符串常量）" class="headerlink" title="String（字符串常量）"></a>String（字符串常量）</h2><p>Java将String类对象称为不可变字符串，String类的声明是<code>publc final</code>,String类没有提供用于修改字符串的方法。举例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String greeting = <span class="string">"Hello!"</span>;</div><div class="line">greeting = greeting.substring(<span class="number">0</span>,<span class="number">3</span>)+<span class="string">"p!"</span>;</div></pre></td></tr></table></figure></p>
-<p>以上为修改<code>greeting</code>的方法，只能通过让它引用另一个字符串的方式修改其内容。一旦要求改变字符串的值，就会开辟新的内存空间来保存新字符串，效率较低。<br>不可变字符串有一个优点：编译器让字符串共享。各种字符串放在公共的存储池中，字符串变量指向存储池中的位置。Java设计者认为共享的效率远高于字符串拼接的效率。</p>
-        
-          <a class="article-more-a" href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java关键字static-final-this总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/05/Java关键字static-final-this总结/">Java关键字static final this总结</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/05/Java关键字static-final-this总结/" class="archive-article-date">
-  	<time datetime="2018-07-05T13:18:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、final-终态"><a href="#一、final-终态" class="headerlink" title="一、final(终态)"></a>一、final(终态)</h2><p>final有“无法改变”的含义，它可以修饰非抽象类、非抽象类成员方法和变量。</p>
+<a id="more"></a>
+<p>如上代码所示，类B可以访问私有变量<code>isTrue</code>。内部类既可以访问自身数据域，也可以访问创建它的外围类对象的数据域。<br><code>划重点：因为内部类的对象总有一个隐式引用outer，指向创建它的外部类对象，这个引用在内部类的定义中不可见。</code><br>外围类的引用在构造器中设置，编译器修改了内部类的构造器，添加了一个外围类引用参数，如下代码所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">B</span><span class="params">(A a)</span> </span>&#123;</div><div class="line">    outer = a;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>事实上，使用外围类引用的语法的表达式是:<code>OutClass.this</code>，例如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getVar</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(A.<span class="keyword">this</span>.isTrue)</div><div class="line">        <span class="keyword">return</span> var;</div><div class="line">    <span class="keyword">else</span> </div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="内部类的安全性"><a href="#内部类的安全性" class="headerlink" title="内部类的安全性"></a>内部类的安全性</h2><p>内部类的语法很复杂，需要管理额外的访问权限。内部类是一种编译器现象，与虚拟机无关，编译器会把内部类翻译成常规类文件，命名为<code>OutClass$InnerClass</code>,如<code>A$B</code>。编译器为了引用外围类，生成了一个附加的类A实例域，同时在类B构造器中加入类A的引用参数。<br>那么内部类如何管理访问权限呢?<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    <span class="keyword">static</span> <span class="keyword">boolean</span> access$<span class="number">0</span>(A);</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编译器在外围类添加静态方法<code>access$0</code>(方法名可能不同，取决于编译器)，在类B中的调用方法即<code>access$0(outer)</code>。这样做存在安全风险，任何人都可以通过调用<code>access$0</code>方法读取到私有域<code>isTrue</code>。</p>
+<h1 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h1><h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><p>在一个方法中定义内部类，不能用<code>public</code>或<code>private</code>访问说明符声明，作用域被限定在声明这个局部类的块中，对外部世界完全隐藏。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">        B b = <span class="keyword">new</span> B();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="不能含有静态成员"><a href="#不能含有静态成员" class="headerlink" title="不能含有静态成员"></a>不能含有静态成员</h2><p>局部内部类不能含有静态成员，内部类的实例对象是外部类的对象的一个成员，若没有外部对象，内部对象也是不存在的。 </p>
+<h2 id="访问局部变量"><a href="#访问局部变量" class="headerlink" title="访问局部变量"></a>访问局部变量</h2><p>与其他内部类相比，局部类还有一个优点，不仅可以访问包含它们的外部类，还可以访问局部变量，但是局部变量必须被声明为<code>final</code>。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">final</span> <span class="keyword">boolean</span> par)</span></span>&#123;</div><div class="line">        <span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;</div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dosomething</span><span class="params">()</span></span>&#123;</div><div class="line">                <span class="keyword">if</span>(par)&#123;</div><div class="line">                    ...</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        B b = <span class="keyword">new</span> B();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>局部变量的生命周期和局部内部类对象的生命周期不一致，局部变量在所在函数执行完后就被释放了，而局部内部类对象还可能一直存在，只要局部内部类的对象一直被引用。这样就会存在局部内部类的对象访问一个已经被释放的变量。当局部变量被声明为<code>final</code>后，编译器在编译时将该变量写入局部内部类中，作为成员变量，声明为<code>final</code>为了保持创建之后和外部类的变量一致，叫做<code>capture-by-value</code>。局部内部类编译后：(变量名可能有所不同)<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>$<span class="title">B</span>()</span>&#123;</div><div class="line">    A$B(A,<span class="keyword">boolean</span>);</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dosomething</span><span class="params">()</span></span>;</div><div class="line">    </div><div class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> var$par;</div><div class="line">    <span class="keyword">final</span> A <span class="keyword">this</span>$<span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>关于为什么局部变量必须被声明为<code>final</code>，可以参考”<a href="http://cuipengfei.me/blog/2013/06/22/why-does-it-have-to-be-final/" target="_blank" rel="external">为什么必须是final的呢？
+</a>“这篇博客。  </p>
+<p>在JDK1.8之后， 局部内部类和匿名内部类访问的局部变量可以不用<code>final</code>修饰了，Java引入了<code>effectively final</code>的概念(A variable or parameter whose value is never changed after it is initialized is effectively final), 看起来是编译器取消了这种机制，实际上是诸如<code>effectively final</code>的变量或参数被Java默认为<code>final</code>类型，所以才不会报错。</p>
+<h2 id="静态方法的局部内部类"><a href="#静态方法的局部内部类" class="headerlink" title="静态方法的局部内部类"></a>静态方法的局部内部类</h2><p>静态方法没有this引用，只能访问静态成员，静态方法的局部内部类同样也只能访问外部类的静态成员。</p>
+<h1 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h1><p>匿名内部类是在局部内部类的使用上更深入一步。匿名类是不能有名称的类，所以没办法引用它们。必须在创建时，作为new语句的一部分来声明它们。这就要采用另一种形式的new语句，如下所示： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">new SuperType(construction parameters)</div><div class="line">&#123;</div><div class="line">    inner class methods and data</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中<code>SuperType</code>可以是接口名称，所以内部类就要实现该接口，<code>SuperType</code>也可以是一个类，内部类就要扩展它。</p>
+<p>由于构造器名字必须与类名相同，而匿名类没有名称，所以匿名类没有构造器，取而代之，将构造器参数传递给超类构造器。所以在实现接口时，不能有任何参数。如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">new InterfaceType()</div><div class="line">&#123;</div><div class="line">    methods and data</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用匿名内部类可以简化代码，让代码简短，更切实际，更易理解。<br>注意：匿名类不等同于匿名内部类</p>
+<h1 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h1><p>有时候内部类只是为了把一个类隐藏在另一个类里面，并不需要引用外部类的对象，此时可以将内部类声明为<code>static</code>,以便取消引用。注意：只有内部类可以声明为<code>static</code>。<br>同时注意以下几点：</p>
 <ul>
-<li>final成员变量表示常量，只能被赋值一次，赋值后值不再改变。</li>
-<li>final方法不能被子类的方法覆盖，但可以被继承。</li>
-<li>final类不能被继承，没有子类，final类中的方法默认是final的。<br>注意：父类的private成员方法是不能被子类方法覆盖的，因此private类型的方法默认是final类型的。</li>
+<li>静态内部类可以有静态成员，而非静态内部类则不能有静态成员</li>
+<li>静态内部类的非静态成员可以访问外部类的静态变量，而不可访问外部类的非静态变量</li>
 </ul>
-        
-          <a class="article-more-a" href="/2018/07/05/Java关键字static-final-this总结/#more">more >></a>
-        
+<h1 id="参考信息"><a href="#参考信息" class="headerlink" title="参考信息"></a>参考信息</h1><ul>
+<li>Java核心技术卷I</li>
+<li><a href="https://www.zhihu.com/question/21395848" target="_blank" rel="external">java为什么匿名内部类的参数引用时final？</a></li>
+<li><a href="https://www.cnblogs.com/devinzhang/archive/2012/02/09/2344105.html" target="_blank" rel="external">静态内部类和非静态内部类的区别</a></li>
+</ul>
+
       
 
       
@@ -361,16 +235,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/05/Java关键字static-final-this总结/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://hengtao24.github.io/2018/07/13/Java-内部类-匿名类-匿名内部类-静态内部类/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java String StringBuffer StingBuilder区别</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -390,411 +323,12 @@
 
 
 
-
   
-    <article id="post-Android屏幕适配（一），相关概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/28/Android屏幕适配（一），相关概念/">Android屏幕适配(一)，相关概念</a>
-    </h1>
   
 
-        
-        <a href="/2018/06/28/Android屏幕适配（一），相关概念/" class="archive-article-date">
-  	<time datetime="2018-06-28T12:33:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。</p>
-<h2 id="术语和概念"><a href="#术语和概念" class="headerlink" title="术语和概念"></a>术语和概念</h2><ul>
-<li>什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ </li>
-<li>什么是dp、dip、sp？他们之间的关系是什么？ </li>
-<li>什么是mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi？如何计算和区分？</li>
-</ul>
-        
-          <a class="article-more-a" href="/2018/06/28/Android屏幕适配（一），相关概念/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/28/Android屏幕适配（一），相关概念/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-《这个世界会好吗》" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/09/《这个世界会好吗》/">《这个世界会好吗》</a>
-    </h1>
   
 
-        
-        <a href="/2018/06/09/《这个世界会好吗》/" class="archive-article-date">
-  	<time datetime="2018-06-09T15:55:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <iframe 
-    frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=31381877&auto=0&height=66">
-</iframe>  
-
-<h2 id="梁济"><a href="#梁济" class="headerlink" title="梁济"></a>梁济</h2><p>1918年，年近60的前清民政部员外郎、学者梁济问儿子梁漱溟：“这个世界会好吗？”。时任北京大学哲学系讲师的梁漱溟回答说：“我相信世界是一天一天往好里去的”。三天后，梁济在北京积水潭投湖自尽了，他认为：“中国每个朝代灭亡都有人或许多人为之殉，清亡无一人殉，这在历史上是可耻的，既然如此，我来做这件事。”  </p>
-<p><img src="http://p9u9uaqvy.bkt.clouddn.com/梁漱溟.jpg" alt="梁漱溟晚年（图片来自网络，侵删）">  </p>
-        
-          <a class="article-more-a" href="/2018/06/09/《这个世界会好吗》/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">李志</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随想</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/09/《这个世界会好吗》/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-高考结束的那天，你在做什么？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/09/高考结束的那天，你在做什么？/">高考结束的那天,你在做什么？</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/09/高考结束的那天，你在做什么？/" class="archive-article-date">
-  	<time datetime="2018-06-09T11:35:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://p9u9uaqvy.bkt.clouddn.com/青春终将散场.jpg" alt="青春终将散场(图片来源网络，侵删)"></p>
-<p>又是一年高考结束，高考对很多人意味着中学时代的青春终结，意味着从此要学会独立生活，独立处理各种问题。对我而言，虽然已经过去了五年，但不免还是会勾起自己一些记忆。</p>
-<p>第一天的数学出奇的难，自己感觉没考好，爸妈一直安慰我，道理我也懂，但自己放不下，毕竟自己的强项是数学。高考第二天又在闷热的暴雨天气中考完了自己不那么稳定的英语，听力全程懵逼，最终错了8个。考完英语感觉心里没底，但也没那么伤感，更没有兴奋感。回到家，吃过晚饭。想着干点啥，却啥也无心，爸妈让我联系同学出去玩，却发现没留联系方式，晚上在家早早睡了，也不太记得为何自己能做到心如止水。</p>
-        
-          <a class="article-more-a" href="/2018/06/09/高考结束的那天，你在做什么？/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随想</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/09/高考结束的那天，你在做什么？/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-叁叁肆" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/09/叁叁肆/">李志叁叁肆芜湖站</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/09/叁叁肆/" class="archive-article-date">
-  	<time datetime="2018-03-09T07:57:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://p9u9uaqvy.bkt.clouddn.com/lizhisansansi.jpg" alt="叁叁肆(图片来源叁叁肆官方微博，侵删)"></p>
-<p>现场真的是燃爆了。逼哥最后几首歌真的是唱不动了，太累了。歌曲编排密度难以想象，一首接着一首，间隔不过五秒，全程2个多小时的表演，大概有二十五首歌，真的是太拼了，高音处脸都唱红了。</p>
-<p>逼哥还是逼哥，全程除了唱歌和介绍乐手部分，没有说过一句话。演了很多经典曲目，基本都是大合唱，新专辑也演了五首，现场才知道原来新专中《在每一条伤心的应天大街上》里的嘶吼声是李志和口琴陈岍一起发出的。开场郑州直接嗨起来，中间再穿插经典曲目，天空之城，下雨，热河，山阴路的夏天都演了，当然没有梵高先生，最后以新专中克兰河结尾。</p>
-        
-          <a class="article-more-a" href="/2018/03/09/叁叁肆/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">李志</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随想</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/09/叁叁肆/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Android-Toolbar-Style" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/19/Android-Toolbar-Style/">Android Toolbar Style</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/19/Android-Toolbar-Style/" class="archive-article-date">
-  	<time datetime="2017-08-19T03:12:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- toolbar style--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"ToolbarTheme"</span> <span class="attr">parent</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"actionMenuTextColor"</span>&gt;</span>@color/white<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textSize"</span>&gt;</span>18sp<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"actionMenuTextAppearance"</span>&gt;</span>@style/AppTheme.actionMenuTextSize<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"popupTheme"</span>&gt;</span>@style/PopupMenuStyle<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme.actionMenuTextSize"</span> <span class="attr">parent</span>=<span class="string">"Base.TextAppearance.AppCompat.Widget.ActionBar.Menu"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textSize"</span>&gt;</span>18sp<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textStyle"</span>&gt;</span>normal<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- toolbar popupmenu --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"PopupMenuStyle"</span> <span class="attr">parent</span>=<span class="string">"ThemeOverlay.AppCompat.Dark"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:colorBackground"</span>&gt;</span>@color/colorPrimary<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textColor"</span>&gt;</span>@color/white<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"actionOverflowMenuStyle"</span>&gt;</span>@style/OverflowMenuStyle<span class="tag">&lt;/<span class="name">item</span>&gt;</span> <span class="comment">&lt;!--新增一个item，用于控制menu--&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- popupmenu style --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"OverflowMenuStyle"</span> <span class="attr">parent</span>=<span class="string">"Widget.AppCompat.Light.PopupMenu.Overflow"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"overlapAnchor"</span>&gt;</span>false<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/19/Android-Toolbar-Style/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -825,8 +359,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
