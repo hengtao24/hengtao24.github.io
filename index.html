@@ -157,6 +157,92 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java泛型详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/31/Java泛型详解/">Java泛型详解</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/31/Java泛型详解/" class="archive-article-date">
+  	<time datetime="2018-07-31T14:41:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Java在JDK1.5版本中加入了泛型，加入泛型机制的主要原因是为了满足在1999年制定的最早的Java规范需求之一(JSR14)，专家组花了5年时间来定义规范和测试实现。<br>使用泛型编写的程序要比那些杂乱使用<code>Object</code>变量，再进行强制类型转换的代码有着更好的安全性和可读性，泛型尤其对集合类有用，例如<code>ArrayList</code>类。Java泛型看起来很像C++中的模板概念。</p>
+<h1 id="为什么使用泛型"><a href="#为什么使用泛型" class="headerlink" title="为什么使用泛型"></a>为什么使用泛型</h1><p>泛型程序意味着编写的代码可以被很多不同类型的对象重用，Java在增加泛型类之前，是通过继承来实现泛型程序设计的。以<code>ArrayList</code>为例，其内部维护了一个<code>Object</code>数组：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>  // 泛型类之前</div><div class="line"></span>&#123;</div><div class="line">    <span class="keyword">private</span> Object[] elementData;</div><div class="line">    ...</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;...&#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Object o)</span></span>&#123;...&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样实现有两个问题，一是获取对象的时候必须进行强制类型转换：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ArrayList files = <span class="keyword">new</span> ArrayList();</div><div class="line">...</div><div class="line">String filename = (String) files.get(<span class="number">0</span>);</div></pre></td></tr></table></figure>
+<p>此外，没有错误检查，因此可以向<code>ArrayList</code>中添加任何类的对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">files.add(<span class="keyword">new</span> OtherClass());</div></pre></td></tr></table></figure>
+<p>对于这个添加过程，编译和运行都不会出错，但当我们调用<code>get()</code>方法进行强制类型转换时，便会出现错误。</p>
+<p>因此，泛型类为这类问题提供了更好的解决方法，类型参数(type parameters)，<code>ArrayList</code>类有一个类型参数用来指示元素的类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ArrayList&lt;String&gt; files = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div></pre></td></tr></table></figure>
+<p>这样的代码具有更好的可读性，我们一看就知道<code>ArrayList</code>内部存储的是<code>String</code>对象。这样对于<code>get()</code>方法和<code>add()</code>方法，编译器都可以更好的工作，调用<code>get()</code>时不再需要强制类型转换，编译器知道返回值的类型是<code>String</code>，而<code>add()</code>方法编译器则知道其有一个<code>String</code>类型的参数，编译器可以检查，避免插入错误类型的对象。</p>
+        
+          <a class="article-more-a" href="/2018/07/31/Java泛型详解/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/31/Java泛型详解/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Android消息机制Handler" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -170,13 +256,8 @@
 
         
         <a href="/2018/07/23/Android消息机制Handler/" class="archive-article-date">
-  	<time datetime="2018-07-23T14:25:04.000Z" itemprop="datePublished">2018-07-23</time>
-  	<span id="busuanzi_container_page_pv" style="color:DarkGray">
-      点击 <span id="busuanzi_value_page_pv"></span> 次
-    </span>
+  	<time datetime="2018-07-23T14:25:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-23</time>
 </a>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
         
       </header>
     
@@ -257,13 +338,8 @@
 
         
         <a href="/2018/07/18/Java数据类型/" class="archive-article-date">
-  	<time datetime="2018-07-18T13:42:43.000Z" itemprop="datePublished">2018-07-18</time>
-  	<span id="busuanzi_container_page_pv" style="color:DarkGray">
-      点击 <span id="busuanzi_value_page_pv"></span> 次
-    </span>
+  	<time datetime="2018-07-18T13:42:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-18</time>
 </a>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
         
       </header>
     
@@ -351,13 +427,8 @@
 
         
         <a href="/2018/07/13/Java-内部类-匿名类-匿名内部类-静态内部类/" class="archive-article-date">
-  	<time datetime="2018-07-13T04:52:02.000Z" itemprop="datePublished">2018-07-13</time>
-  	<span id="busuanzi_container_page_pv" style="color:DarkGray">
-      点击 <span id="busuanzi_value_page_pv"></span> 次
-    </span>
+  	<time datetime="2018-07-13T04:52:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-13</time>
 </a>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
         
       </header>
     
@@ -433,13 +504,8 @@
 
         
         <a href="/2018/07/12/Android屏幕适配（二），适配方案/" class="archive-article-date">
-  	<time datetime="2018-07-12T04:53:37.000Z" itemprop="datePublished">2018-07-12</time>
-  	<span id="busuanzi_container_page_pv" style="color:DarkGray">
-      点击 <span id="busuanzi_value_page_pv"></span> 次
-    </span>
+  	<time datetime="2018-07-12T04:53:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-12</time>
 </a>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
         
       </header>
     
@@ -516,13 +582,8 @@
 
         
         <a href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/" class="archive-article-date">
-  	<time datetime="2018-07-05T13:28:42.000Z" itemprop="datePublished">2018-07-05</time>
-  	<span id="busuanzi_container_page_pv" style="color:DarkGray">
-      点击 <span id="busuanzi_value_page_pv"></span> 次
-    </span>
+  	<time datetime="2018-07-05T13:28:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
 </a>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
         
       </header>
     
@@ -598,13 +659,8 @@
 
         
         <a href="/2018/07/05/Java关键字static-final-this总结/" class="archive-article-date">
-  	<time datetime="2018-07-05T13:18:28.000Z" itemprop="datePublished">2018-07-05</time>
-  	<span id="busuanzi_container_page_pv" style="color:DarkGray">
-      点击 <span id="busuanzi_value_page_pv"></span> 次
-    </span>
+  	<time datetime="2018-07-05T13:18:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
 </a>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
         
       </header>
     
@@ -684,13 +740,8 @@
 
         
         <a href="/2018/06/28/Android屏幕适配（一），相关概念/" class="archive-article-date">
-  	<time datetime="2018-06-28T12:33:56.000Z" itemprop="datePublished">2018-06-28</time>
-  	<span id="busuanzi_container_page_pv" style="color:DarkGray">
-      点击 <span id="busuanzi_value_page_pv"></span> 次
-    </span>
+  	<time datetime="2018-06-28T12:33:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
 </a>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
         
       </header>
     
@@ -774,13 +825,8 @@
 
         
         <a href="/2018/06/09/《这个世界会好吗》/" class="archive-article-date">
-  	<time datetime="2018-06-09T15:55:34.000Z" itemprop="datePublished">2018-06-09</time>
-  	<span id="busuanzi_container_page_pv" style="color:DarkGray">
-      点击 <span id="busuanzi_value_page_pv"></span> 次
-    </span>
+  	<time datetime="2018-06-09T15:55:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-09</time>
 </a>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
         
       </header>
     
@@ -864,13 +910,8 @@
 
         
         <a href="/2018/06/09/高考结束的那天，你在做什么？/" class="archive-article-date">
-  	<time datetime="2018-06-09T11:35:23.000Z" itemprop="datePublished">2018-06-09</time>
-  	<span id="busuanzi_container_page_pv" style="color:DarkGray">
-      点击 <span id="busuanzi_value_page_pv"></span> 次
-    </span>
+  	<time datetime="2018-06-09T11:35:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-09</time>
 </a>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
         
       </header>
     
@@ -905,93 +946,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/06/09/高考结束的那天，你在做什么？/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-叁叁肆" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/09/叁叁肆/">李志叁叁肆芜湖站</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/09/叁叁肆/" class="archive-article-date">
-  	<time datetime="2018-03-09T07:57:42.000Z" itemprop="datePublished">2018-03-09</time>
-  	<span id="busuanzi_container_page_pv" style="color:DarkGray">
-      点击 <span id="busuanzi_value_page_pv"></span> 次
-    </span>
-</a>
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://p9u9uaqvy.bkt.clouddn.com/lizhisansansi.jpg" alt="叁叁肆(图片来源叁叁肆官方微博，侵删)"></p>
-<p>现场真的是燃爆了。逼哥最后几首歌真的是唱不动了，太累了。歌曲编排密度难以想象，一首接着一首，间隔不过五秒，全程2个多小时的表演，大概有二十五首歌，真的是太拼了，高音处脸都唱红了。</p>
-<p>逼哥还是逼哥，全程除了唱歌和介绍乐手部分，没有说过一句话。演了很多经典曲目，基本都是大合唱，新专辑也演了五首，现场才知道原来新专中《在每一条伤心的应天大街上》里的嘶吼声是李志和口琴陈岍一起发出的。开场郑州直接嗨起来，中间再穿插经典曲目，天空之城，下雨，热河，山阴路的夏天都演了，当然没有梵高先生，最后以新专中克兰河结尾。</p>
-        
-          <a class="article-more-a" href="/2018/03/09/叁叁肆/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">李志</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随想</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/09/叁叁肆/">展开全文 >></a>
         </p>
       
 
