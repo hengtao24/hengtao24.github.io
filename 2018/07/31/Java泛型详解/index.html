@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="hengtao">
 <meta property="og:description" content="前言Java在JDK1.5版本中加入了泛型，加入泛型机制的主要原因是为了满足在1999年制定的最早的Java规范需求之一(JSR14)，专家组花了5年时间来定义规范和测试实现。使用泛型编写的程序要比那些杂乱使用Object变量，再进行强制类型转换的代码有着更好的安全性和可读性，泛型尤其对集合类有用，例如ArrayList类。Java泛型看起来很像C++中的模板概念。
 为什么使用泛型泛型程序意味着编">
-<meta property="og:updated_time" content="2018-07-31T14:41:58.833Z">
+<meta property="og:updated_time" content="2018-08-01T08:09:23.572Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java泛型详解">
 <meta name="twitter:description" content="前言Java在JDK1.5版本中加入了泛型，加入泛型机制的主要原因是为了满足在1999年制定的最早的Java规范需求之一(JSR14)，专家组花了5年时间来定义规范和测试实现。使用泛型编写的程序要比那些杂乱使用Object变量，再进行强制类型转换的代码有着更好的安全性和可读性，泛型尤其对集合类有用，例如ArrayList类。Java泛型看起来很像C++中的模板概念。
@@ -389,6 +389,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么使用泛型"><span class="toc-number">2.</span> <span class="toc-text">为什么使用泛型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#泛型使用"><span class="toc-number">3.</span> <span class="toc-text">泛型使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#泛型类"><span class="toc-number">3.1.</span> <span class="toc-text">泛型类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泛型接口"><span class="toc-number">3.2.</span> <span class="toc-text">泛型接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泛型方法"><span class="toc-number">3.3.</span> <span class="toc-text">泛型方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型变量的限定"><span class="toc-number">3.4.</span> <span class="toc-text">类型变量的限定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承规则"><span class="toc-number">3.5.</span> <span class="toc-text">继承规则</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#通配符"><span class="toc-number">4.</span> <span class="toc-text">通配符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#超类型限定"><span class="toc-number">4.1.</span> <span class="toc-text">超类型限定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无限定通配符"><span class="toc-number">4.2.</span> <span class="toc-text">无限定通配符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#泛型与虚拟机"><span class="toc-number">5.</span> <span class="toc-text">泛型与虚拟机</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#类型擦除"><span class="toc-number">5.1.</span> <span class="toc-text">类型擦除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#翻译泛型表达式"><span class="toc-number">5.2.</span> <span class="toc-text">翻译泛型表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#桥方法"><span class="toc-number">5.3.</span> <span class="toc-text">桥方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java泛型转换总结"><span class="toc-number">5.4.</span> <span class="toc-text">Java泛型转换总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#约束与局限性"><span class="toc-number">6.</span> <span class="toc-text">约束与局限性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#类型判断只适用于原始类型"><span class="toc-number">6.1.</span> <span class="toc-text">类型判断只适用于原始类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不能创建参数化类型数组"><span class="toc-number">6.2.</span> <span class="toc-text">不能创建参数化类型数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不能实例化类型变量"><span class="toc-number">6.3.</span> <span class="toc-text">不能实例化类型变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泛型类中的静态域或静态方法中引用类型变量无效"><span class="toc-number">6.4.</span> <span class="toc-text">泛型类中的静态域或静态方法中引用类型变量无效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意擦除后的冲突"><span class="toc-number">6.5.</span> <span class="toc-text">注意擦除后的冲突</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考信息"><span class="toc-number">7.</span> <span class="toc-text">参考信息</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
