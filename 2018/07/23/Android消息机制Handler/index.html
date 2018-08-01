@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="hengtao">
 <meta property="og:description" content="前言Android和Windows一样都采用了消息机制，从开发角度说，Handler是Android消息机制的上层接口，开发过程中和Handler交互即可。Android规范限制我们不能在子线程中更新UI，只能在主线程中更新UI，Handler可以轻松的将一个任务切换到Handler所在的线程中去执行。所以，开发过程中Handler通常被用来更新UI，利用Handler将更新UI的操作切换到主线程">
 <meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Handler工作过程1.png">
-<meta property="og:updated_time" content="2018-07-23T14:25:40.857Z">
+<meta property="og:updated_time" content="2018-08-01T08:13:34.897Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android消息机制Handler">
 <meta name="twitter:description" content="前言Android和Windows一样都采用了消息机制，从开发角度说，Handler是Android消息机制的上层接口，开发过程中和Handler交互即可。Android规范限制我们不能在子线程中更新UI，只能在主线程中更新UI，Handler可以轻松的将一个任务切换到Handler所在的线程中去执行。所以，开发过程中Handler通常被用来更新UI，利用Handler将更新UI的操作切换到主线程">
@@ -368,6 +368,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Handler"><span class="toc-number">2.</span> <span class="toc-text">Handler</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#工作过程"><span class="toc-number">2.1.</span> <span class="toc-text">工作过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理"><span class="toc-number">2.2.</span> <span class="toc-text">工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#发送消息"><span class="toc-number">2.2.1.</span> <span class="toc-text">发送消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#处理消息"><span class="toc-number">2.2.2.</span> <span class="toc-text">处理消息</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Looper"><span class="toc-number">3.</span> <span class="toc-text">Looper</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建Looper"><span class="toc-number">3.1.</span> <span class="toc-text">创建Looper</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Looper退出"><span class="toc-number">3.2.</span> <span class="toc-text">Looper退出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息循环"><span class="toc-number">3.3.</span> <span class="toc-text">消息循环</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Message-amp-MessageQueue"><span class="toc-number">4.</span> <span class="toc-text">Message & MessageQueue</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android中为什么主线程不会因为Looper-loop-里的死循环卡死？"><span class="toc-number">5.</span> <span class="toc-text">Android中为什么主线程不会因为Looper.loop()里的死循环卡死？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题描述"><span class="toc-number">5.1.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原因"><span class="toc-number">5.2.</span> <span class="toc-text">原因</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Handler的其它用法"><span class="toc-number">6.</span> <span class="toc-text">Handler的其它用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#View中的post-方法"><span class="toc-number">6.1.</span> <span class="toc-text">View中的post()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Activity中的runOnUiThread-方法"><span class="toc-number">6.2.</span> <span class="toc-text">Activity中的runOnUiThread()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">6.3.</span> <span class="toc-text"> </span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考信息"><span class="toc-number">7.</span> <span class="toc-text">参考信息</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
