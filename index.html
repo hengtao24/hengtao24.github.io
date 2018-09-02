@@ -163,6 +163,92 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Android Activity生命周期，启动模式，启动过程详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/02/Android Activity生命周期，启动模式，启动过程详解/">Android Activity�������ڣ�����ģʽ��������������</a>
+    </h1>
+  
+
+		
+		
+	  
+        
+        <a href="/2018/09/02/Android Activity生命周期，启动模式，启动过程详解/" class="archive-article-date">
+  	<time datetime="2018-09-02T12:11:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="j��"><a href="#j��" class="headerlink" title="ǰ��"></a>ǰ��</h1><p>�Ӵ���Android������ͬѧ��֪��Activity��Activity��ΪAndroid�Ĵ�����֮һ��ʹ��Ƶ�ʸߡ�������˵Activity�ṩ��һ����ʾ���棬���û����и��ֲ�����������Ҫ��Ϊ�����������֣�Activity���������ڣ�����ģʽ���Լ�Activity�Ĺ������̡����д󲿷�ƪ�����ԡ�Android��������̽����һ�飬�������������̻�ͼƬ����ʽ˵�����κ��ı����ޣ�Androidϵͳ�������ջ��������룬ֻ�ܽ����ο�ǰ���ĳɹ���������ҪĿ���ǰ��Լ�����Activity���������⣬��©֮����ӭָ����</p>
+<blockquote>
+<p>˵���������е�Դ�붼�ǻ���Android-25�汾��</p>
+</blockquote>
+<h1 id="Activity��������"><a href="#Activity��������" class="headerlink" title="Activity��������"></a>Activity��������</h1><h2 id="��������"><a href="#��������" class="headerlink" title="��������"></a>��������</h2><p>���ȸ���Activity�������������ڣ�����ͼ��ʾ��<br><img src="https://developer.android.google.cn/images/activity_lifecycle.png" alt="Activity��������"> </p>
+<blockquote>
+<p>ͼƬ��ԴAndroid�����߹���</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2018/09/02/Android Activity生命周期，启动模式，启动过程详解/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/02/Android Activity生命周期，启动模式，启动过程详解/">展开全文 >></a>
+        </p>
+      
+	  
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Java泛型详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     	  
@@ -189,14 +275,6 @@
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Java在JDK1.5版本中加入了泛型，加入泛型机制的主要原因是为了满足在1999年制定的最早的Java规范需求之一(JSR14)，专家组花了5年时间来定义规范和测试实现。<br>使用泛型编写的程序要比那些杂乱使用<code>Object</code>变量，再进行强制类型转换的代码有着更好的安全性和可读性，泛型尤其对集合类有用，例如<code>ArrayList</code>类。Java泛型看起来很像C++中的模板概念。</p>
 <h1 id="为什么使用泛型"><a href="#为什么使用泛型" class="headerlink" title="为什么使用泛型"></a>为什么使用泛型</h1><p>泛型程序意味着编写的代码可以被很多不同类型的对象重用，Java在增加泛型类之前，是通过继承来实现泛型程序设计的。以<code>ArrayList</code>为例，其内部维护了一个<code>Object</code>数组：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>  // 泛型类之前</div><div class="line"></span>&#123;</div><div class="line">    <span class="keyword">private</span> Object[] elementData;</div><div class="line">    ...</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;...&#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Object o)</span></span>&#123;...&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样实现有两个问题，一是获取对象的时候必须进行强制类型转换：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ArrayList files = <span class="keyword">new</span> ArrayList();</div><div class="line">...</div><div class="line">String filename = (String) files.get(<span class="number">0</span>);</div></pre></td></tr></table></figure>
-<p>此外，没有错误检查，因此可以向<code>ArrayList</code>中添加任何类的对象。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">files.add(<span class="keyword">new</span> OtherClass());</div></pre></td></tr></table></figure>
-<p>对于这个添加过程，编译和运行都不会出错，但当我们调用<code>get()</code>方法进行强制类型转换时，便会出现错误。</p>
-<p>因此，泛型类为这类问题提供了更好的解决方法，类型参数(type parameters)，<code>ArrayList</code>类有一个类型参数用来指示元素的类型：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ArrayList&lt;String&gt; files = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div></pre></td></tr></table></figure>
-<p>这样的代码具有更好的可读性，我们一看就知道<code>ArrayList</code>内部存储的是<code>String</code>对象。这样对于<code>get()</code>方法和<code>add()</code>方法，编译器都可以更好的工作，调用<code>get()</code>时不再需要强制类型转换，编译器知道返回值的类型是<code>String</code>，而<code>add()</code>方法编译器则知道其有一个<code>String</code>类型的参数，编译器可以检查，避免插入错误类型的对象。</p>
         
           <a class="article-more-a" href="/2018/07/31/Java泛型详解/#more">more >></a>
         
@@ -901,87 +979,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/06/09/《这个世界会好吗》/">展开全文 >></a>
-        </p>
-      
-	  
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-高考结束的那天，你在做什么？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    	  
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/09/高考结束的那天，你在做什么？/">高考结束的那天,你在做什么？</a>
-    </h1>
-  
-
-		
-		
-	  
-        
-        <a href="/2018/06/09/高考结束的那天，你在做什么？/" class="archive-article-date">
-  	<time datetime="2018-06-09T11:35:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://p9u9uaqvy.bkt.clouddn.com/青春终将散场.jpg" alt="青春终将散场(图片来源网络，侵删)"></p>
-<p>又是一年高考结束，高考对很多人意味着中学时代的青春终结，意味着从此要学会独立生活，独立处理各种问题。对我而言，虽然已经过去了五年，但不免还是会勾起自己一些记忆。</p>
-<p>第一天的数学出奇的难，自己感觉没考好，爸妈一直安慰我，道理我也懂，但自己放不下，毕竟自己的强项是数学。高考第二天又在闷热的暴雨天气中考完了自己不那么稳定的英语，听力全程懵逼，最终错了8个。考完英语感觉心里没底，但也没那么伤感，更没有兴奋感。回到家，吃过晚饭。想着干点啥，却啥也无心，爸妈让我联系同学出去玩，却发现没留联系方式，晚上在家早早睡了，也不太记得为何自己能做到心如止水。</p>
-        
-          <a class="article-more-a" href="/2018/06/09/高考结束的那天，你在做什么？/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随想</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/09/高考结束的那天，你在做什么？/">展开全文 >></a>
         </p>
       
 	  

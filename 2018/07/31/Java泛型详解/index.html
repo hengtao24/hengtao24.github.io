@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="hengtao">
 <meta property="og:description" content="前言Java在JDK1.5版本中加入了泛型，加入泛型机制的主要原因是为了满足在1999年制定的最早的Java规范需求之一(JSR14)，专家组花了5年时间来定义规范和测试实现。使用泛型编写的程序要比那些杂乱使用Object变量，再进行强制类型转换的代码有着更好的安全性和可读性，泛型尤其对集合类有用，例如ArrayList类。Java泛型看起来很像C++中的模板概念。
 为什么使用泛型泛型程序意味着编">
-<meta property="og:updated_time" content="2018-08-01T08:11:58.673Z">
+<meta property="og:updated_time" content="2018-09-02T12:12:23.881Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java泛型详解">
 <meta name="twitter:description" content="前言Java在JDK1.5版本中加入了泛型，加入泛型机制的主要原因是为了满足在1999年制定的最早的Java规范需求之一(JSR14)，专家组花了5年时间来定义规范和测试实现。使用泛型编写的程序要比那些杂乱使用Object变量，再进行强制类型转换的代码有着更好的安全性和可读性，泛型尤其对集合类有用，例如ArrayList类。Java泛型看起来很像C++中的模板概念。
@@ -200,6 +200,7 @@
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Java在JDK1.5版本中加入了泛型，加入泛型机制的主要原因是为了满足在1999年制定的最早的Java规范需求之一(JSR14)，专家组花了5年时间来定义规范和测试实现。<br>使用泛型编写的程序要比那些杂乱使用<code>Object</code>变量，再进行强制类型转换的代码有着更好的安全性和可读性，泛型尤其对集合类有用，例如<code>ArrayList</code>类。Java泛型看起来很像C++中的模板概念。</p>
 <h1 id="为什么使用泛型"><a href="#为什么使用泛型" class="headerlink" title="为什么使用泛型"></a>为什么使用泛型</h1><p>泛型程序意味着编写的代码可以被很多不同类型的对象重用，Java在增加泛型类之前，是通过继承来实现泛型程序设计的。以<code>ArrayList</code>为例，其内部维护了一个<code>Object</code>数组：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>  // 泛型类之前</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> Object[] elementData;</div><div class="line">    ...</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;...&#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Object o)</span></span>&#123;...&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>这样实现有两个问题，一是获取对象的时候必须进行强制类型转换：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ArrayList files = <span class="keyword">new</span> ArrayList();</div><div class="line">...</div><div class="line">String filename = (String) files.get(<span class="number">0</span>);</div></pre></td></tr></table></figure>
 <p>此外，没有错误检查，因此可以向<code>ArrayList</code>中添加任何类的对象。</p>
@@ -208,7 +209,6 @@
 <p>因此，泛型类为这类问题提供了更好的解决方法，类型参数(type parameters)，<code>ArrayList</code>类有一个类型参数用来指示元素的类型：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ArrayList&lt;String&gt; files = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div></pre></td></tr></table></figure>
 <p>这样的代码具有更好的可读性，我们一看就知道<code>ArrayList</code>内部存储的是<code>String</code>对象。这样对于<code>get()</code>方法和<code>add()</code>方法，编译器都可以更好的工作，调用<code>get()</code>时不再需要强制类型转换，编译器知道返回值的类型是<code>String</code>，而<code>add()</code>方法编译器则知道其有一个<code>String</code>类型的参数，编译器可以检查，避免插入错误类型的对象。</p>
-<a id="more"></a>
 <h1 id="泛型使用"><a href="#泛型使用" class="headerlink" title="泛型使用"></a>泛型使用</h1><p>泛型的使用基本包括泛型类，泛型接口，泛型方法三个方面，下面一一展开。</p>
 <h2 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h2><p>首先定义一个简单的泛型类，代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericClass</span>&lt;<span class="title">T</span>&gt;</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> T var;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GenericClass</span><span class="params">(T t)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">this</span>.var = t;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">getVar</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> var;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setVar</span><span class="params">(T t)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">this</span>.var = t;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -382,6 +382,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/09/02/Android Activity生命周期，启动模式，启动过程详解/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Android Activity�������ڣ�����ģʽ��������������
+        
+      </div>
+    </a>
   
   
     <a href="/2018/07/23/Android消息机制Handler/" id="article-nav-older" class="article-nav-link-wrap">
