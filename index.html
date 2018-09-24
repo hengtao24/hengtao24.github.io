@@ -163,6 +163,260 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java集合系列03之LinkedList源码分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/24/Java集合系列03之LinkedList源码分析/">Java集合系列03之LinkedList源码分析</a>
+    </h1>
+  
+
+		
+		
+	  
+        
+        <a href="/2018/09/24/Java集合系列03之LinkedList源码分析/" class="archive-article-date">
+  	<time datetime="2018-09-24T11:12:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文开始分析<code>LinkedList</code>。<code>ArrayList</code>和<code>LinkedList</code>都实现了List接口，但内部数据结构有所区别，<code>LinkedList</code>内部是基于链表实现的，所以其插入和删除操作效率较高，但是随机访问效率就相对较低。其定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedList</span>&lt;<span class="title">E</span>&gt;</div><div class="line">    <span class="keyword">extends</span> <span class="title">AbstractSequentialList</span>&lt;<span class="title">E</span>&gt;</div><div class="line">    <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">Deque</span>&lt;<span class="title">E</span>&gt;, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></div></pre></td></tr></table></figure>
+<p>可以看到<code>LinkedList</code>继承<code>AbstractSequentialList</code>，实现了<code>List</code>，<code>Deque</code>，<code>Cloneable</code>，<code>java.io.Serializable</code>四个接口。</p>
+<p><code>AbstractSequenceList</code>实现了大部分<code>List</code>接口的方法，<code>Deque</code>接口定义了双端队列的操作。</p>
+<blockquote>
+<p>本文源码分析基于jdk 1.8.0_121</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2018/09/24/Java集合系列03之LinkedList源码分析/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/24/Java集合系列03之LinkedList源码分析/">展开全文 >></a>
+        </p>
+      
+	  
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Java集合系列02之ArrayList源码分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/24/Java集合系列02之ArrayList源码分析/">Java集合系列02之ArrayList源码分析</a>
+    </h1>
+  
+
+		
+		
+	  
+        
+        <a href="/2018/09/24/Java集合系列02之ArrayList源码分析/" class="archive-article-date">
+  	<time datetime="2018-09-24T11:11:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文开始分析具体集合的源码和实现原理，首先来看<code>ArrayList</code>。<code>ArrayList</code>可以理解为一个动态数组，与普通数组相比，它的容量能动态增长。其定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</div><div class="line">        <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></div></pre></td></tr></table></figure>
+<p>可以看到<code>ArrayList</code>继承了<code>AbstractList</code>类，实现了<code>List</code>，<code>RandomAccess</code>，<code>Cloneable</code>和<code>java.io.Serializable</code>四个接口。 </p>
+<p>上文提到，<code>AbstractList</code>类提供了大部分List接口的实现，帮助我们减少了实现List接口的工作。</p>
+<p><code>RandomAccess</code>接口是List实现所使用的标记接口，表明List支持快速随机访问功能(就是通过索引获取元素)。</p>
+<p>实现<code>Cloneable</code>接口表明覆盖了<code>Clone()</code>函数，能被克隆，实现<code>java.io.Serializable</code>接口表明<code>ArrayList</code>支持序列化。</p>
+<blockquote>
+<p>本文源码分析基于jdk 1.8.0_121</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2018/09/24/Java集合系列02之ArrayList源码分析/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/24/Java集合系列02之ArrayList源码分析/">展开全文 >></a>
+        </p>
+      
+	  
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Java集合系列01之概览" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/24/Java集合系列01之概览/">Java集合系列01之概览</a>
+    </h1>
+  
+
+		
+		
+	  
+        
+        <a href="/2018/09/24/Java集合系列01之概览/" class="archive-article-date">
+  	<time datetime="2018-09-24T11:09:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>从本篇开始，我将开始Java集合系列的梳理，本文先对集合框架中涉及到的接口，架构，类等做一个总体展示，后面的文章中再结合源码分别剖析具体集合，希望能用两个月的时间完成Java集合系列文章。</p>
+<p>Java最初版本只为最常用的数据结构提供了很少的一组类：<code>Vector</code>，<code>Stack</code>，<code>Hashtable</code>，<code>BitSet</code>与<code>Enumeration</code>接口。<code>Enumeration</code>接口定义了从一个数据结构得到连续数据的手段，实现了遍历集合，现在已经被迭代器<code>Iterator</code>取代了。<code>JDK1.2</code>版本后，Java开始提供了一组集合框架，完善了Java数据结构。</p>
+<p>Java集合包含了以下常用的数据结构：集合（<code>Set</code>，无序不可重合的集合）、列表（<code>List</code>，有序可重复的集合）、队列（<code>Queue</code>，队列集合，<code>JDK1.5</code>后加入）、栈（<code>Stack</code>）、数组、映射表（<code>Map</code>，具有映射关系的集合）等。Java集合类库构成了集合类的框架，包含了大量的接口，抽象类，框架图如下所示：<br><img src="http://p9u9uaqvy.bkt.clouddn.com/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B61.png" alt="Java集合框架">  </p>
+<p>从上图可以发现，Java集合主要由三个接口派生出来，分别是<code>Iterator</code>，<code>Collection</code>，<code>Map</code>，而<code>Collection</code>又派生出<code>List</code>，<code>Set</code>，<code>Queue</code>等，可以说是Java集合的根接口了。</p>
+        
+          <a class="article-more-a" href="/2018/09/24/Java集合系列01之概览/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/24/Java集合系列01之概览/">展开全文 >></a>
+        </p>
+      
+	  
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Android-Activity生命周期，启动模式，启动过程详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     	  
@@ -748,266 +1002,6 @@
 
 
   
-    <article id="post-Java关键字static-final-this总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    	  
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/05/Java关键字static-final-this总结/">Java关键字static final this总结</a>
-    </h1>
-  
-
-		
-		
-	  
-        
-        <a href="/2018/07/05/Java关键字static-final-this总结/" class="archive-article-date">
-  	<time datetime="2018-07-05T13:18:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、final-终态"><a href="#一、final-终态" class="headerlink" title="一、final(终态)"></a>一、final(终态)</h2><p>final有“无法改变”的含义，它可以修饰非抽象类、非抽象类成员方法和变量。</p>
-<ul>
-<li>final成员变量表示常量，只能被赋值一次，赋值后值不再改变。</li>
-<li>final方法不能被子类的方法覆盖，但可以被继承。</li>
-<li>final类不能被继承，没有子类，final类中的方法默认是final的。<br>注意：父类的private成员方法是不能被子类方法覆盖的，因此private类型的方法默认是final类型的。</li>
-</ul>
-        
-          <a class="article-more-a" href="/2018/07/05/Java关键字static-final-this总结/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/05/Java关键字static-final-this总结/">展开全文 >></a>
-        </p>
-      
-	  
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Android屏幕适配（一），相关概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    	  
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/28/Android屏幕适配（一），相关概念/">Android屏幕适配(一)，相关概念</a>
-    </h1>
-  
-
-		
-		
-	  
-        
-        <a href="/2018/06/28/Android屏幕适配（一），相关概念/" class="archive-article-date">
-  	<time datetime="2018-06-28T12:33:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。</p>
-<h2 id="术语和概念"><a href="#术语和概念" class="headerlink" title="术语和概念"></a>术语和概念</h2><ul>
-<li>什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ </li>
-<li>什么是dp、dip、sp？他们之间的关系是什么？ </li>
-<li>什么是mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi？如何计算和区分？</li>
-</ul>
-        
-          <a class="article-more-a" href="/2018/06/28/Android屏幕适配（一），相关概念/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/28/Android屏幕适配（一），相关概念/">展开全文 >></a>
-        </p>
-      
-	  
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-《这个世界会好吗》" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    	  
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/09/《这个世界会好吗》/">《这个世界会好吗》</a>
-    </h1>
-  
-
-		
-		
-	  
-        
-        <a href="/2018/06/09/《这个世界会好吗》/" class="archive-article-date">
-  	<time datetime="2018-06-09T15:55:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <iframe 
-    frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=31381877&auto=0&height=66">
-</iframe>  
-
-<h2 id="梁济"><a href="#梁济" class="headerlink" title="梁济"></a>梁济</h2><p>1918年，年近60的前清民政部员外郎、学者梁济问儿子梁漱溟：“这个世界会好吗？”。时任北京大学哲学系讲师的梁漱溟回答说：“我相信世界是一天一天往好里去的”。三天后，梁济在北京积水潭投湖自尽了，他认为：“中国每个朝代灭亡都有人或许多人为之殉，清亡无一人殉，这在历史上是可耻的，既然如此，我来做这件事。”  </p>
-<p><img src="http://p9u9uaqvy.bkt.clouddn.com/梁漱溟.jpg" alt="梁漱溟晚年（图片来自网络，侵删）">  </p>
-        
-          <a class="article-more-a" href="/2018/06/09/《这个世界会好吗》/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">李志</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随想</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/09/《这个世界会好吗》/">展开全文 >></a>
-        </p>
-      
-	  
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1138,11 +1132,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">李志</a>
+                <a href="javascript:void(0)" class="js-tag color3">随想</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随想</a>
+                <a href="javascript:void(0)" class="js-tag color3">李志</a>
               </li>
             
             <div class="clearfix"></div>

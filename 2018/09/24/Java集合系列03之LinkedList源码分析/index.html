@@ -6,14 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://hengtao24.github.io">
-  <title>Archives | hengtao</title>
+  <title>Java集合系列03之LinkedList源码分析 | hengtao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="hengtao">
-<meta property="og:url" content="https://hengtao24.github.io/archives/index.html">
+  <meta name="description" content="前言本文开始分析LinkedList。ArrayList和LinkedList都实现了List接口，但内部数据结构有所区别，LinkedList内部是基于链表实现的，所以其插入和删除操作效率较高，但是随机访问效率就相对较低。其定义如下：
+123public class LinkedList&amp;lt;E&amp;gt;    extends AbstractSequentialList&amp;lt;E&amp;gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java集合系列03之LinkedList源码分析">
+<meta property="og:url" content="https://hengtao24.github.io/2018/09/24/Java集合系列03之LinkedList源码分析/index.html">
 <meta property="og:site_name" content="hengtao">
+<meta property="og:description" content="前言本文开始分析LinkedList。ArrayList和LinkedList都实现了List接口，但内部数据结构有所区别，LinkedList内部是基于链表实现的，所以其插入和删除操作效率较高，但是随机访问效率就相对较低。其定义如下：
+123public class LinkedList&amp;lt;E&amp;gt;    extends AbstractSequentialList&amp;lt;E&amp;gt;">
+<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/LinkedList%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
+<meta property="og:updated_time" content="2018-09-24T11:22:35.049Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hengtao">
+<meta name="twitter:title" content="Java集合系列03之LinkedList源码分析">
+<meta name="twitter:description" content="前言本文开始分析LinkedList。ArrayList和LinkedList都实现了List接口，但内部数据结构有所区别，LinkedList内部是基于链表实现的，所以其插入和删除操作效率较高，但是随机访问效率就相对较低。其定义如下：
+123public class LinkedList&amp;lt;E&amp;gt;    extends AbstractSequentialList&amp;lt;E&amp;gt;">
+<meta name="twitter:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/LinkedList%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -161,36 +170,145 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Java集合系列03之LinkedList源码分析" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Java集合系列03之LinkedList源码分析
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/24/Java集合系列03之LinkedList源码分析/" class="archive-article-date">
+
+		
+		
+		<div class="bookicon"></div>
+		<div class="article-hit">
+			<span id="busuanzi_container_page_pv">
+			阅读 <span id="busuanzi_value_page_pv"></span>次</span>
+		</div>
+		
+	  
+        
+        <a href="/2018/09/24/Java集合系列03之LinkedList源码分析/" class="archive-article-date">
   	<time datetime="2018-09-24T11:12:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-24</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/24/Java集合系列03之LinkedList源码分析/">Java集合系列03之LinkedList源码分析</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文开始分析<code>LinkedList</code>。<code>ArrayList</code>和<code>LinkedList</code>都实现了List接口，但内部数据结构有所区别，<code>LinkedList</code>内部是基于链表实现的，所以其插入和删除操作效率较高，但是随机访问效率就相对较低。其定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedList</span>&lt;<span class="title">E</span>&gt;</span></div><div class="line">    <span class="keyword">extends</span> <span class="title">AbstractSequentialList</span>&lt;<span class="title">E</span>&gt;</div><div class="line">    <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">Deque</span>&lt;<span class="title">E</span>&gt;, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></div></pre></td></tr></table></figure>
+<p>可以看到<code>LinkedList</code>继承<code>AbstractSequentialList</code>，实现了<code>List</code>，<code>Deque</code>，<code>Cloneable</code>，<code>java.io.Serializable</code>四个接口。</p>
+<p><code>AbstractSequenceList</code>实现了大部分<code>List</code>接口的方法，<code>Deque</code>接口定义了双端队列的操作。</p>
+<blockquote>
+<p>本文源码分析基于jdk 1.8.0_121</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h1><h2 id="LinkedList继承关系"><a href="#LinkedList继承关系" class="headerlink" title="LinkedList继承关系"></a>LinkedList继承关系</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">java.lang.Object</div><div class="line">  |___ java.util.AbstractCollection&lt;E&gt;</div><div class="line">      |___ java.util.AbstractList&lt;E&gt;</div><div class="line">          |___ java.util.AbstractSequentialList&lt;E&gt;</div><div class="line">              |___ java.util.LinkedList&lt;E&gt;</div><div class="line"></div><div class="line">所有已实现的接口：</div><div class="line">Serializable, Cloneable, Iterable&lt;E&gt;, Collection&lt;E&gt;, Deque&lt;E&gt;, List&lt;E&gt;, Queue&lt;E&gt;</div></pre></td></tr></table></figure>
+<h2 id="关系图"><a href="#关系图" class="headerlink" title="关系图"></a>关系图</h2><p><img src="http://p9u9uaqvy.bkt.clouddn.com/Java/LinkedList%E5%85%B3%E7%B3%BB%E5%9B%BE.png" alt="LinkedList关系图"><br><code>LinkedList</code>的本质是双向链表，<code>LinkedList</code>中<code>first,last,size</code>等成员比较重要，<code>first</code>是链表的头指针，<code>last</code>是尾指针，<code>size</code>是双向链表中节点的个数，链表的节点对应<code>Node</code>类数据结构如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">    E item;        <span class="comment">// 节点值</span></div><div class="line">    Node&lt;E&gt; next;  <span class="comment">// 指向下一个节点</span></div><div class="line">    Node&lt;E&gt; prev;  <span class="comment">// 指向上一个节点</span></div><div class="line"></div><div class="line">    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</div><div class="line">        <span class="keyword">this</span>.item = element;</div><div class="line">        <span class="keyword">this</span>.next = next;</div><div class="line">        <span class="keyword">this</span>.prev = prev;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="AbstractSequenceList"><a href="#AbstractSequenceList" class="headerlink" title="AbstractSequenceList"></a>AbstractSequenceList</h1><p><code>AbstractSequentialList</code> 继承自 <code>AbstractList</code>，是 <code>LinkedList</code> 的父类，提供了List接口大部分实现。<br><code>AbstractSequentialList</code> 实现了“随机访问”方法<code>get(int index)、set(int index, E element)、add(int index, E element)、remove(int index)</code>。<br>要实现一个列表，我们只需要扩展此类，并提供 <code>listIterator</code> 和 <code>size</code> 方法的实现即可。对于不可修改的列表，我们只需要实现列表迭代器的 <code>hasNext、next、hasPrevious、previous、index</code> 方法即可。</p>
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">boolean</span>             <span class="title">add</span><span class="params">(E e)</span></span></div><div class="line"><span class="keyword">void</span>                <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E element)</span></div><div class="line"><span class="keyword">boolean</span>             <span class="title">addAll</span><span class="params">(Collection&lt;? extends E&gt; c)</span></div><div class="line"><span class="keyword">boolean</span>             <span class="title">addAll</span><span class="params">(<span class="keyword">int</span> index, Collection&lt;? extends E&gt; c)</span></div><div class="line"><span class="keyword">void</span>                <span class="title">addFirst</span><span class="params">(E e)</span></div><div class="line"><span class="keyword">void</span>                <span class="title">addLast</span><span class="params">(E e)</span></div><div class="line"><span class="keyword">void</span>                <span class="title">clear</span><span class="params">()</span></div><div class="line">Object              <span class="title">clone</span><span class="params">()</span></div><div class="line"><span class="keyword">boolean</span>             <span class="title">contains</span><span class="params">(Object o)</span></div><div class="line">Iterator&lt;E&gt;         <span class="title">descendingIterator</span><span class="params">()</span></div><div class="line">E                   <span class="title">element</span><span class="params">()</span></div><div class="line">E                   <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span></div><div class="line">E                   <span class="title">getFirst</span><span class="params">()</span></div><div class="line">E                   <span class="title">getLast</span><span class="params">()</span></div><div class="line"><span class="keyword">int</span>                 <span class="title">indexOf</span><span class="params">(Object o)</span></div><div class="line"><span class="keyword">int</span>                 <span class="title">lastIndexOf</span><span class="params">(Object o)</span></div><div class="line">ListIterator&lt;E&gt;     <span class="title">listIterator</span><span class="params">(<span class="keyword">int</span> index)</span></div><div class="line"><span class="keyword">boolean</span>             <span class="title">offer</span><span class="params">(E e)</span></div><div class="line"><span class="keyword">boolean</span>             <span class="title">offerFirst</span><span class="params">(E e)</span></div><div class="line"><span class="keyword">boolean</span>             <span class="title">offerLast</span><span class="params">(E e)</span></div><div class="line">E                   <span class="title">peek</span><span class="params">()</span></div><div class="line">E                   <span class="title">peekFirst</span><span class="params">()</span></div><div class="line">E                   <span class="title">peekLast</span><span class="params">()</span></div><div class="line">E                   <span class="title">poll</span><span class="params">()</span></div><div class="line">E                   <span class="title">pollFirst</span><span class="params">()</span></div><div class="line">E                   <span class="title">pollLast</span><span class="params">()</span></div><div class="line">E                   <span class="title">pop</span><span class="params">()</span></div><div class="line"><span class="keyword">void</span>                <span class="title">push</span><span class="params">(E e)</span></div><div class="line">E                   <span class="title">remove</span><span class="params">()</span></div><div class="line">E                   <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span></div><div class="line"><span class="keyword">boolean</span>             <span class="title">remove</span><span class="params">(Object o)</span></div><div class="line">E                   <span class="title">removeFirst</span><span class="params">()</span></div><div class="line"><span class="keyword">boolean</span>             <span class="title">removeFirstOccurrence</span><span class="params">(Object o)</span></div><div class="line">E                   <span class="title">removeLast</span><span class="params">()</span></div><div class="line"><span class="keyword">boolean</span>             <span class="title">removeLastOccurrence</span><span class="params">(Object o)</span></div><div class="line">E                   <span class="title">set</span><span class="params">(<span class="keyword">int</span> index, E element)</span></div><div class="line"><span class="keyword">int</span>                 <span class="title">size</span><span class="params">()</span></div><div class="line">&lt;T&gt; T[]             <span class="title">toArray</span><span class="params">(T[] a)</span></div><div class="line">Object[]            <span class="title">toArray</span><span class="params">()</span></div></pre></td></tr></table></figure>
+<h1 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h1><p>首先我们知道<code>LinkedList</code>是一个双向链表，但是同时也实现了List接口，因此也可以根据索引值（<code>index</code>）来获取，更改，删除节点等。那么是如何把链表和索引值联系的呢？<code>LinkedList</code>是通过一个计数索引值来实现的，当我们调用<code>get(int index)</code>时，我们会把<code>index</code>和链表长度的1/2比较，如果<code>index</code>值小·，则从链表头向后遍历；反之；如果<code>index</code>值大，则从链表尾遍历。其余方法原理类似。</p>
+<h2 id="成员对象"><a href="#成员对象" class="headerlink" title="成员对象"></a>成员对象</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;   <span class="comment">// 节点个数</span></div><div class="line"> </div><div class="line"><span class="keyword">transient</span> Node&lt;E&gt; first;  <span class="comment">// 表头</span></div><div class="line"></div><div class="line"><span class="keyword">transient</span> Node&lt;E&gt; last;   <span class="comment">// 表尾</span></div></pre></td></tr></table></figure>
+<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 默认构造函数</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">LinkedList</span><span class="params">()</span> </span>&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 创建包含集合c的LinkedList</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">LinkedList</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>();</div><div class="line">    addAll(c);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="增加元素"><a href="#增加元素" class="headerlink" title="增加元素"></a>增加元素</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 添加元素，添加到last节点后</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">    linkLast(e);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 新建一个节点newNode，让其prev属性为当前last节点，last属性为null</span></div><div class="line"><span class="comment">// 如果当前last节点为null，则令first节点为newNode</span></div><div class="line"><span class="comment">// 如果当前last节点不为null，则让其next属性为newNode</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">linkLast</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; l = last;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; newNode = <span class="keyword">new</span> Node&lt;&gt;(l, e, <span class="keyword">null</span>);</div><div class="line">    last = newNode;</div><div class="line">    <span class="keyword">if</span> (l == <span class="keyword">null</span>)</div><div class="line">        first = newNode;</div><div class="line">    <span class="keyword">else</span></div><div class="line">        l.next = newNode;</div><div class="line">    size++;</div><div class="line">    modCount++;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 先检查index，如果index值正好为size，那么添加到last节点后</span></div><div class="line"><span class="comment">// 否则，添加到index位置处，node(index)获取当前index处节点</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E element)</span> </span>&#123;</div><div class="line">    checkPositionIndex(index);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (index == size)</div><div class="line">        linkLast(element);</div><div class="line">    <span class="keyword">else</span></div><div class="line">        linkBefore(element, node(index));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 先获取当前index处节点的前一个节点pred</span></div><div class="line"><span class="comment">// 再新建节点newNode，如果pred节点为null，则令first为newNode</span></div><div class="line"><span class="comment">// 否则pred的next节点为newNode，同时改变size和修改计数值</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">linkBefore</span><span class="params">(E e, Node&lt;E&gt; succ)</span> </span>&#123;</div><div class="line">    <span class="comment">// assert succ != null;</span></div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; pred = succ.prev;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; newNode = <span class="keyword">new</span> Node&lt;&gt;(pred, e, succ);</div><div class="line">    succ.prev = newNode;</div><div class="line">    <span class="keyword">if</span> (pred == <span class="keyword">null</span>)</div><div class="line">        first = newNode;</div><div class="line">    <span class="keyword">else</span></div><div class="line">        pred.next = newNode;</div><div class="line">    size++;</div><div class="line">    modCount++;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 添加集合c到LinkedList中</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> addAll(size, c);</div><div class="line">&#125;</div><div class="line">  </div><div class="line"><span class="comment">// 在index处添加所有集合c中所有节点</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(<span class="keyword">int</span> index, Collection&lt;? extends E&gt; c)</span> </span>&#123;</div><div class="line">    checkPositionIndex(index);</div><div class="line"></div><div class="line">    Object[] a = c.toArray();</div><div class="line">    <span class="keyword">int</span> numNew = a.length;</div><div class="line">    <span class="keyword">if</span> (numNew == <span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    Node&lt;E&gt; pred, succ;</div><div class="line">    <span class="keyword">if</span> (index == size) &#123;</div><div class="line">        succ = <span class="keyword">null</span>;</div><div class="line">        pred = last;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        succ = node(index);</div><div class="line">        pred = succ.prev;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (Object o : a) &#123;</div><div class="line">        <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>) E e = (E) o;</div><div class="line">        Node&lt;E&gt; newNode = <span class="keyword">new</span> Node&lt;&gt;(pred, e, <span class="keyword">null</span>);</div><div class="line">        <span class="keyword">if</span> (pred == <span class="keyword">null</span>)</div><div class="line">            first = newNode;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            pred.next = newNode;</div><div class="line">        pred = newNode;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (succ == <span class="keyword">null</span>) &#123;</div><div class="line">        last = pred;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        pred.next = succ;</div><div class="line">        succ.prev = pred;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    size += numNew;</div><div class="line">    modCount++;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;    </div><div class="line"></div><div class="line"><span class="comment">// 添加元素到头节点位置</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFirst</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">    linkFirst(e);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 把元素e设置为第一个节点</span></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">linkFirst</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; f = first;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; newNode = <span class="keyword">new</span> Node&lt;&gt;(<span class="keyword">null</span>, e, f);</div><div class="line">    first = newNode;</div><div class="line">    <span class="keyword">if</span> (f == <span class="keyword">null</span>)</div><div class="line">        last = newNode;</div><div class="line">    <span class="keyword">else</span></div><div class="line">        f.prev = newNode;</div><div class="line">    size++;</div><div class="line">    modCount++;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 添加元素到尾节点位置</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addLast</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">    linkLast(e);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="设置元素"><a href="#设置元素" class="headerlink" title="设置元素"></a>设置元素</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">set</span><span class="params">(<span class="keyword">int</span> index, E element)</span> </span>&#123;</div><div class="line">    checkElementIndex(index);</div><div class="line">    Node&lt;E&gt; x = node(index);</div><div class="line">    E oldVal = x.item;</div><div class="line">    x.item = element;</div><div class="line">    <span class="keyword">return</span> oldVal;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="获取元素"><a href="#获取元素" class="headerlink" title="获取元素"></a>获取元素</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 返回index处节点值</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    checkElementIndex(index);</div><div class="line">    <span class="keyword">return</span> node(index).item;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 返回头节点值</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">getFirst</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; f = first;</div><div class="line">    <span class="keyword">if</span> (f == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</div><div class="line">    <span class="keyword">return</span> f.item;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 返回尾节点值</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">getLast</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; l = last;</div><div class="line">    <span class="keyword">if</span> (l == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</div><div class="line">    <span class="keyword">return</span> l.item;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 从LinkedList中删除对象o</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object o)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (o == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="keyword">null</span>; x = x.next) &#123;</div><div class="line">            <span class="keyword">if</span> (x.item == <span class="keyword">null</span>) &#123;</div><div class="line">                unlink(x);</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="keyword">null</span>; x = x.next) &#123;</div><div class="line">            <span class="keyword">if</span> (o.equals(x.item)) &#123;</div><div class="line">                unlink(x);</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 删除index处节点</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    checkElementIndex(index);</div><div class="line">    <span class="keyword">return</span> unlink(node(index));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 删除第一个元素</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> removeFirst();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 删除第一个元素</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">removeFirst</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; f = first;</div><div class="line">    <span class="keyword">if</span> (f == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</div><div class="line">    <span class="keyword">return</span> unlinkFirst(f);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 删除最后一个元素</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">removeLast</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; l = last;</div><div class="line">    <span class="keyword">if</span> (l == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</div><div class="line">    <span class="keyword">return</span> unlinkLast(l);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="toArray"><a href="#toArray" class="headerlink" title="toArray"></a>toArray</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 返回LinkedList的Object[]数组</span></div><div class="line"><span class="keyword">public</span> Object[] toArray() &#123;</div><div class="line">    Object[] result = <span class="keyword">new</span> Object[size];</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="keyword">null</span>; x = x.next)</div><div class="line">        result[i++] = x.item;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 返回T类型的数组</span></div><div class="line"><span class="keyword">public</span> &lt;T&gt; T[] toArray(T[] a) &#123;</div><div class="line">    <span class="comment">// 若数组a的大小小于LinkedList的元素个数</span></div><div class="line">    <span class="comment">// 则新建一个T[]数组，T[]的大小为LinkedList大小，并将该T[]赋值给a。</span></div><div class="line">    <span class="keyword">if</span> (a.length &lt; size)</div><div class="line">        a = (T[])java.lang.reflect.Array.newInstance(</div><div class="line">                            a.getClass().getComponentType(), size);</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    Object[] result = a;</div><div class="line">    <span class="keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="keyword">null</span>; x = x.next)</div><div class="line">        result[i++] = x.item;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (a.length &gt; size)</div><div class="line">        a[size] = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> a;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="克隆函数"><a href="#克隆函数" class="headerlink" title="克隆函数"></a>克隆函数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 克隆函数</span></div><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</div><div class="line">    LinkedList&lt;E&gt; clone = superClone();</div><div class="line">    </div><div class="line">    <span class="comment">// 重新初始化</span></div><div class="line">    clone.first = clone.last = <span class="keyword">null</span>;</div><div class="line">    clone.size = <span class="number">0</span>;</div><div class="line">    clone.modCount = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 添加所有节点数值</span></div><div class="line">    <span class="keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="keyword">null</span>; x = x.next)</div><div class="line">        clone.add(x.item);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> clone;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 调用父clone函数</span></div><div class="line"><span class="function"><span class="keyword">private</span> LinkedList&lt;E&gt; <span class="title">superClone</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="keyword">return</span> (LinkedList&lt;E&gt;) <span class="keyword">super</span>.clone();</div><div class="line">    &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(e);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="其余函数"><a href="#其余函数" class="headerlink" title="其余函数"></a>其余函数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 将e添加到链表末尾</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">offer</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> add(e);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 将e添加到链表头节点处</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">offerFirst</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">    addFirst(e);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 将e添加到链表末尾</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">offerLast</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">    addLast(e);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 返回头节点，头节点为null则返回null</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">peekFirst</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; f = first;</div><div class="line">    <span class="keyword">return</span> (f == <span class="keyword">null</span>) ? <span class="keyword">null</span> : f.item;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"><span class="comment">// 返回尾节点，尾节点为null则返回null</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">peekLast</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; l = last;</div><div class="line">    <span class="keyword">return</span> (l == <span class="keyword">null</span>) ? <span class="keyword">null</span> : l.item;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 返回头节点并删除</span></div><div class="line"><span class="comment">// 头节点为null则返回null</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">pollFirst</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; f = first;</div><div class="line">    <span class="keyword">return</span> (f == <span class="keyword">null</span>) ? <span class="keyword">null</span> : unlinkFirst(f);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 返回尾节点并删除</span></div><div class="line"><span class="comment">// 尾节点为null则返回null</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">pollLast</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Node&lt;E&gt; l = last;</div><div class="line">    <span class="keyword">return</span> (l == <span class="keyword">null</span>) ? <span class="keyword">null</span> : unlinkLast(l);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 将e插入到双向链表头节点</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(E e)</span> </span>&#123;</div><div class="line">    addFirst(e);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 删除并返回第一个节点</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">pop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> removeFirst();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li><code>LinkedList</code>是通过双向链表实现的，内部有节点的数据结构</li>
+<li><code>LinkedList</code>实现了<code>Deque</code>，而<code>Deque</code>接口定义了在队列两端访问元素的方法，有增加，删除，获取第一个元素等方法。</li>
+<li><code>LinkedList</code>可以作为<code>FIFO</code>先进先出的队列，下列方法等效</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>队列方法</th>
+<th>等效方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add(e)</td>
+<td>addLast(e)</td>
+</tr>
+<tr>
+<td>offer(e)</td>
+<td>offerLast(e)</td>
+</tr>
+<tr>
+<td>remove()</td>
+<td>removeFirst()</td>
+</tr>
+<tr>
+<td>poll()</td>
+<td>pollFirst()</td>
+</tr>
+<tr>
+<td>element()</td>
+<td>getFirst()</td>
+</tr>
+<tr>
+<td>peek()</td>
+<td>peekFirst()</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><code>LinkedList</code>可以作为<code>LIFO</code>后进先出的栈，下列方法等效</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>栈方法</th>
+<th>等效方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>push(e)</td>
+<td>addFirst(e)</td>
+</tr>
+<tr>
+<td>pop()</td>
+<td>removeFirst()</td>
+</tr>
+<tr>
+<td>peek()</td>
+<td>peekFirst()</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="遍历方式"><a href="#遍历方式" class="headerlink" title="遍历方式"></a>遍历方式</h1><h2 id="迭代器遍历"><a href="#迭代器遍历" class="headerlink" title="迭代器遍历"></a>迭代器遍历</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Iterator iter = list.iterator();</div><div class="line"><span class="keyword">while</span>(iter.hasNext()) &#123;</div><div class="line">    iter.next();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="随机访问"><a href="#随机访问" class="headerlink" title="随机访问"></a>随机访问</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;list.size(); i++) &#123;</div><div class="line">    list.get(i);        </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="foreach循环"><a href="#foreach循环" class="headerlink" title="foreach循环"></a>foreach循环</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (Integer integ:list) &#123;</div><div class="line">    ;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="pollFirst"><a href="#pollFirst" class="headerlink" title="pollFirst"></a>pollFirst</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span>(list.pollFirst() != <span class="keyword">null</span>)</div><div class="line">    ;</div></pre></td></tr></table></figure>
+<h2 id="pollLast"><a href="#pollLast" class="headerlink" title="pollLast"></a>pollLast</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span>(list.pollLast() != <span class="keyword">null</span>)</div><div class="line">    ;</div></pre></td></tr></table></figure>
+<h2 id="removeFirst"><a href="#removeFirst" class="headerlink" title="removeFirst"></a>removeFirst</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">try &#123;</div><div class="line">    while(list.removeFirst() != null)</div><div class="line">        ;</div><div class="line">&#125; catch (NoSuchElementException e) &#123;</div><div class="line">    ...</div><div class="line">&#125;</div><div class="line">##</div></pre></td></tr></table></figure>
+<h2 id="removeLast"><a href="#removeLast" class="headerlink" title="removeLast"></a>removeLast</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">while</span>(list.removeLast() != <span class="keyword">null</span>)</div><div class="line">        ;</div><div class="line">&#125; <span class="keyword">catch</span> (NoSuchElementException e) &#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过随机访问的方式遍历<code>LinkedList</code>时，效率很低，因此需要尽量避免这种方式。</p>
+<h1 id="参考内容"><a href="#参考内容" class="headerlink" title="参考内容"></a>参考内容</h1><ul>
+<li><a href="http://www.cnblogs.com/skywang12345/p/3308807.html" target="_blank" rel="external">Java 集合系列05之 LinkedList详细介绍(源码解析)和使用示例</a></li>
+<li><a href="http://wiki.jikexueyuan.com/project/java-collection/linkedlist.html" target="_blank" rel="external">LinkedList 的实现原理</a></li>
+</ul>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -202,364 +320,134 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+	  
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+	  <img src="//img.fanhaobai.com/qrcode.php?url=https://hengtao24.github.io/2018/09/24/Java集合系列03之LinkedList源码分析/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/24/Java集合系列02之ArrayList源码分析/" class="archive-article-date">
-  	<time datetime="2018-09-24T11:11:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-24</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/24/Java集合系列02之ArrayList源码分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java集合系列02之ArrayList源码分析</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/24/Java集合系列02之ArrayList源码分析/">Java集合系列02之ArrayList源码分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#继承关系"><span class="toc-number">2.</span> <span class="toc-text">继承关系</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#LinkedList继承关系"><span class="toc-number">2.1.</span> <span class="toc-text">LinkedList继承关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关系图"><span class="toc-number">2.2.</span> <span class="toc-text">关系图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AbstractSequenceList"><span class="toc-number">3.</span> <span class="toc-text">AbstractSequenceList</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#API"><span class="toc-number">4.</span> <span class="toc-text">API</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#源码分析"><span class="toc-number">5.</span> <span class="toc-text">源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#成员对象"><span class="toc-number">5.1.</span> <span class="toc-text">成员对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造函数"><span class="toc-number">5.2.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#增加元素"><span class="toc-number">5.3.</span> <span class="toc-text">增加元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置元素"><span class="toc-number">5.4.</span> <span class="toc-text">设置元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取元素"><span class="toc-number">5.5.</span> <span class="toc-text">获取元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除元素"><span class="toc-number">5.6.</span> <span class="toc-text">删除元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#toArray"><span class="toc-number">5.7.</span> <span class="toc-text">toArray</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#克隆函数"><span class="toc-number">5.8.</span> <span class="toc-text">克隆函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其余函数"><span class="toc-number">5.9.</span> <span class="toc-text">其余函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">5.10.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#遍历方式"><span class="toc-number">6.</span> <span class="toc-text">遍历方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#迭代器遍历"><span class="toc-number">6.1.</span> <span class="toc-text">迭代器遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#随机访问"><span class="toc-number">6.2.</span> <span class="toc-text">随机访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#foreach循环"><span class="toc-number">6.3.</span> <span class="toc-text">foreach循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pollFirst"><span class="toc-number">6.4.</span> <span class="toc-text">pollFirst</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pollLast"><span class="toc-number">6.5.</span> <span class="toc-text">pollLast</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#removeFirst"><span class="toc-number">6.6.</span> <span class="toc-text">removeFirst</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#removeLast"><span class="toc-number">6.7.</span> <span class="toc-text">removeLast</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考内容"><span class="toc-number">7.</span> <span class="toc-text">参考内容</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/24/Java集合系列01之概览/" class="archive-article-date">
-  	<time datetime="2018-09-24T11:09:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-24</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/24/Java集合系列01之概览/">Java集合系列01之概览</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/02/Android-Activity生命周期，启动模式，启动过程详解/" class="archive-article-date">
-  	<time datetime="2018-09-02T12:15:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/02/Android-Activity生命周期，启动模式，启动过程详解/">Android Activity生命周期，启动模式，启动过程详解</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/31/Java泛型详解/" class="archive-article-date">
-  	<time datetime="2018-07-31T14:41:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/31/Java泛型详解/">Java泛型详解</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/23/Android消息机制Handler/" class="archive-article-date">
-  	<time datetime="2018-07-23T14:25:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/23/Android消息机制Handler/">Android消息机制Handler</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/18/Java数据类型/" class="archive-article-date">
-  	<time datetime="2018-07-18T13:42:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/18/Java数据类型/">Java数据类型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/13/Java-内部类-匿名类-匿名内部类-静态内部类/" class="archive-article-date">
-  	<time datetime="2018-07-13T04:52:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/13/Java-内部类-匿名类-匿名内部类-静态内部类/">Java 内部类 匿名类 匿名内部类 静态内部类</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/12/Android屏幕适配（二），适配方案/" class="archive-article-date">
-  	<time datetime="2018-07-12T04:53:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/12/Android屏幕适配（二），适配方案/">Android屏幕适配(二),适配方案</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/" class="archive-article-date">
-  	<time datetime="2018-07-05T13:28:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/">Java String StringBuffer StingBuilder区别</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "Mon Sep 24 2018 19:12:47 GMT+0800",
+  owner: 'hengtao24',
+  repo: 'hengtao24.github.io',
+  oauth: {
+    client_id: '39d330ed943023c8dee1',
+    client_secret: '1be20048c6f63b3317e3bff537bc09bde8667aff',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -591,8 +479,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
