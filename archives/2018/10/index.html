@@ -6,29 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://hengtao24.github.io">
-  <title>Android屏幕适配(一)，相关概念 | hengtao</title>
+  <title>Archives: 2018/10 | hengtao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。
-术语和概念
-什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ 
-什么是dp、dip、sp？他们之间的关系">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android屏幕适配(一)，相关概念">
-<meta property="og:url" content="https://hengtao24.github.io/2018/06/28/Android屏幕适配（一），相关概念/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="hengtao">
+<meta property="og:url" content="https://hengtao24.github.io/archives/2018/10/index.html">
 <meta property="og:site_name" content="hengtao">
-<meta property="og:description" content="前言由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。
-术语和概念
-什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ 
-什么是dp、dip、sp？他们之间的关系">
-<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/dpi-calculate.png">
-<meta property="og:updated_time" content="2018-07-18T14:02:40.920Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android屏幕适配(一)，相关概念">
-<meta name="twitter:description" content="前言由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。
-术语和概念
-什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ 
-什么是dp、dip、sp？他们之间的关系">
-<meta name="twitter:image" content="http://p9u9uaqvy.bkt.clouddn.com/dpi-calculate.png">
+<meta name="twitter:title" content="hengtao">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -176,247 +161,98 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Android屏幕适配（一），相关概念" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    	  
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Android屏幕适配(一)，相关概念
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/10/10/Java集合系列05之Vector&Stack源码分析及List总结/" class="archive-article-date">
+  	<time datetime="2018-10-10T15:45:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-10</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/10/10/Java集合系列05之Vector&Stack源码分析及List总结/">Java集合系列05之Vector&amp;Stack源码分析及List总结</a>
     </h1>
   
 
-		
-		
-		<div class="bookicon"></div>
-		<div class="article-hit">
-			<span id="busuanzi_container_page_pv">
-			阅读 <span id="busuanzi_value_page_pv"></span>次</span>
-		</div>
-		
-	  
-        
-        <a href="/2018/06/28/Android屏幕适配（一），相关概念/" class="archive-article-date">
-  	<time datetime="2018-06-28T12:33:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。</p>
-<h2 id="术语和概念"><a href="#术语和概念" class="headerlink" title="术语和概念"></a>术语和概念</h2><ul>
-<li>什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ </li>
-<li>什么是dp、dip、sp？他们之间的关系是什么？ </li>
-<li>什么是mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi？如何计算和区分？</li>
-</ul>
-<a id="more"></a>
-<h2 id="屏幕尺寸"><a href="#屏幕尺寸" class="headerlink" title="屏幕尺寸"></a>屏幕尺寸</h2><ul>
-<li>指的是手机屏幕对角线的长度，单位是英寸，换算关系是1英寸=2.54厘米，比如我们常说的小米6的屏幕尺寸是5.15寸</li>
-</ul>
-<h2 id="屏幕分辨率"><a href="#屏幕分辨率" class="headerlink" title="屏幕分辨率"></a>屏幕分辨率</h2><ul>
-<li>指的是屏幕上物理像素的总数，单位px，比如小米6分辨率是1920*1080</li>
-<li>适配时不会直接使用分辨率；而只应关注通用尺寸和密度组指定的屏幕尺寸及密度</li>
-</ul>
-<h2 id="屏幕密度"><a href="#屏幕密度" class="headerlink" title="屏幕密度"></a>屏幕密度</h2><ul>
-<li>屏幕物理区域中的像素量；通常称为dpi（每英寸点数）,对角线每英寸的像素点的个数</li>
-<li>Android将所有屏幕密度分组为六种通用密度ldpi（低）,hdpi（高）,xhdpi（超高）,xxhdpi（超超高）,xxxhdpi（超超超高）</li>
-<li>计算公式如下：<script type="math/tex; mode=display">\frac{\sqrt{(height^2 + width ^2)}}{size}</script>height和width即为长宽的像素，平方和即为对角线的像素个数，size即屏幕尺寸,如下图所示:</li>
-</ul>
-<p><img src="http://p9u9uaqvy.bkt.clouddn.com/dpi-calculate.png" alt="dpi计算示意图"></p>
-<h2 id="密度无关像素-dp-dip"><a href="#密度无关像素-dp-dip" class="headerlink" title="密度无关像素 dp(dip)"></a>密度无关像素 dp(dip)</h2><ul>
-<li>dp也叫dip，是device independent pixels</li>
-<li>在定义UI布局时使用的虚拟像素单位，以密度无关方式表示布局位置</li>
-<li>dp单位转换为屏幕像素：px = dp * (dpi / 160)，例如，在240dpi屏幕上，1dp等于1.5px</li>
-</ul>
-<h2 id="sp"><a href="#sp" class="headerlink" title="sp"></a>sp</h2><ul>
-<li>sp，即scale-independent-pixels，与dp类似，但是可以根据文字大小首选项进行放缩，是设置字体大小的御用单位</li>
-</ul>
-<h2 id="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"><a href="#mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi" class="headerlink" title="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"></a>mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi</h2><ul>
-<li>修饰了drawable文件夹和value文件夹，用来区分不同像素图片和dimen值，不同像素图片需要放在不同文件夹下</li>
-</ul>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">名称</th>
-<th style="text-align:center">dpi范围</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">mdpi</td>
-<td style="text-align:center">120 ~ 160</td>
-</tr>
-<tr>
-<td style="text-align:center">hdpi</td>
-<td style="text-align:center">160 ~ 240</td>
-</tr>
-<tr>
-<td style="text-align:center">xhdpi</td>
-<td style="text-align:center">240 ~ 320</td>
-</tr>
-<tr>
-<td style="text-align:center">xxhdpi</td>
-<td style="text-align:center">320 ~ 480</td>
-</tr>
-<tr>
-<td style="text-align:center">xxxhdpi</td>
-<td style="text-align:center">480 ~ 640</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>在设计图标时：对于五种主流像素密度(mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)应按照(2:3:4:6:8)的比例进行缩放，(1x, 1.5x, 2x, 3x, 4x)<br>例如：尺寸为48x48dp的图标，表示在mdpi的屏幕上其尺寸应为48x48px在hdpi的屏幕上其实际大小是mdpi的1.5倍（72x72px）… 依此类推</p>
-<h1 id="更多内容"><a href="#更多内容" class="headerlink" title="更多内容"></a>更多内容</h1><p><a href="https://hengtao24.github.io/2018/07/12/Android%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%8C%E9%80%82%E9%85%8D%E6%96%B9%E6%A1%88/#more">Android屏幕适配(二),适配方案</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-	  
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-	  <img src="//img.fanhaobai.com/qrcode.php?url=https://hengtao24.github.io/2018/06/28/Android屏幕适配（一），相关概念/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
   
-<nav id="article-nav">
-  
-    <a href="/2018/07/05/Java关键字static-final-this总结/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Java关键字static final this总结
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/06/09/《这个世界会好吗》/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">《这个世界会好吗》</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/10/10/Java集合系列04之fail-fast机制分析/" class="archive-article-date">
+  	<time datetime="2018-10-10T15:45:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-10</time>
+</a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
+    	 
   
-  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/10/10/Java集合系列04之fail-fast机制分析/">Java集合系列04之fail-fast机制分析</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
   
 
-  
-
-  
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
-<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  id: "Thu Jun 28 2018 20:33:56 GMT+0800",
-  owner: 'hengtao24',
-  repo: 'hengtao24.github.io',
-  oauth: {
-    client_id: '39d330ed943023c8dee1',
-    client_secret: '1be20048c6f63b3317e3bff537bc09bde8667aff',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
-  
+    
 
 
           </div>
@@ -447,8 +283,8 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -163,6 +163,172 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java集合系列05之Vector&amp;Stack源码分析及List总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/10/Java集合系列05之Vector&Stack源码分析及List总结/">Java集合系列05之Vector&amp;Stack源码分析及List总结</a>
+    </h1>
+  
+
+		
+		
+	  
+        
+        <a href="/2018/10/10/Java集合系列05之Vector&Stack源码分析及List总结/" class="archive-article-date">
+  	<time datetime="2018-10-10T15:45:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>Vector</code>是矢量队列，<code>JDK1.0</code>版本添加的类，是一个动态数组，与<code>ArrayList</code>不同的是<code>Vector</code>支持多线程访问，是线程安全的，因为内部很多方法都被<code>synchronized</code>关键字修饰了，有同步锁，而且其内部有很多不属于集合框架的方法。其定义如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Vector</span>&lt;<span class="title">E</span>&gt;</div><div class="line">    <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</div><div class="line">    <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></div></pre></td></tr></table></figure></p>
+<p><code>Vector</code>继承了<code>AbstractList</code>，实现了<code>List，RandomAccess, Cloneable， java.io.Serializable</code>四个接口，支持随机访问。</p>
+<p><code>Stack</code>表示先进后出<code>(FILO)</code>的堆栈，是一种常见的数据结构，<code>Stack</code>继承了<code>Vector</code>，由于<code>Vector</code>是通过数组实现的，因此<code>Stack</code>也是通过数组实现的，而非链表。前面介绍<code>LinkedList</code>时，我们也说过可以把<code>LinkedList</code>当作<code>Stack</code>使用。</p>
+<blockquote>
+<p>本文源码分析基于jdk 1.8.0_121</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2018/10/10/Java集合系列05之Vector&Stack源码分析及List总结/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/10/Java集合系列05之Vector&Stack源码分析及List总结/">展开全文 >></a>
+        </p>
+      
+	  
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Java集合系列04之fail-fast机制分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/10/Java集合系列04之fail-fast机制分析/">Java集合系列04之fail-fast机制分析</a>
+    </h1>
+  
+
+		
+		
+	  
+        
+        <a href="/2018/10/10/Java集合系列04之fail-fast机制分析/" class="archive-article-date">
+  	<time datetime="2018-10-10T15:45:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>fail-fast</code>机制是Java集合的一种错误机制，当多个线程对同一集合内容操作时，便可能会出现<code>fail-fast</code>现象。例如：存在两个线程（A、B），A通过<code>Iterator</code>在遍历集合C中的元素过程中，B修改了集合C的内容，程序就可能会抛出 <code>ConcurrentModificationException</code> 异常，出现<code>fail-fast</code>现象。</p>
+<blockquote>
+<p>本文源码分析基于jdk 1.8.0_121</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2018/10/10/Java集合系列04之fail-fast机制分析/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/10/Java集合系列04之fail-fast机制分析/">展开全文 >></a>
+        </p>
+      
+	  
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Java集合系列03之LinkedList源码分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     	  
@@ -360,7 +526,7 @@
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>从本篇开始，我将开始Java集合系列的梳理，本文先对集合框架中涉及到的接口，架构，类等做一个总体展示，后面的文章中再结合源码分别剖析具体集合，希望能用两个月的时间完成Java集合系列文章。</p>
 <p>Java最初版本只为最常用的数据结构提供了很少的一组类：<code>Vector</code>，<code>Stack</code>，<code>Hashtable</code>，<code>BitSet</code>与<code>Enumeration</code>接口。<code>Enumeration</code>接口定义了从一个数据结构得到连续数据的手段，实现了遍历集合，现在已经被迭代器<code>Iterator</code>取代了。<code>JDK1.2</code>版本后，Java开始提供了一组集合框架，完善了Java数据结构。</p>
-<p>Java集合包含了以下常用的数据结构：集合（<code>Set</code>，无序不可重合的集合）、列表（<code>List</code>，有序可重复的集合）、队列（<code>Queue</code>，队列集合，<code>JDK1.5</code>后加入）、栈（<code>Stack</code>）、数组、映射表（<code>Map</code>，具有映射关系的集合）等。Java集合类库构成了集合类的框架，包含了大量的接口，抽象类，框架图如下所示：<br><img src="http://p9u9uaqvy.bkt.clouddn.com/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B61.png" alt="Java集合框架">  </p>
+<p>Java集合包含了以下常用的数据结构：集合（<code>Set</code>，无序不可重合的集合）、列表（<code>List</code>，有序可重复的集合）、队列（<code>Queue</code>，队列集合，<code>JDK1.5</code>后加入）、栈（<code>Stack</code>）、数组、映射表（<code>Map</code>，具有映射关系的集合）等。Java集合类库构成了集合类的框架，包含了大量的接口，抽象类，框架图如下所示：<br><img src="http://p9u9uaqvy.bkt.clouddn.com/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6.png" alt="Java集合框架">  </p>
 <p>从上图可以发现，Java集合主要由三个接口派生出来，分别是<code>Iterator</code>，<code>Collection</code>，<code>Map</code>，而<code>Collection</code>又派生出<code>List</code>，<code>Set</code>，<code>Queue</code>等，可以说是Java集合的根接口了。</p>
         
           <a class="article-more-a" href="/2018/09/24/Java集合系列01之概览/#more">more >></a>
@@ -841,167 +1007,6 @@
 
 
   
-    <article id="post-Android屏幕适配（二），适配方案" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    	  
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/12/Android屏幕适配（二），适配方案/">Android屏幕适配(二),适配方案</a>
-    </h1>
-  
-
-		
-		
-	  
-        
-        <a href="/2018/07/12/Android屏幕适配（二），适配方案/" class="archive-article-date">
-  	<time datetime="2018-07-12T04:53:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>从 Android 1.6（API 4）开始，Android支持多种屏幕尺寸和密度，因此Android屏幕适配需要做到两个方面，尺寸适配和密度适配，确保应用正常渲染，在每个屏幕上提供最佳的用户体验。  </p>
-<p>在前文<a href="https://hengtao24.github.io/2018/06/28/Android%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%8C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">Android屏幕适配（一），相关概念</a>中，主要给出了一些概念的定义，本文具体说明屏幕适配的解决办法。  </p>
-<p><img src="http://p9u9uaqvy.bkt.clouddn.com/Androi屏幕适配问题及解决方案.png" alt="Android屏幕适配问题及解决方案"></p>
-        
-          <a class="article-more-a" href="/2018/07/12/Android屏幕适配（二），适配方案/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/12/Android屏幕适配（二），适配方案/">展开全文 >></a>
-        </p>
-      
-	  
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java-String-StringBuffer-StingBuilder区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    	  
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/">Java String StringBuffer StingBuilder区别</a>
-    </h1>
-  
-
-		
-		
-	  
-        
-        <a href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/" class="archive-article-date">
-  	<time datetime="2018-07-05T13:28:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="String（字符串常量）"><a href="#String（字符串常量）" class="headerlink" title="String（字符串常量）"></a>String（字符串常量）</h2><p>Java将String类对象称为不可变字符串，String类的声明是<code>publc final</code>,String类没有提供用于修改字符串的方法。举例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String greeting = <span class="string">"Hello!"</span>;</div><div class="line">greeting = greeting.substring(<span class="number">0</span>,<span class="number">3</span>)+<span class="string">"p!"</span>;</div></pre></td></tr></table></figure></p>
-<p>以上为修改<code>greeting</code>的方法，只能通过让它引用另一个字符串的方式修改其内容。一旦要求改变字符串的值，就会开辟新的内存空间来保存新字符串，效率较低。<br>不可变字符串有一个优点：编译器让字符串共享。各种字符串放在公共的存储池中，字符串变量指向存储池中的位置。Java设计者认为共享的效率远高于字符串拼接的效率。</p>
-        
-          <a class="article-more-a" href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/">展开全文 >></a>
-        </p>
-      
-	  
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1023,7 +1028,7 @@
       	</div>
     </div>
   </div>
-  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  <script async src="//dn-lbstatics.qbox.info/busuanzi/2.3/busuanzi.pure.mini.js">
   </script>
   <span id="busuanzi_container_site_pv">
   	本站总访问量<span id="busuanzi_value_site_pv"></span>次
@@ -1132,11 +1137,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随想</a>
+                <a href="javascript:void(0)" class="js-tag color3">李志</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">李志</a>
+                <a href="javascript:void(0)" class="js-tag color3">随想</a>
               </li>
             
             <div class="clearfix"></div>

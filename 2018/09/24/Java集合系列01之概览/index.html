@@ -16,17 +16,17 @@ Java最初版本只为最常用的数据结构提供了很少的一组类：Vect
 <meta property="og:site_name" content="hengtao">
 <meta property="og:description" content="前言从本篇开始，我将开始Java集合系列的梳理，本文先对集合框架中涉及到的接口，架构，类等做一个总体展示，后面的文章中再结合源码分别剖析具体集合，希望能用两个月的时间完成Java集合系列文章。
 Java最初版本只为最常用的数据结构提供了很少的一组类：Vector，Stack，Hashtable，BitSet与Enumeration接口。Enumeration接口定义了从一个数据结构得到连续数据的手">
-<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B61.png">
+<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6.png">
 <meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/Collection%E6%96%B9%E6%B3%95%E6%91%98%E8%A6%81.png">
 <meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/Queue%E6%8E%A5%E5%8F%A3%E6%96%B9%E6%B3%95%E6%91%98%E8%A6%81.png">
 <meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/Map%E6%8E%A5%E5%8F%A3%E6%96%B9%E6%B3%95%E6%91%98%E8%A6%81.png">
 <meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/ListIterator%E6%8E%A5%E5%8F%A3%E6%96%B9%E6%B3%95%E6%91%98%E8%A6%81.png">
-<meta property="og:updated_time" content="2018-09-24T12:15:21.911Z">
+<meta property="og:updated_time" content="2018-10-08T15:28:03.871Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java集合系列01之概览">
 <meta name="twitter:description" content="前言从本篇开始，我将开始Java集合系列的梳理，本文先对集合框架中涉及到的接口，架构，类等做一个总体展示，后面的文章中再结合源码分别剖析具体集合，希望能用两个月的时间完成Java集合系列文章。
 Java最初版本只为最常用的数据结构提供了很少的一组类：Vector，Stack，Hashtable，BitSet与Enumeration接口。Enumeration接口定义了从一个数据结构得到连续数据的手">
-<meta name="twitter:image" content="http://p9u9uaqvy.bkt.clouddn.com/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B61.png">
+<meta name="twitter:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6.png">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -205,7 +205,7 @@ Java最初版本只为最常用的数据结构提供了很少的一组类：Vect
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>从本篇开始，我将开始Java集合系列的梳理，本文先对集合框架中涉及到的接口，架构，类等做一个总体展示，后面的文章中再结合源码分别剖析具体集合，希望能用两个月的时间完成Java集合系列文章。</p>
 <p>Java最初版本只为最常用的数据结构提供了很少的一组类：<code>Vector</code>，<code>Stack</code>，<code>Hashtable</code>，<code>BitSet</code>与<code>Enumeration</code>接口。<code>Enumeration</code>接口定义了从一个数据结构得到连续数据的手段，实现了遍历集合，现在已经被迭代器<code>Iterator</code>取代了。<code>JDK1.2</code>版本后，Java开始提供了一组集合框架，完善了Java数据结构。</p>
-<p>Java集合包含了以下常用的数据结构：集合（<code>Set</code>，无序不可重合的集合）、列表（<code>List</code>，有序可重复的集合）、队列（<code>Queue</code>，队列集合，<code>JDK1.5</code>后加入）、栈（<code>Stack</code>）、数组、映射表（<code>Map</code>，具有映射关系的集合）等。Java集合类库构成了集合类的框架，包含了大量的接口，抽象类，框架图如下所示：<br><img src="http://p9u9uaqvy.bkt.clouddn.com/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B61.png" alt="Java集合框架">  </p>
+<p>Java集合包含了以下常用的数据结构：集合（<code>Set</code>，无序不可重合的集合）、列表（<code>List</code>，有序可重复的集合）、队列（<code>Queue</code>，队列集合，<code>JDK1.5</code>后加入）、栈（<code>Stack</code>）、数组、映射表（<code>Map</code>，具有映射关系的集合）等。Java集合类库构成了集合类的框架，包含了大量的接口，抽象类，框架图如下所示：<br><img src="http://p9u9uaqvy.bkt.clouddn.com/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6.png" alt="Java集合框架">  </p>
 <p>从上图可以发现，Java集合主要由三个接口派生出来，分别是<code>Iterator</code>，<code>Collection</code>，<code>Map</code>，而<code>Collection</code>又派生出<code>List</code>，<code>Set</code>，<code>Queue</code>等，可以说是Java集合的根接口了。</p>
 <a id="more"></a>
 <h1 id="迭代器接口（Iterator）"><a href="#迭代器接口（Iterator）" class="headerlink" title="迭代器接口（Iterator）"></a>迭代器接口（Iterator）</h1><p>首先我们来看<code>Iterator</code>接口，主要用来遍历集合对象中的元素，其包含三个方法：</p>
@@ -443,7 +443,7 @@ gitment.render('gitment-ctn')
       	</div>
     </div>
   </div>
-  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  <script async src="//dn-lbstatics.qbox.info/busuanzi/2.3/busuanzi.pure.mini.js">
   </script>
   <span id="busuanzi_container_site_pv">
   	本站总访问量<span id="busuanzi_value_site_pv"></span>次
@@ -552,11 +552,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随想</a>
+                <a href="javascript:void(0)" class="js-tag color3">李志</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">李志</a>
+                <a href="javascript:void(0)" class="js-tag color3">随想</a>
               </li>
             
             <div class="clearfix"></div>

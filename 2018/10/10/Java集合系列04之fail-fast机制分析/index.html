@@ -6,29 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://hengtao24.github.io">
-  <title>Android屏幕适配(一)，相关概念 | hengtao</title>
+  <title>Java集合系列04之fail-fast机制分析 | hengtao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。
-术语和概念
-什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ 
-什么是dp、dip、sp？他们之间的关系">
+  <meta name="description" content="前言fail-fast机制是Java集合的一种错误机制，当多个线程对同一集合内容操作时，便可能会出现fail-fast现象。例如：存在两个线程（A、B），A通过Iterator在遍历集合C中的元素过程中，B修改了集合C的内容，程序就可能会抛出 ConcurrentModificationException 异常，出现fail-fast现象。
+
+本文源码分析基于jdk 1.8.0_121">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android屏幕适配(一)，相关概念">
-<meta property="og:url" content="https://hengtao24.github.io/2018/06/28/Android屏幕适配（一），相关概念/index.html">
+<meta property="og:title" content="Java集合系列04之fail-fast机制分析">
+<meta property="og:url" content="https://hengtao24.github.io/2018/10/10/Java集合系列04之fail-fast机制分析/index.html">
 <meta property="og:site_name" content="hengtao">
-<meta property="og:description" content="前言由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。
-术语和概念
-什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ 
-什么是dp、dip、sp？他们之间的关系">
-<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/dpi-calculate.png">
-<meta property="og:updated_time" content="2018-07-18T14:02:40.920Z">
+<meta property="og:description" content="前言fail-fast机制是Java集合的一种错误机制，当多个线程对同一集合内容操作时，便可能会出现fail-fast现象。例如：存在两个线程（A、B），A通过Iterator在遍历集合C中的元素过程中，B修改了集合C的内容，程序就可能会抛出 ConcurrentModificationException 异常，出现fail-fast现象。
+
+本文源码分析基于jdk 1.8.0_121">
+<meta property="og:updated_time" content="2018-10-10T15:47:30.842Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android屏幕适配(一)，相关概念">
-<meta name="twitter:description" content="前言由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。
-术语和概念
-什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ 
-什么是dp、dip、sp？他们之间的关系">
-<meta name="twitter:image" content="http://p9u9uaqvy.bkt.clouddn.com/dpi-calculate.png">
+<meta name="twitter:title" content="Java集合系列04之fail-fast机制分析">
+<meta name="twitter:description" content="前言fail-fast机制是Java集合的一种错误机制，当多个线程对同一集合内容操作时，便可能会出现fail-fast现象。例如：存在两个线程（A、B），A通过Iterator在遍历集合C中的元素过程中，B修改了集合C的内容，程序就可能会抛出 ConcurrentModificationException 异常，出现fail-fast现象。
+
+本文源码分析基于jdk 1.8.0_121">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -176,14 +171,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Android屏幕适配（一），相关概念" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Java集合系列04之fail-fast机制分析" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     	  
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Android屏幕适配(一)，相关概念
+      Java集合系列04之fail-fast机制分析
     </h1>
   
 
@@ -197,82 +192,51 @@
 		
 	  
         
-        <a href="/2018/06/28/Android屏幕适配（一），相关概念/" class="archive-article-date">
-  	<time datetime="2018-06-28T12:33:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
+        <a href="/2018/10/10/Java集合系列04之fail-fast机制分析/" class="archive-article-date">
+  	<time datetime="2018-10-10T15:45:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于Android系统的开放性，各大手机厂商都会对Android系统进行定制，导致Android系统设备的碎片化，出现各种屏幕尺寸的设备，为了让APP能够比较美观的显示在不同尺寸、分辨率、像素密度的设备上，那就要在开发的过程中对屏幕进行适配。本篇先介绍一些相关概念，下篇介绍具体的适配方法。</p>
-<h2 id="术语和概念"><a href="#术语和概念" class="headerlink" title="术语和概念"></a>术语和概念</h2><ul>
-<li>什么是屏幕尺寸、屏幕分辨率、屏幕像素密度？ </li>
-<li>什么是dp、dip、sp？他们之间的关系是什么？ </li>
-<li>什么是mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi？如何计算和区分？</li>
-</ul>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>fail-fast</code>机制是Java集合的一种错误机制，当多个线程对同一集合内容操作时，便可能会出现<code>fail-fast</code>现象。例如：存在两个线程（A、B），A通过<code>Iterator</code>在遍历集合C中的元素过程中，B修改了集合C的内容，程序就可能会抛出 <code>ConcurrentModificationException</code> 异常，出现<code>fail-fast</code>现象。</p>
+<blockquote>
+<p>本文源码分析基于jdk 1.8.0_121</p>
+</blockquote>
 <a id="more"></a>
-<h2 id="屏幕尺寸"><a href="#屏幕尺寸" class="headerlink" title="屏幕尺寸"></a>屏幕尺寸</h2><ul>
-<li>指的是手机屏幕对角线的长度，单位是英寸，换算关系是1英寸=2.54厘米，比如我们常说的小米6的屏幕尺寸是5.15寸</li>
+<h1 id="实例展示"><a href="#实例展示" class="headerlink" title="实例展示"></a>实例展示</h1><p>下面给出一个实际代码展示，来演示<code>fail-fast</code>现象，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.Iterator;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i= <span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</div><div class="line">            list.add(i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">new</span> ThreadA().start();</div><div class="line">        <span class="keyword">new</span> ThreadB().start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">            Iterator iter = list.iterator();</div><div class="line">            <span class="keyword">int</span> value = <span class="number">0</span>;</div><div class="line">            <span class="keyword">while</span>(iter.hasNext()) &#123;</div><div class="line">                value = (<span class="keyword">int</span>)iter.next();</div><div class="line">                System.out.println(value+<span class="string">", "</span>);</div><div class="line">                <span class="keyword">try</span>&#123;</div><div class="line">                    Thread.sleep(<span class="number">10</span>);</div><div class="line">                &#125;<span class="keyword">catch</span> (InterruptedException e)&#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">5</span>;i&lt;<span class="number">10</span>;i++)&#123;</div><div class="line">                list.add(i);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行以上代码，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0,</div><div class="line">Exception in thread &quot;Thread-0&quot; java.util.ConcurrentModificationException</div><div class="line">	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:901)</div><div class="line">	at java.util.ArrayList$Itr.next(ArrayList.java:851)</div><div class="line">	at Main$ThreadA.run(Main.java:22)</div></pre></td></tr></table></figure>
+<p>需要注意的是，如果我们再加一个子线程C，其代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadC</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</div><div class="line">            list.set(i,i+<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">new</span> ThreadA().start();</div><div class="line"><span class="keyword">new</span> ThreadC().start();</div></pre></td></tr></table></figure>
+<p>当我们同时运行子线程A和子线程C时，程序可以顺利执行，因为子线程没有改变原有<code>list</code>的结构，只是重新给每个索引设置了新的值，运行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">0, </div><div class="line">2, </div><div class="line">3, </div><div class="line">4, </div><div class="line">5,</div></pre></td></tr></table></figure></p>
+<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><p>对于前面的集合<code>ArrayList</code>其不是线程安全的，<code>LinkedList</code>也不是线程安全的，在多线程的环境下，我们可以使用<code>java.util.concurrent</code>包下的类去取代<code>java.util</code>包下的类来避免并发带来的<code>fail-fast</code>现象；对于<code>ArrayList</code>我们可以使用<code>CopyOnWriteArrayList</code>代替即可。</p>
+<h1 id="fail-fast原理"><a href="#fail-fast原理" class="headerlink" title="fail-fast原理"></a>fail-fast原理</h1><p>当操作<code>Iterator</code>时，如果抛出<code>ConcurrentModificationException</code>便出现了<code>fail-fast</code>现象，而<code>ArrayList</code>的<code>iterator</code>方法返回一个<code>Itr</code>对象，<code>Itr</code>类是<code>ArrayList</code>的内部类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">// Itr是迭代器的实现类</div><div class="line">private class Itr implements Iterator&lt;E&gt; &#123;</div><div class="line">    int cursor;       // index of next element to return</div><div class="line">    int lastRet = -1; // index of last element returned; -1 if no such</div><div class="line">    </div><div class="line">    // 修改次数的记录值</div><div class="line">    // 遍历list元素时，会比较expectedModCount和modCount是否相等</div><div class="line">    // 如果不相等，则会抛出异常，出现fail-fast现象</div><div class="line">    int expectedModCount = modCount;</div><div class="line"></div><div class="line">    public boolean hasNext() &#123;</div><div class="line">        return cursor != size;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">    public E next() &#123;</div><div class="line">        // 判断expectedModCount和modCount是否相等</div><div class="line">        checkForComodification();</div><div class="line">        int i = cursor;</div><div class="line">        if (i &gt;= size)</div><div class="line">            throw new NoSuchElementException();</div><div class="line">        Object[] elementData = ArrayList.this.elementData;</div><div class="line">        if (i &gt;= elementData.length)</div><div class="line">            throw new ConcurrentModificationException();</div><div class="line">        cursor = i + 1;</div><div class="line">        return (E) elementData[lastRet = i];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void remove() &#123;</div><div class="line">        if (lastRet &lt; 0)</div><div class="line">            throw new IllegalStateException();</div><div class="line">        checkForComodification();</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            ArrayList.this.remove(lastRet);</div><div class="line">            cursor = lastRet;</div><div class="line">            lastRet = -1;</div><div class="line">            expectedModCount = modCount;</div><div class="line">        &#125; catch (IndexOutOfBoundsException ex) &#123;</div><div class="line">            throw new ConcurrentModificationException();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    @SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">    public void forEachRemaining(Consumer&lt;? super E&gt; consumer) &#123;</div><div class="line">        Objects.requireNonNull(consumer);</div><div class="line">        final int size = ArrayList.this.size;</div><div class="line">        int i = cursor;</div><div class="line">        if (i &gt;= size) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        final Object[] elementData = ArrayList.this.elementData;</div><div class="line">        if (i &gt;= elementData.length) &#123;</div><div class="line">            throw new ConcurrentModificationException();</div><div class="line">        &#125;</div><div class="line">        while (i != size &amp;&amp; modCount == expectedModCount) &#123;</div><div class="line">            consumer.accept((E) elementData[i++]);</div><div class="line">        &#125;</div><div class="line">        // update once at end of iteration to reduce heap write traffic</div><div class="line">        cursor = i;</div><div class="line">        lastRet = i - 1;</div><div class="line">        checkForComodification();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 不相等，抛出异常</div><div class="line">    final void checkForComodification() &#123;</div><div class="line">        if (modCount != expectedModCount)</div><div class="line">            throw new ConcurrentModificationException();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>modCount</code>是<code>AbstractList</code>中的一个成员变量，而<code>ArrayList</code>继承自<code>AbstractList</code>，<code>ArrayList</code>的以下方法会修改<code>modCount</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">trimToSize</span><span class="params">()</span> </span>&#123;</div><div class="line">    modCount++;</div><div class="line">    <span class="keyword">if</span> (size &lt; elementData.length) &#123;</div><div class="line">        elementData = (size == <span class="number">0</span>)</div><div class="line">          ? EMPTY_ELEMENTDATA</div><div class="line">          : Arrays.copyOf(elementData, size);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureExplicitCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</div><div class="line">    modCount++;</div><div class="line"></div><div class="line">    <span class="comment">// overflow-conscious code</span></div><div class="line">    <span class="keyword">if</span> (minCapacity - elementData.length &gt; <span class="number">0</span>)</div><div class="line">        grow(minCapacity);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    rangeCheck(index);</div><div class="line"></div><div class="line">    modCount++;</div><div class="line">    E oldValue = elementData(index);</div><div class="line"></div><div class="line">    <span class="keyword">int</span> numMoved = size - index - <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span> (numMoved &gt; <span class="number">0</span>)</div><div class="line">        System.arraycopy(elementData, index+<span class="number">1</span>, elementData, index,</div><div class="line">                         numMoved);</div><div class="line">    elementData[--size] = <span class="keyword">null</span>; <span class="comment">// clear to let GC do its work</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> oldValue;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fastRemove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    modCount++;</div><div class="line">    <span class="keyword">int</span> numMoved = size - index - <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span> (numMoved &gt; <span class="number">0</span>)</div><div class="line">        System.arraycopy(elementData, index+<span class="number">1</span>, elementData, index,</div><div class="line">                         numMoved);</div><div class="line">    elementData[--size] = <span class="keyword">null</span>; <span class="comment">// clear to let GC do its work</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</div><div class="line">    modCount++;</div><div class="line"></div><div class="line">    <span class="comment">// clear to let GC do its work</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)</div><div class="line">        elementData[i] = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    size = <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">removeRange</span><span class="params">(<span class="keyword">int</span> fromIndex, <span class="keyword">int</span> toIndex)</span> </span>&#123;</div><div class="line">    modCount++;</div><div class="line">    <span class="keyword">int</span> numMoved = size - toIndex;</div><div class="line">    System.arraycopy(elementData, toIndex, elementData, fromIndex,</div><div class="line">                     numMoved);</div><div class="line"></div><div class="line">    <span class="comment">// clear to let GC do its work</span></div><div class="line">    <span class="keyword">int</span> newSize = size - (toIndex-fromIndex);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = newSize; i &lt; size; i++) &#123;</div><div class="line">        elementData[i] = <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    size = newSize;</div><div class="line">&#125;</div><div class="line"></div><div class="line">...</div></pre></td></tr></table></figure>
+<p>从以上我们可以发现，当涉及到修改<code>ArrayList</code>中元素个数的方法<code>(remove(),clear(),ensureExplicitCapacity()...)</code>，便会修改<code>modCount</code>。  </p>
+<p>因此在前文演示代码中，子线程A正在通过迭代器遍历集合元素，而子线程B中<code>add()</code>方法修改了集合中元素的数量，导致此时<code>expectedModCount</code>和<code>modCount</code>不相等，因此执行<code>checkForComodification</code>方法时，便会抛出异常。</p>
+<h1 id="CopyOnWriteArrayList源码分析"><a href="#CopyOnWriteArrayList源码分析" class="headerlink" title="CopyOnWriteArrayList源码分析"></a>CopyOnWriteArrayList源码分析</h1><p>前文说了<code>CopyOnWriteArrayList</code>可以解决集合面对并发，下面我们从源码角度分析下<code>CopyOnWriteArrayList</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line">public class CopyOnWriteArrayList&lt;E&gt;</div><div class="line">    implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable &#123;</div><div class="line">    </div><div class="line">    ...</div><div class="line">    </div><div class="line">    public Iterator&lt;E&gt; iterator() &#123;</div><div class="line">        return new COWIterator&lt;E&gt;(getArray(), 0);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    ...</div><div class="line">    static final class COWIterator&lt;E&gt; implements ListIterator&lt;E&gt; &#123;</div><div class="line">    </div><div class="line">        // 创建COWIterator时，将集合中的元素保存到一个新的数组</div><div class="line">        // 当原始集合的数据改变，拷贝数据中的值也不会变化</div><div class="line">        private final Object[] snapshot;</div><div class="line">        /** Index of element to be returned by subsequent call to next.  */</div><div class="line">        private int cursor;</div><div class="line">        </div><div class="line">        private COWIterator(Object[] elements, int initialCursor) &#123;</div><div class="line">            cursor = initialCursor;</div><div class="line">            snapshot = elements;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        public boolean hasNext() &#123;</div><div class="line">            return cursor &lt; snapshot.length;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        public boolean hasPrevious() &#123;</div><div class="line">            return cursor &gt; 0;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        @SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">        public E next() &#123;</div><div class="line">            if (! hasNext())</div><div class="line">                throw new NoSuchElementException();</div><div class="line">            return (E) snapshot[cursor++];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        @SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">        public E previous() &#123;</div><div class="line">            if (! hasPrevious())</div><div class="line">                throw new NoSuchElementException();</div><div class="line">            return (E) snapshot[--cursor];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        public int nextIndex() &#123;</div><div class="line">            return cursor;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        public int previousIndex() &#123;</div><div class="line">            return cursor-1;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        // 不支持的方法</div><div class="line">        public void remove() &#123;</div><div class="line">            throw new UnsupportedOperationException();</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        // 不支持的方法</div><div class="line">        public void set(E e) &#123;</div><div class="line">            throw new UnsupportedOperationException();</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        // 不支持的方法</div><div class="line">        public void add(E e) &#123;</div><div class="line">            throw new UnsupportedOperationException();</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        ...</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从以上代码，我们可以看到以下几点：</p>
+<ul>
+<li><code>CopyOnWriteArrayList</code>没有继承<code>AbstractList</code>，只是实现了<code>List</code>接口</li>
+<li><code>ArrayList</code>返回的<code>Iterator</code>是在<code>AbstractList</code>中实现的，而<code>CopyOnWriteArrayList</code>是自己实现的<code>Iterator</code></li>
+<li><code>CopyOnWriteArrayList</code>的各个方法中不会抛出<code>ConcurrentModificationException</code>异常</li>
 </ul>
-<h2 id="屏幕分辨率"><a href="#屏幕分辨率" class="headerlink" title="屏幕分辨率"></a>屏幕分辨率</h2><ul>
-<li>指的是屏幕上物理像素的总数，单位px，比如小米6分辨率是1920*1080</li>
-<li>适配时不会直接使用分辨率；而只应关注通用尺寸和密度组指定的屏幕尺寸及密度</li>
+<h1 id="参考内容"><a href="#参考内容" class="headerlink" title="参考内容"></a>参考内容</h1><ul>
+<li><a href="http://www.cnblogs.com/skywang12345/p/3308762.html" target="_blank" rel="external">Java 集合系列04之 fail-fast总结(通过ArrayList来说明fail-fast的原理、解决办法)</a></li>
 </ul>
-<h2 id="屏幕密度"><a href="#屏幕密度" class="headerlink" title="屏幕密度"></a>屏幕密度</h2><ul>
-<li>屏幕物理区域中的像素量；通常称为dpi（每英寸点数）,对角线每英寸的像素点的个数</li>
-<li>Android将所有屏幕密度分组为六种通用密度ldpi（低）,hdpi（高）,xhdpi（超高）,xxhdpi（超超高）,xxxhdpi（超超超高）</li>
-<li>计算公式如下：<script type="math/tex; mode=display">\frac{\sqrt{(height^2 + width ^2)}}{size}</script>height和width即为长宽的像素，平方和即为对角线的像素个数，size即屏幕尺寸,如下图所示:</li>
+<h1 id="更多内容"><a href="#更多内容" class="headerlink" title="更多内容"></a>更多内容</h1><ul>
+<li><a href="http://hengtao.top/2018/09/24/Java%E9%9B%86%E5%90%88%E7%B3%BB%E5%88%9701%E4%B9%8B%E6%A6%82%E8%A7%88/" target="_blank" rel="external">Java集合系列01之概览
+</a></li>
+<li><a href="http://hengtao.top/2018/09/24/Java%E9%9B%86%E5%90%88%E7%B3%BB%E5%88%9702%E4%B9%8BArrayList%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" target="_blank" rel="external">Java集合系列02之ArrayList源码分析
+</a></li>
+<li><a href="http://hengtao.top/2018/09/24/Java%E9%9B%86%E5%90%88%E7%B3%BB%E5%88%9703%E4%B9%8BLinkedList%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" target="_blank" rel="external">Java集合系列03之LinkedList源码分析
+</a></li>
 </ul>
-<p><img src="http://p9u9uaqvy.bkt.clouddn.com/dpi-calculate.png" alt="dpi计算示意图"></p>
-<h2 id="密度无关像素-dp-dip"><a href="#密度无关像素-dp-dip" class="headerlink" title="密度无关像素 dp(dip)"></a>密度无关像素 dp(dip)</h2><ul>
-<li>dp也叫dip，是device independent pixels</li>
-<li>在定义UI布局时使用的虚拟像素单位，以密度无关方式表示布局位置</li>
-<li>dp单位转换为屏幕像素：px = dp * (dpi / 160)，例如，在240dpi屏幕上，1dp等于1.5px</li>
-</ul>
-<h2 id="sp"><a href="#sp" class="headerlink" title="sp"></a>sp</h2><ul>
-<li>sp，即scale-independent-pixels，与dp类似，但是可以根据文字大小首选项进行放缩，是设置字体大小的御用单位</li>
-</ul>
-<h2 id="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"><a href="#mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi" class="headerlink" title="mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi"></a>mdpi、hdpi、xhdpi、xxhdpi、xxxhdpi</h2><ul>
-<li>修饰了drawable文件夹和value文件夹，用来区分不同像素图片和dimen值，不同像素图片需要放在不同文件夹下</li>
-</ul>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">名称</th>
-<th style="text-align:center">dpi范围</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">mdpi</td>
-<td style="text-align:center">120 ~ 160</td>
-</tr>
-<tr>
-<td style="text-align:center">hdpi</td>
-<td style="text-align:center">160 ~ 240</td>
-</tr>
-<tr>
-<td style="text-align:center">xhdpi</td>
-<td style="text-align:center">240 ~ 320</td>
-</tr>
-<tr>
-<td style="text-align:center">xxhdpi</td>
-<td style="text-align:center">320 ~ 480</td>
-</tr>
-<tr>
-<td style="text-align:center">xxxhdpi</td>
-<td style="text-align:center">480 ~ 640</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>在设计图标时：对于五种主流像素密度(mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)应按照(2:3:4:6:8)的比例进行缩放，(1x, 1.5x, 2x, 3x, 4x)<br>例如：尺寸为48x48dp的图标，表示在mdpi的屏幕上其尺寸应为48x48px在hdpi的屏幕上其实际大小是mdpi的1.5倍（72x72px）… 依此类推</p>
-<h1 id="更多内容"><a href="#更多内容" class="headerlink" title="更多内容"></a>更多内容</h1><p><a href="https://hengtao24.github.io/2018/07/12/Android%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%8C%E9%80%82%E9%85%8D%E6%96%B9%E6%A1%88/#more">Android屏幕适配(二),适配方案</a></p>
 
       
 
@@ -286,7 +250,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
         		</li>
       		
 		</ul>
@@ -342,7 +306,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-	  <img src="//img.fanhaobai.com/qrcode.php?url=https://hengtao24.github.io/2018/06/28/Android屏幕适配（一），相关概念/" alt="微信分享二维码">
+	  <img src="//img.fanhaobai.com/qrcode.php?url=https://hengtao24.github.io/2018/10/10/Java集合系列04之fail-fast机制分析/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -356,18 +320,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/07/05/Java关键字static-final-this总结/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/10/10/Java集合系列05之Vector&Stack源码分析及List总结/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Java关键字static final this总结
+          Java集合系列05之Vector&amp;Stack源码分析及List总结
         
       </div>
     </a>
   
   
-    <a href="/2018/06/09/《这个世界会好吗》/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">《这个世界会好吗》</div>
+    <a href="/2018/09/24/Java集合系列03之LinkedList源码分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java集合系列03之LinkedList源码分析</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -386,6 +350,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例展示"><span class="toc-number">2.</span> <span class="toc-text">实例展示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解决办法"><span class="toc-number">3.</span> <span class="toc-text">解决办法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#fail-fast原理"><span class="toc-number">4.</span> <span class="toc-text">fail-fast原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CopyOnWriteArrayList源码分析"><span class="toc-number">5.</span> <span class="toc-text">CopyOnWriteArrayList源码分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考内容"><span class="toc-number">6.</span> <span class="toc-text">参考内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#更多内容"><span class="toc-number">7.</span> <span class="toc-text">更多内容</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -406,7 +383,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "Thu Jun 28 2018 20:33:56 GMT+0800",
+  id: "Wed Oct 10 2018 23:45:22 GMT+0800",
   owner: 'hengtao24',
   repo: 'hengtao24.github.io',
   oauth: {
