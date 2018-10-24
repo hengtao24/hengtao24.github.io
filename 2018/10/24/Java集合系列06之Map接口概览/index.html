@@ -6,14 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://hengtao24.github.io">
-  <title>Archives: 2018 | hengtao</title>
+  <title>Java集合系列06之Map接口概览 | hengtao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="hengtao">
-<meta property="og:url" content="https://hengtao24.github.io/archives/2018/page/2/index.html">
+  <meta name="description" content="前言前面介绍集合的框架时，我们提到集合框架中主要有List，Set，Map三种数据类型，List我们已经分析过了，而Set的实现依赖于Map，HashSet是通过HashMap实现的，TreeSet是通过TreeMap实现的，因此我们再来分析Map。
+
+本文源码分析基于jdk 1.8.0_121">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java集合系列06之Map接口概览">
+<meta property="og:url" content="https://hengtao24.github.io/2018/10/24/Java集合系列06之Map接口概览/index.html">
 <meta property="og:site_name" content="hengtao">
+<meta property="og:description" content="前言前面介绍集合的框架时，我们提到集合框架中主要有List，Set，Map三种数据类型，List我们已经分析过了，而Set的实现依赖于Map，HashSet是通过HashMap实现的，TreeSet是通过TreeMap实现的，因此我们再来分析Map。
+
+本文源码分析基于jdk 1.8.0_121">
+<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/Map%E6%A1%86%E6%9E%B6.png">
+<meta property="og:updated_time" content="2018-10-24T14:52:40.326Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hengtao">
+<meta name="twitter:title" content="Java集合系列06之Map接口概览">
+<meta name="twitter:description" content="前言前面介绍集合的框架时，我们提到集合框架中主要有List，Set，Map三种数据类型，List我们已经分析过了，而Set的实现依赖于Map，HashSet是通过HashMap实现的，TreeSet是通过TreeMap实现的，因此我们再来分析Map。
+
+本文源码分析基于jdk 1.8.0_121">
+<meta name="twitter:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/Map%E6%A1%86%E6%9E%B6.png">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -161,36 +173,90 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Java集合系列06之Map接口概览" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Java集合系列06之Map接口概览
+    </h1>
   
+
+		
+		
+		<div class="bookicon"></div>
+		<div class="article-hit">
+			<span id="busuanzi_container_page_pv">
+			阅读 <span id="busuanzi_value_page_pv"></span>次</span>
+		</div>
+		
+	  
+        
+        <a href="/2018/10/24/Java集合系列06之Map接口概览/" class="archive-article-date">
+  	<time datetime="2018-10-24T14:52:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-24</time>
+</a>
+        
+      </header>
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前面介绍集合的框架时，我们提到集合框架中主要有<code>List</code>，<code>Set</code>，<code>Map</code>三种数据类型，<code>List</code>我们已经分析过了，而<code>Set</code>的实现依赖于<code>Map</code>，<code>HashSet</code>是通过<code>HashMap</code>实现的，<code>TreeSet</code>是通过<code>TreeMap</code>实现的，因此我们再来分析<code>Map</code>。</p>
+<blockquote>
+<p>本文源码分析基于jdk 1.8.0_121</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="关系图"><a href="#关系图" class="headerlink" title="关系图"></a>关系图</h1><p><img src="http://p9u9uaqvy.bkt.clouddn.com/Java/Map%E6%A1%86%E6%9E%B6.png" alt="Map框架"> </p>
+<ul>
+<li><code>Map</code>是具有映射关系的集合接口，储存内容是键值对</li>
+<li><code>AbstractMap</code>是继承于<code>Map</code>的抽象类，实现了<code>Map</code>中大部分方法,类似<code>AbstractList</code></li>
+<li><code>SortedMap</code> 是继承于<code>Map</code>的接口，储存有序的键值对，排序是通过<code>Comparator</code>实现的</li>
+<li><code>NavigableMap</code> 是继承于<code>SortedMap</code>的接口，<code>NavigableMap</code>有一系列的导航方法；如”获取大于/等于某对象的键值对”、“获取小于/等于某对象的键值对”等等</li>
+<li><code>TreeMap</code> 继承于<code>AbstractMap</code>，并实现了<code>NavigableMap</code>接口，储存有序的键值对</li>
+<li><code>HashMap</code> 继承于<code>AbstractMap</code>，存储无序的键值对</li>
+<li><code>WeakHashMap</code> 继承于<code>AbstractMap</code>，存储无序的“弱键值对”</li>
+<li><code>Hashtable</code> 继承于<code>Dictionary</code>，实现了<code>Map</code>接口，储存无序的键值对，且是线程安全的，支持<code>Enumeration</code>遍历。</li>
+</ul>
+<h1 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h1><p>Map的定义如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>其储存了键值对，且不允许包含重复的键，一个键只能对应一个值，<code>Map</code>可以单独查看键集、值集或键-值映射关系。</p>
+<h2 id="Map-API"><a href="#Map-API" class="headerlink" title="Map API"></a>Map API</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span>                 <span class="title">clear</span><span class="params">()</span></span></div><div class="line"><span class="keyword">boolean</span>              <span class="title">containsKey</span><span class="params">(Object key)</span></div><div class="line"><span class="keyword">boolean</span>              <span class="title">containsValue</span><span class="params">(Object value)</span></div><div class="line">Set&lt;Entry&lt;K, V&gt;&gt;     <span class="title">entrySet</span><span class="params">()</span></div><div class="line"><span class="keyword">boolean</span>              <span class="title">equals</span><span class="params">(Object o)</span></div><div class="line">V                    <span class="title">get</span><span class="params">(Object key)</span></div><div class="line"><span class="keyword">int</span>                  <span class="title">hashCode</span><span class="params">()</span></div><div class="line"><span class="keyword">boolean</span>              <span class="title">isEmpty</span><span class="params">()</span></div><div class="line">Set&lt;K&gt;               <span class="title">keySet</span><span class="params">()</span></div><div class="line">V                    <span class="title">put</span><span class="params">(K key, V value)</span></div><div class="line"><span class="keyword">void</span>                 <span class="title">putAll</span><span class="params">(Map&lt;? extends K, ? extends V&gt; map)</span></div><div class="line">V                    <span class="title">remove</span><span class="params">(Object key)</span></div><div class="line"><span class="keyword">int</span>                  <span class="title">size</span><span class="params">()</span></div><div class="line">Collection&lt;V&gt;        <span class="title">values</span><span class="params">()</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>keySet()</code> 方法用于返回键集</li>
+<li><code>values()</code> 方法用于返回值集</li>
+<li><code>entrySet()</code> 方法用于返回键-值映射关系</li>
+</ul>
+<h2 id="Map-Entry"><a href="#Map-Entry" class="headerlink" title="Map.Entry"></a>Map.Entry</h2><p>其定义如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><code>Map.Entry</code>是<code>Map</code>的内部接口，<code>Map.Entry</code>是键值对，Map通过<code>entrySet()</code> 获取<code>Map.Entry</code>的键值对集合。</p>
+<h3 id="Map-Entry-API"><a href="#Map-Entry-API" class="headerlink" title="Map.Entry API"></a>Map.Entry API</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function">K <span class="title">getKey</span><span class="params">()</span></span>;</div><div class="line"><span class="function">V <span class="title">getValue</span><span class="params">()</span></span>;</div><div class="line"><span class="function">V <span class="title">setValue</span><span class="params">(V value)</span></span>;</div><div class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</div></pre></td></tr></table></figure>
+<h1 id="AbstractMap"><a href="#AbstractMap" class="headerlink" title="AbstractMap"></a>AbstractMap</h1><p>其定义如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><code>AbstractMap</code>提供了Map的大部分实现，要实现不可修改的映射，只需扩展此类并提供 <code>entrySet()</code>方法的实现即可。要实现可修改的映射，编程人员必须另外重写此类的 <code>put</code> 方法（否则将抛出 <code>UnsupportedOperationException</code>），<code>entrySet().iterator()</code> 返回的迭代器也必须另外实现其 <code>remove</code> 方法。</p>
+<h1 id="AbstractMap-API"><a href="#AbstractMap-API" class="headerlink" title="AbstractMap API"></a>AbstractMap API</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">abstract</span> Set&lt;Entry&lt;K, V&gt;&gt;     entrySet()</div><div class="line">         <span class="function"><span class="keyword">void</span>                 <span class="title">clear</span><span class="params">()</span></span></div><div class="line">         <span class="keyword">boolean</span>              <span class="title">containsKey</span><span class="params">(Object key)</span></div><div class="line">         <span class="keyword">boolean</span>              <span class="title">containsValue</span><span class="params">(Object value)</span></div><div class="line">         <span class="keyword">boolean</span>              <span class="title">equals</span><span class="params">(Object o)</span></div><div class="line">         V                    <span class="title">get</span><span class="params">(Object key)</span></div><div class="line">         <span class="keyword">int</span>                  <span class="title">hashCode</span><span class="params">()</span></div><div class="line">         <span class="keyword">boolean</span>              <span class="title">isEmpty</span><span class="params">()</span></div><div class="line">         Set&lt;K&gt;               <span class="title">keySet</span><span class="params">()</span></div><div class="line">         V                    <span class="title">put</span><span class="params">(K key, V value)</span></div><div class="line">         <span class="keyword">void</span>                 <span class="title">putAll</span><span class="params">(Map&lt;? extends K, ? extends V&gt; m)</span></div><div class="line">         V                    <span class="title">remove</span><span class="params">(Object key)</span></div><div class="line">         <span class="keyword">int</span>                  <span class="title">size</span><span class="params">()</span></div><div class="line">         String               <span class="title">toString</span><span class="params">()</span></div><div class="line">         Collection&lt;V&gt;        <span class="title">values</span><span class="params">()</span></div><div class="line">         Object               <span class="title">clone</span><span class="params">()</span></div></pre></td></tr></table></figure>
+<h1 id="SortedMap"><a href="#SortedMap" class="headerlink" title="SortedMap"></a>SortedMap</h1><p>其定义如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SortedMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><code>SortedMap</code>是一个有序的键值映射，排序方式有两种:自然排序和指定<code>Comparator</code>。</p>
+<h2 id="SortedMap-API"><a href="#SortedMap-API" class="headerlink" title="SortedMap API"></a>SortedMap API</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Comparator&lt;? <span class="keyword">super</span> K&gt;     comparator()</div><div class="line"><span class="function">K                         <span class="title">firstKey</span><span class="params">()</span></span></div><div class="line">SortedMap&lt;K, V&gt;           <span class="title">headMap</span><span class="params">(K endKey)</span></div><div class="line">K                         <span class="title">lastKey</span><span class="params">()</span></div><div class="line">SortedMap&lt;K, V&gt;           <span class="title">subMap</span><span class="params">(K startKey, K endKey)</span></div><div class="line">SortedMap&lt;K, V&gt;           <span class="title">tailMap</span><span class="params">(K startKey)</span></div><div class="line">Set&lt;K&gt;                    <span class="title">keySet</span><span class="params">()</span>;</div><div class="line"><span class="function">Collection&lt;V&gt;             <span class="title">values</span><span class="params">()</span></span>;</div><div class="line">Set&lt;Map.Entry&lt;K, V&gt;&gt;      entrySet();</div></pre></td></tr></table></figure>
+<h1 id="NavigableMap"><a href="#NavigableMap" class="headerlink" title="NavigableMap"></a>NavigableMap</h1><p>其定义如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">NavigableMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">SortedMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><code>NavigableMap</code>是继承于<code>SortedMap</code>的接口，具有了针对给定搜索目标返回最接近匹配项的导航方法。</p>
+<h2 id="NavigableMap-API"><a href="#NavigableMap-API" class="headerlink" title="NavigableMap API"></a>NavigableMap API</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function">Entry&lt;K, V&gt;             <span class="title">ceilingEntry</span><span class="params">(K key)</span></span></div><div class="line">Entry&lt;K, V&gt;             <span class="title">firstEntry</span><span class="params">()</span></div><div class="line">Entry&lt;K, V&gt;             <span class="title">floorEntry</span><span class="params">(K key)</span></div><div class="line">Entry&lt;K, V&gt;             <span class="title">higherEntry</span><span class="params">(K key)</span></div><div class="line">Entry&lt;K, V&gt;             <span class="title">lastEntry</span><span class="params">()</span></div><div class="line">Entry&lt;K, V&gt;             <span class="title">lowerEntry</span><span class="params">(K key)</span></div><div class="line">Entry&lt;K, V&gt;             <span class="title">pollFirstEntry</span><span class="params">()</span></div><div class="line">Entry&lt;K, V&gt;             <span class="title">pollLastEntry</span><span class="params">()</span></div><div class="line">K                       <span class="title">ceilingKey</span><span class="params">(K key)</span></div><div class="line">K                       <span class="title">floorKey</span><span class="params">(K key)</span></div><div class="line">K                       <span class="title">higherKey</span><span class="params">(K key)</span></div><div class="line">K                       <span class="title">lowerKey</span><span class="params">(K key)</span></div><div class="line">NavigableSet&lt;K&gt;         <span class="title">descendingKeySet</span><span class="params">()</span></div><div class="line">NavigableSet&lt;K&gt;         <span class="title">navigableKeySet</span><span class="params">()</span></div><div class="line">NavigableMap&lt;K, V&gt;      <span class="title">descendingMap</span><span class="params">()</span></div><div class="line">NavigableMap&lt;K, V&gt;      <span class="title">headMap</span><span class="params">(K toKey, <span class="keyword">boolean</span> inclusive)</span></div><div class="line">SortedMap&lt;K, V&gt;         <span class="title">headMap</span><span class="params">(K toKey)</span></div><div class="line">SortedMap&lt;K, V&gt;         <span class="title">subMap</span><span class="params">(K fromKey, K toKey)</span></div><div class="line">NavigableMap&lt;K, V&gt;      <span class="title">subMap</span><span class="params">(K fromKey, <span class="keyword">boolean</span> fromInclusive, <span class="keyword">boolean</span> toInclusive)</span></div><div class="line">SortedMap&lt;K, V&gt;         <span class="title">tailMap</span><span class="params">(K fromKey)</span></div><div class="line">NavigableMap&lt;K, V&gt;      <span class="title">tailMap</span><span class="params">(K fromKey, <span class="keyword">boolean</span> inclusive)</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>lowerEntry</code>、<code>floorEntry</code>、<code>ceilingEntry</code> 和 <code>higherEntry</code> 分别返回与小于、小于等于、大于等于、大于给定键的键关联的 <code>Map.Entry</code> 对象，如果不存在这样的键，则返回 <code>null</code></li>
+<li><code>firstEntry、pollFirstEntry、lastEntry 和 pollLastEntry</code> 方法，它们返回和/或移除最小和最大的映射关系（如果存在），否则返回 null。</li>
+<li><code>lowerKey、floorKey、ceilingKey 和 higherKey</code>分别返回与小于、小于等于、大于等于、大于给定键的键</li>
+<li><code>navigableKeySet、descendingKeySet</code>分别获取正序/反序的键集，<code>descendingMap()</code>返回此映射中所包含映射关系的逆序视图</li>
+<li><code>headMap、subMap、tailMap</code>返回特定的键-值对的子集</li>
+</ul>
+<h2 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h2><p>其定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public abstract class Dictionary&lt;K,V&gt;</div></pre></td></tr></table></figure>
+<p><code>NavigableMap</code>是<code>JDK 1.0</code>定义的键值对的接口，它也包括了操作键值对的基本函数。</p>
+<h2 id="Dictionary-API"><a href="#Dictionary-API" class="headerlink" title="Dictionary API"></a>Dictionary API</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function">Enumeration&lt;V&gt;     <span class="title">elements</span><span class="params">()</span></span></div><div class="line">V                  <span class="title">get</span><span class="params">(Object key)</span></div><div class="line"><span class="keyword">boolean</span>            <span class="title">isEmpty</span><span class="params">()</span></div><div class="line">Enumeration&lt;K&gt;     <span class="title">keys</span><span class="params">()</span></div><div class="line">V                  <span class="title">put</span><span class="params">(K key, V value)</span></div><div class="line">V                  <span class="title">remove</span><span class="params">(Object key)</span></div><div class="line"><span class="keyword">int</span>                <span class="title">size</span><span class="params">()</span></div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/13/Java-内部类-匿名类-匿名内部类-静态内部类/" class="archive-article-date">
-  	<time datetime="2018-07-13T04:52:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/13/Java-内部类-匿名类-匿名内部类-静态内部类/">Java 内部类 匿名类 匿名内部类 静态内部类</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -202,296 +268,121 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+	  
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+	  <img src="//img.fanhaobai.com/qrcode.php?url=https://hengtao24.github.io/2018/10/24/Java集合系列06之Map接口概览/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/12/Android屏幕适配（二），适配方案/" class="archive-article-date">
-  	<time datetime="2018-07-12T04:53:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-12</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/10/10/Java集合系列05之Vector&Stack源码分析及List总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java集合系列05之Vector&amp;Stack源码分析及List总结</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/12/Android屏幕适配（二），适配方案/">Android屏幕适配(二),适配方案</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/" class="archive-article-date">
-  	<time datetime="2018-07-05T13:28:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/05/Java-String-StringBuffer-StingBuilder区别/">Java String StringBuffer StingBuilder区别</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/05/Java关键字static-final-this总结/" class="archive-article-date">
-  	<time datetime="2018-07-05T13:18:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/05/Java关键字static-final-this总结/">Java关键字static final this总结</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/28/Android屏幕适配（一），相关概念/" class="archive-article-date">
-  	<time datetime="2018-06-28T12:33:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/28/Android屏幕适配（一），相关概念/">Android屏幕适配(一)，相关概念</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/09/《这个世界会好吗》/" class="archive-article-date">
-  	<time datetime="2018-06-09T15:55:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/09/《这个世界会好吗》/">《这个世界会好吗》</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">李志</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随想</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/09/高考结束的那天，你在做什么？/" class="archive-article-date">
-  	<time datetime="2018-06-09T11:35:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/09/高考结束的那天，你在做什么？/">高考结束的那天,你在做什么？</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随想</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/09/叁叁肆/" class="archive-article-date">
-  	<time datetime="2018-03-09T07:57:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/09/叁叁肆/">李志叁叁肆芜湖站</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">李志</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随想</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2018/">&laquo; Prev</a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span>
-    </nav>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "Wed Oct 24 2018 22:52:02 GMT+0800",
+  owner: 'hengtao24',
+  repo: 'hengtao24.github.io',
+  oauth: {
+    client_id: '39d330ed943023c8dee1',
+    client_secret: '1be20048c6f63b3317e3bff537bc09bde8667aff',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -523,8 +414,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
