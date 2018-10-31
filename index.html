@@ -163,6 +163,184 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java集合系列08之WeakHashMap源码分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/31/Java集合系列08之WeakHashMap源码分析/">Java集合系列08之WeakHashMap源码分析</a>
+    </h1>
+  
+
+		
+		
+	  
+        
+        <a href="/2018/10/31/Java集合系列08之WeakHashMap源码分析/" class="archive-article-date">
+  	<time datetime="2018-10-31T15:11:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>WeakHashMap</code>类似<code>HashMap</code>是一个基于哈希实现的无序散列表，存储内容是键值对(<code>key-value</code>)，是非线程安全的，但是<code>WeakHashMap</code>的键是弱键。  </p>
+<p>在<code>WeakHashMap</code>中，当某个键不再正常使用时，将会被自动移除。更精确地说，对于一个给定的键，其映射的存在并不阻止垃圾回收器对该键的回收，这就使该键成为可终止的，然后被回收。回收某个键时，对应的键值对会从映射中有效地移除。因此，该类的行为与其他的 Map 实现有所不同。其定义如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeakHashMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</div><div class="line">    <span class="keyword">extends</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</div><div class="line">    <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>可以看到<code>HashMap</code>继承<code>AbstractMap</code>，实现了Map接口。  </p>
+<p>那么<code>WeakHashMap</code>是怎么实现这个弱键的呢？<code>WeakHashMap</code>是通过<code>WeakReference</code>和<code>ReferenceQueue</code>实现的，<code>WeakHashMap</code>的<code>key</code>是<code>WeakReference</code>类型的，将<code>WeakReference</code>和<code>ReferenceQueue</code>关联，<code>ReferenceQueue</code>便会保存被<code>GC</code>回收的“弱键”，如下（具体关于Java的四种引用类型见前文<a href="http://hengtao.top/2018/07/18/Java%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">Java数据类型</a>）： </p>
+<ul>
+<li>与<code>HashMap</code>类似，<code>WeakHashMap</code>是通过数组<code>table</code>保存<code>Entry</code>(键值对)，而每一个<code>Entry</code>是单向链表，<code>Entry</code>类继承<code>WeakReference</code>，新建<code>Entry</code>时，便会把<code>Entry</code>的<code>key</code>和<code>ReferceQueue</code>关联</li>
+<li><p>当“弱键”不再被其它对象引用，便会被GC回收时。GC回收该“弱键”时，这个“弱键”也同时会被添加到<code>ReferenceQueue(queue)</code>队列中</p>
+</li>
+<li><p>当再次操作<code>WeakHashMap</code>时，如获取<code>size</code>大小，扩容等，会先同步<code>table和queue</code>，<code>table</code>中保存了全部的键值对，而<code>queue</code>中保存被GC回收的键值对，删除<code>table</code>中被GC回收的键值对。</p>
+</li>
+</ul>
+<p>和<code>HashMap</code>一样，<code>WeakHashMap</code>是不同步的。可以使用 <code>Collections.synchronizedMap</code> 方法来构造同步的 <code>WeakHashMap</code>。</p>
+<blockquote>
+<p>本文源码分析基于jdk 1.8.0_121</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2018/10/31/Java集合系列08之WeakHashMap源码分析/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/31/Java集合系列08之WeakHashMap源码分析/">展开全文 >></a>
+        </p>
+      
+	  
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Java集合系列07之HashMap源码分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/31/Java集合系列07之HashMap源码分析/">Java集合系列07之HashMap源码分析</a>
+    </h1>
+  
+
+		
+		
+	  
+        
+        <a href="/2018/10/31/Java集合系列07之HashMap源码分析/" class="archive-article-date">
+  	<time datetime="2018-10-31T15:10:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>HashMap</code>是一个基于哈希实现的无序散列表，存储内容是键值对(key-value)，非线程安全。其定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;</div><div class="line">    implements Map&lt;K,V&gt;, Cloneable, Serializable</div></pre></td></tr></table></figure>
+<p>可以看到<code>HashMap</code>继承<code>AbstractMap</code>，实现了<code>Map、Cloneable、java.io.Serializable</code>接口。</p>
+<blockquote>
+<p>本文源码分析基于jdk 1.8.0_121</p>
+</blockquote>
+<h1 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h1><h2 id="HashMap继承关系"><a href="#HashMap继承关系" class="headerlink" title="HashMap继承关系"></a>HashMap继承关系</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">java.lang.Object</div><div class="line">   |___  java.util.AbstractMap&lt;K,V&gt;</div><div class="line">       |___  java.util.HashMap&lt;K,V&gt;</div><div class="line">所有已实现的接口：</div><div class="line">Serializable, Cloneable, Map&lt;K,V&gt;</div></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2018/10/31/Java集合系列07之HashMap源码分析/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/31/Java集合系列07之HashMap源码分析/">展开全文 >></a>
+        </p>
+      
+	  
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Java集合系列06之Map接口概览" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     	  
@@ -832,186 +1010,9 @@
 
 
   
-    <article id="post-Android消息机制Handler" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    	  
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/23/Android消息机制Handler/">Android消息机制Handler</a>
-    </h1>
-  
-
-		
-		
-	  
-        
-        <a href="/2018/07/23/Android消息机制Handler/" class="archive-article-date">
-  	<time datetime="2018-07-23T14:25:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Android和Windows一样都采用了消息机制，从开发角度说，<code>Handler</code>是Android消息机制的上层接口，开发过程中和<code>Handler</code>交互即可。Android规范限制我们不能在子线程中更新UI，只能在主线程中更新UI，Handler可以轻松的将一个任务切换到Handler所在的线程中去执行。所以，开发过程中Handler通常被用来更新UI，利用Handler将更新UI的操作切换到主线程中执行。</p>
-<p><code>ViewRootImpl</code>对我们的UI操作进行了验证，具体是在<code>checkThread()</code>方法中完成的，如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">checkThread</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (mThread != Thread.currentThread()) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> CalledFromWrongThreadException(</div><div class="line">                <span class="string">"Only the original thread that created a view hierarchy can touch its views."</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>ViewRootImpl</code>是所有<code>View</code>的根,<code>Window</code>和<code>View</code>通过<code>ViewRootImpl</code>建立联系，<code>checkThread()</code>方法校验当前线程是否是<code>ViewRootImpl</code>被创建时所在的线程。具体请参考<a href="https://blog.csdn.net/xyh269/article/details/52728861">Android中子线程真的不能更新UI吗？</a></p>
-<blockquote>
-<p>说明：本文中的源码都是基于Android-25版本。</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2018/07/23/Android消息机制Handler/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/23/Android消息机制Handler/">展开全文 >></a>
-        </p>
-      
-	  
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java数据类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    	  
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/18/Java数据类型/">Java数据类型</a>
-    </h1>
-  
-
-		
-		
-	  
-        
-        <a href="/2018/07/18/Java数据类型/" class="archive-article-date">
-  	<time datetime="2018-07-18T13:42:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>java数据类型分为基本数据类型和引用数据类型。基本数据类型有8种，而引用数据类型又分为强引用，软引用，弱引用，虚引用。介绍完两种数据类型后，再说下和两种数据类型有关的问题，一是Java方法参数到底是传值还是传引用，二是“equals” &amp; “==” &amp; “hashcode”三者之间的区别。好，正式进入正文。</p>
-<h1 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h1><p>Java一共8种基本数据类型：</p>
-<ul>
-<li>整型：int, short, long, byte 分别是4, 2, 8, 1字节</li>
-<li>浮点型：float, double 分别是4, 8字节</li>
-<li>char类型：char 是两个字节</li>
-<li>boolean类型：boolean 大小取决于java虚拟机，不同虚拟机大小不同</li>
-</ul>
-<p>相关说明：</p>
-<ul>
-<li>整型的范围与运行java代码的机器无关，而<code>C++</code>则与平台有关</li>
-<li>大数值类（<code>BigInteger/BigDecimal</code>）可以实现任意精度的运算，使用静态的<code>valueOf</code>方法将普通数值转换为大数值</li>
-<li>基本数据类型不面向对象</li>
-</ul>
-        
-          <a class="article-more-a" href="/2018/07/18/Java数据类型/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/18/Java数据类型/">展开全文 >></a>
-        </p>
-      
-	  
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 

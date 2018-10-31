@@ -163,6 +163,183 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Android消息机制Handler" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/23/Android消息机制Handler/">Android消息机制Handler</a>
+    </h1>
+  
+
+		
+		
+	  
+        
+        <a href="/2018/07/23/Android消息机制Handler/" class="archive-article-date">
+  	<time datetime="2018-07-23T14:25:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Android和Windows一样都采用了消息机制，从开发角度说，<code>Handler</code>是Android消息机制的上层接口，开发过程中和<code>Handler</code>交互即可。Android规范限制我们不能在子线程中更新UI，只能在主线程中更新UI，Handler可以轻松的将一个任务切换到Handler所在的线程中去执行。所以，开发过程中Handler通常被用来更新UI，利用Handler将更新UI的操作切换到主线程中执行。</p>
+<p><code>ViewRootImpl</code>对我们的UI操作进行了验证，具体是在<code>checkThread()</code>方法中完成的，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">checkThread</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (mThread != Thread.currentThread()) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> CalledFromWrongThreadException(</div><div class="line">                <span class="string">"Only the original thread that created a view hierarchy can touch its views."</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>ViewRootImpl</code>是所有<code>View</code>的根,<code>Window</code>和<code>View</code>通过<code>ViewRootImpl</code>建立联系，<code>checkThread()</code>方法校验当前线程是否是<code>ViewRootImpl</code>被创建时所在的线程。具体请参考<a href="https://blog.csdn.net/xyh269/article/details/52728861">Android中子线程真的不能更新UI吗？</a></p>
+<blockquote>
+<p>说明：本文中的源码都是基于Android-25版本。</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2018/07/23/Android消息机制Handler/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/23/Android消息机制Handler/">展开全文 >></a>
+        </p>
+      
+	  
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Java数据类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    	  
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/18/Java数据类型/">Java数据类型</a>
+    </h1>
+  
+
+		
+		
+	  
+        
+        <a href="/2018/07/18/Java数据类型/" class="archive-article-date">
+  	<time datetime="2018-07-18T13:42:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>java数据类型分为基本数据类型和引用数据类型。基本数据类型有8种，而引用数据类型又分为强引用，软引用，弱引用，虚引用。介绍完两种数据类型后，再说下和两种数据类型有关的问题，一是Java方法参数到底是传值还是传引用，二是“equals” &amp; “==” &amp; “hashcode”三者之间的区别。好，正式进入正文。</p>
+<h1 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h1><p>Java一共8种基本数据类型：</p>
+<ul>
+<li>整型：int, short, long, byte 分别是4, 2, 8, 1字节</li>
+<li>浮点型：float, double 分别是4, 8字节</li>
+<li>char类型：char 是两个字节</li>
+<li>boolean类型：boolean 大小取决于java虚拟机，不同虚拟机大小不同</li>
+</ul>
+<p>相关说明：</p>
+<ul>
+<li>整型的范围与运行java代码的机器无关，而<code>C++</code>则与平台有关</li>
+<li>大数值类（<code>BigInteger/BigDecimal</code>）可以实现任意精度的运算，使用静态的<code>valueOf</code>方法将普通数值转换为大数值</li>
+<li>基本数据类型不面向对象</li>
+</ul>
+        
+          <a class="article-more-a" href="/2018/07/18/Java数据类型/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/18/Java数据类型/">展开全文 >></a>
+        </p>
+      
+	  
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Java-内部类-匿名类-匿名内部类-静态内部类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     	  
@@ -830,85 +1007,9 @@
 
 
   
-    <article id="post-Android-Toolbar-Style" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    	  
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/19/Android-Toolbar-Style/">Android Toolbar Style</a>
-    </h1>
-  
-
-		
-		
-	  
-        
-        <a href="/2017/08/19/Android-Toolbar-Style/" class="archive-article-date">
-  	<time datetime="2017-08-19T03:12:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- toolbar style--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"ToolbarTheme"</span> <span class="attr">parent</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"actionMenuTextColor"</span>&gt;</span>@color/white<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textSize"</span>&gt;</span>18sp<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"actionMenuTextAppearance"</span>&gt;</span>@style/AppTheme.actionMenuTextSize<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"popupTheme"</span>&gt;</span>@style/PopupMenuStyle<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme.actionMenuTextSize"</span> <span class="attr">parent</span>=<span class="string">"Base.TextAppearance.AppCompat.Widget.ActionBar.Menu"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textSize"</span>&gt;</span>18sp<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textStyle"</span>&gt;</span>normal<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- toolbar popupmenu --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"PopupMenuStyle"</span> <span class="attr">parent</span>=<span class="string">"ThemeOverlay.AppCompat.Dark"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:colorBackground"</span>&gt;</span>@color/colorPrimary<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:textColor"</span>&gt;</span>@color/white<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"actionOverflowMenuStyle"</span>&gt;</span>@style/OverflowMenuStyle<span class="tag">&lt;/<span class="name">item</span>&gt;</span> <span class="comment">&lt;!--新增一个item，用于控制menu--&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- popupmenu style --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"OverflowMenuStyle"</span> <span class="attr">parent</span>=<span class="string">"Widget.AppCompat.Light.PopupMenu.Overflow"</span>&gt;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"overlapAnchor"</span>&gt;</span>false<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/19/Android-Toolbar-Style/">展开全文 >></a>
-        </p>
-      
-	  
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
