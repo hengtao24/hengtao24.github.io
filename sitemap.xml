@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hengtao24.github.io/2018/07/12/Android%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%8C%E9%80%82%E9%85%8D%E6%96%B9%E6%A1%88/</loc>
+    
+    <lastmod>2019-05-09T11:21:09.672Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hengtao24.github.io/2018/06/28/Android%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%8C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</loc>
+    
+    <lastmod>2019-05-09T11:20:00.360Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hengtao24.github.io/2018/10/31/Java%E9%9B%86%E5%90%88%E7%B3%BB%E5%88%9708%E4%B9%8BWeakHashMap%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</loc>
     
     <lastmod>2018-10-31T15:13:02.927Z</lastmod>
@@ -79,13 +93,6 @@
   </url>
   
   <url>
-    <loc>https://hengtao24.github.io/2018/07/12/Android%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%8C%E9%80%82%E9%85%8D%E6%96%B9%E6%A1%88/</loc>
-    
-    <lastmod>2018-08-01T08:56:51.819Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://hengtao24.github.io/2018/07/05/Java-String-StringBuffer-StingBuilder%E5%8C%BA%E5%88%AB/</loc>
     
     <lastmod>2018-08-01T08:56:30.813Z</lastmod>
@@ -117,13 +124,6 @@
     <loc>https://hengtao24.github.io/2018/07/23/Android%E6%B6%88%E6%81%AF%E6%9C%BA%E5%88%B6Handler/</loc>
     
     <lastmod>2018-08-01T08:13:34.897Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hengtao24.github.io/2018/06/28/Android%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%8C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</loc>
-    
-    <lastmod>2018-07-18T14:02:40.920Z</lastmod>
     
   </url>
   
