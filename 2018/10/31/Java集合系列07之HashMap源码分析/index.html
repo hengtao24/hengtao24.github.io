@@ -18,15 +18,15 @@
 <meta property="og:description" content="前言HashMap是一个基于哈希实现的无序散列表，存储内容是键值对(key-value)，非线程安全。其定义如下：
 12public class HashMap&amp;lt;K,V&amp;gt; extends AbstractMap&amp;lt;K,V&amp;gt;    implements Map&amp;lt;K,V&amp;gt;, Cloneable, Serializable
 可以看到HashMap继承AbstractMa">
-<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/HashMap%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
-<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/HashMap%E7%BA%A2%E9%BB%91%E6%A0%91.png">
-<meta property="og:updated_time" content="2018-10-31T15:12:24.880Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/HashMap%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/HashMap%E7%BA%A2%E9%BB%91%E6%A0%91.png">
+<meta property="og:updated_time" content="2019-05-09T11:41:13.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java集合系列07之HashMap源码分析">
 <meta name="twitter:description" content="前言HashMap是一个基于哈希实现的无序散列表，存储内容是键值对(key-value)，非线程安全。其定义如下：
 12public class HashMap&amp;lt;K,V&amp;gt; extends AbstractMap&amp;lt;K,V&amp;gt;    implements Map&amp;lt;K,V&amp;gt;, Cloneable, Serializable
 可以看到HashMap继承AbstractMa">
-<meta name="twitter:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/HashMap%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/HashMap%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -211,7 +211,7 @@
 </blockquote>
 <h1 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h1><h2 id="HashMap继承关系"><a href="#HashMap继承关系" class="headerlink" title="HashMap继承关系"></a>HashMap继承关系</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">java.lang.Object</div><div class="line">   |___  java.util.AbstractMap&lt;K,V&gt;</div><div class="line">       |___  java.util.HashMap&lt;K,V&gt;</div><div class="line">所有已实现的接口：</div><div class="line">Serializable, Cloneable, Map&lt;K,V&gt;</div></pre></td></tr></table></figure>
 <a id="more"></a>
-<h2 id="关系图"><a href="#关系图" class="headerlink" title="关系图"></a>关系图</h2><p><img src="http://p9u9uaqvy.bkt.clouddn.com/Java/HashMap%E5%85%B3%E7%B3%BB%E5%9B%BE.png" alt="HashMap关系图"></p>
+<h2 id="关系图"><a href="#关系图" class="headerlink" title="关系图"></a>关系图</h2><p><img src="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/HashMap%E5%85%B3%E7%B3%BB%E5%9B%BE.png" alt="HashMap关系图"></p>
 <ul>
 <li><code>table</code>是<code>Node</code>型的数组，而<code>Node</code>其实是个单向链表，所以<code>HashMap</code>的底层实现是由数组和链表实现的</li>
 <li><code>size</code>是<code>HashMap</code>的实际大小</li>
@@ -220,7 +220,7 @@
 <li><code>modCount</code>是修改<code>HashMap</code>结构的计数值，用来实现<code>fail-fast</code>机制</li>
 </ul>
 <p>需要注意的是在<code>JDK 1.8</code>以前<code>HashMap</code>的实现是数组+链表，但是哈希函数很难将元素百分百均匀分布，因此可能出现有大量的元素都存放到同一个桶中，那么便会出现一条长链表， <code>HashMap</code> 就相当于一个单链表结构，遍历的时间复杂度变成 <code>O(n)</code>。<code>JDK 1.8</code>时引入红黑树结构来优化此种现象，时间复杂度为<code>O(logn)</code>。当单个链表长度大于<code>8</code>时，就会将链表结构转为红黑树结构，示意图如下：</p>
-<p><img src="http://p9u9uaqvy.bkt.clouddn.com/Java/HashMap%E7%BA%A2%E9%BB%91%E6%A0%91.png" alt="HashMap红黑树"></p>
+<p><img src="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/HashMap%E7%BA%A2%E9%BB%91%E6%A0%91.png" alt="HashMap红黑树"></p>
 <blockquote>
 <p>图片来源【文斯莫克香吉士】博客，博客地址见参考信息【Java集合：HashMap详解（JDK 1.8）】</p>
 </blockquote>

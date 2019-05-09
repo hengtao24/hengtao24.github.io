@@ -14,13 +14,13 @@
 <meta property="og:url" content="https://hengtao24.github.io/2018/10/10/Java集合系列05之Vector&Stack源码分析及List总结/index.html">
 <meta property="og:site_name" content="hengtao">
 <meta property="og:description" content="前言Vector是矢量队列，JDK1.0版本添加的类，是一个动态数组，与ArrayList不同的是Vector支持多线程访问，是线程安全的，因为内部很多方法都被synchronized关键字修饰了，有同步锁，而且其内部有很多不属于集合框架的方法。其定义如下：123public class Vector&amp;lt;E&amp;gt;    extends AbstractList&amp;lt;E&amp;gt;    imp">
-<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/Vector&Stack%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/Vector%26Stack%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
 <meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/List.png">
-<meta property="og:updated_time" content="2018-10-10T15:48:13.193Z">
+<meta property="og:updated_time" content="2019-05-09T11:42:01.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java集合系列05之Vector&Stack源码分析及List总结">
 <meta name="twitter:description" content="前言Vector是矢量队列，JDK1.0版本添加的类，是一个动态数组，与ArrayList不同的是Vector支持多线程访问，是线程安全的，因为内部很多方法都被synchronized关键字修饰了，有同步锁，而且其内部有很多不属于集合框架的方法。其定义如下：123public class Vector&amp;lt;E&amp;gt;    extends AbstractList&amp;lt;E&amp;gt;    imp">
-<meta name="twitter:image" content="http://p9u9uaqvy.bkt.clouddn.com/Java/Vector&Stack%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/Vector%26Stack%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -205,7 +205,7 @@
 </blockquote>
 <a id="more"></a>
 <h1 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h1><h2 id="Vector-amp-Stack继承关系"><a href="#Vector-amp-Stack继承关系" class="headerlink" title="Vector&amp;Stack继承关系"></a>Vector&amp;Stack继承关系</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">java.lang.Object</div><div class="line">  |___ java.util.AbstractCollection&lt;E&gt;</div><div class="line">      |___ java.util.AbstractList&lt;E&gt;</div><div class="line">          |___ java.util.Vector&lt;E&gt;</div><div class="line">              |___ java.util.Stack&lt;E&gt;</div><div class="line">所有已实现的接口：</div><div class="line">Serializable, Cloneable, Iterable&lt;E&gt;, Collection&lt;E&gt;, List&lt;E&gt;, RandomAccess</div></pre></td></tr></table></figure>
-<h2 id="关系图"><a href="#关系图" class="headerlink" title="关系图"></a>关系图</h2><p><img src="http://p9u9uaqvy.bkt.clouddn.com/Java/Vector&amp;Stack%E5%85%B3%E7%B3%BB%E5%9B%BE.png" alt="Vector&amp;Stack关系图"><br><code>Vector</code>的数据结构和<code>ArrayList</code>类似，包含了<code>elementData，elementCount，capacityIncrement</code>三个成员变量：</p>
+<h2 id="关系图"><a href="#关系图" class="headerlink" title="关系图"></a>关系图</h2><p><img src="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/Vector%26Stack%E5%85%B3%E7%B3%BB%E5%9B%BE.png" alt="Vector&amp;Stack关系图"><br><code>Vector</code>的数据结构和<code>ArrayList</code>类似，包含了<code>elementData，elementCount，capacityIncrement</code>三个成员变量：</p>
 <ul>
 <li><code>elementData</code>是<code>Object[]</code>类型的数组，保存了<code>Vector</code>的数据，是<code>Vector</code>的底层实现，它是个动态数组，在添加数据过程中不断扩展容量，初始化时若没有指定数组大小，则默认的数组大小是10；</li>
 <li><code>elementCount</code>是动态数组的实际大小；</li>

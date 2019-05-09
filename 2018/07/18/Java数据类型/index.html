@@ -20,17 +20,17 @@
 基本数据类型Java一共8种基本数据类型：
 
 整型：int, sho">
-<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/string%E8%B5%8B%E5%80%BC.png">
-<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/%E4%BC%A0%E5%80%BC%E4%BC%A0%E5%BC%95%E7%94%A81.png">
-<meta property="og:image" content="http://p9u9uaqvy.bkt.clouddn.com/%E4%BC%A0%E5%80%BC%E4%BC%A0%E5%BC%95%E7%94%A82.png">
-<meta property="og:updated_time" content="2018-08-01T08:56:01.953Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/string%E8%B5%8B%E5%80%BC_small.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/%E4%BC%A0%E5%80%BC%E4%BC%A0%E5%BC%95%E7%94%A81_small.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/%E4%BC%A0%E5%80%BC%E4%BC%A0%E5%BC%95%E7%94%A82_small.png">
+<meta property="og:updated_time" content="2019-05-09T11:38:22.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java数据类型">
 <meta name="twitter:description" content="前言java数据类型分为基本数据类型和引用数据类型。基本数据类型有8种，而引用数据类型又分为强引用，软引用，弱引用，虚引用。介绍完两种数据类型后，再说下和两种数据类型有关的问题，一是Java方法参数到底是传值还是传引用，二是“equals” &amp;amp; “==” &amp;amp; “hashcode”三者之间的区别。好，正式进入正文。
 基本数据类型Java一共8种基本数据类型：
 
 整型：int, sho">
-<meta name="twitter:image" content="http://p9u9uaqvy.bkt.clouddn.com/string%E8%B5%8B%E5%80%BC.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/string%E8%B5%8B%E5%80%BC_small.png">
   
     <link rel="alternative" href="/atom.xml" title="hengtao" type="application/atom+xml">
   
@@ -221,7 +221,6 @@
 <li>大数值类（<code>BigInteger/BigDecimal</code>）可以实现任意精度的运算，使用静态的<code>valueOf</code>方法将普通数值转换为大数值</li>
 <li>基本数据类型不面向对象</li>
 </ul>
-<a id="more"></a>
 <h1 id="包装类"><a href="#包装类" class="headerlink" title="包装类"></a>包装类</h1><p>有时候，需要将<code>int</code>这样的基本类型转换为对象。所有基本类型都有一个与之对应的类，称为包装类。所有包装类均位于<code>java.lang</code>包，包装类和基本数据类型的对应关系如下表所示:</p>
 <div class="table-container">
 <table>
@@ -360,9 +359,9 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> num = <span class="number">100</span>;</div><div class="line">        Main a = <span class="keyword">new</span> Main();</div><div class="line">        a.foo(num);                          <span class="comment">// 不改变num的值</span></div><div class="line">        System.out.println(num);</div><div class="line"></div><div class="line">        String str = <span class="string">"java"</span>;</div><div class="line">        a.foo(str);                         <span class="comment">// str没有被改变 没有提供改变自身方法的引用类型</span></div><div class="line">        System.out.println(str);</div><div class="line"></div><div class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder(str);</div><div class="line">        a.foo(sb);                          <span class="comment">// 提供了改变自身方法的引用类型</span></div><div class="line">        System.out.println(sb.toString());</div><div class="line"></div><div class="line">        a.foo1(sb);                         <span class="comment">// 提供了改变自身方法的引用类型，但是并没有使用</span></div><div class="line">        System.out.println(sb.toString());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</div><div class="line">        value = <span class="number">200</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(String text)</span> </span>&#123;</div><div class="line">        text = <span class="string">"windows"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(StringBuilder builder)</span> </span>&#123;</div><div class="line">        builder.append(<span class="string">" code "</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo1</span><span class="params">(StringBuilder builder)</span> </span>&#123;</div><div class="line">        builder = <span class="keyword">new</span> StringBuilder(<span class="string">" C++ "</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>输出结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">100</div><div class="line">java</div><div class="line">java code </div><div class="line">java code</div></pre></td></tr></table></figure>
-<p>第2-4个例子输出结果解释图如下：<br><img src="http://p9u9uaqvy.bkt.clouddn.com/string%E8%B5%8B%E5%80%BC.png" alt="字符串">  </p>
-<p><code>builder.append(&quot; code &quot;);</code>前后的变化如下图所示：<br><img src="http://p9u9uaqvy.bkt.clouddn.com/%E4%BC%A0%E5%80%BC%E4%BC%A0%E5%BC%95%E7%94%A81.png" alt="第三个例子"></p>
-<p><code>builder = new StringBuilder(&quot; C++ &quot;);</code>前后的变化如下图所示：<br><img src="http://p9u9uaqvy.bkt.clouddn.com/%E4%BC%A0%E5%80%BC%E4%BC%A0%E5%BC%95%E7%94%A82.png" alt="第四个例子">  </p>
+<p>第2-4个例子输出结果解释图如下：<br><img src="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/string%E8%B5%8B%E5%80%BC_small.png" alt="字符串">  </p>
+<p><code>builder.append(&quot; code &quot;);</code>前后的变化如下图所示：<br><img src="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/%E4%BC%A0%E5%80%BC%E4%BC%A0%E5%BC%95%E7%94%A81_small.png" alt="第三个例子"></p>
+<p><code>builder = new StringBuilder(&quot; C++ &quot;);</code>前后的变化如下图所示：<br><img src="https://raw.githubusercontent.com/hengtao24/MyPic/master/img/%E4%BC%A0%E5%80%BC%E4%BC%A0%E5%BC%95%E7%94%A82_small.png" alt="第四个例子"></p>
 <p>对于Java来说，引用是保存在虚拟机栈上的，而实际对象内容保存在堆中，引用是对象在堆中的地址值。当我们修改引用时，是让引用指向别的对象，并没有修改实际对象的值。<br>在C/C++中是通过指针运算符 *p来访问到指针p指向的堆上的对象的，然后再修改它。在Java中通过点操作符访问对象，再通过对象调用方法从而修改对象的实际内容，给引用赋值并不会改变实际对象内容。</p>
 <h1 id="“equals”-amp-“-”-amp-“hashcode”区别"><a href="#“equals”-amp-“-”-amp-“hashcode”区别" class="headerlink" title="“equals” &amp; “==” &amp; “hashcode”区别"></a>“equals” &amp; “==” &amp; “hashcode”区别</h1><p><code>equals()</code>方法定义在JDK的<code>Object.java</code>中，<code>Object</code>是所有类的超类，用来判断两个对象是否相等。<br><code>hashcode()</code>方法定义在JDK的<code>Object.java</code>中，用来获取散列码，散列码是对象在散列表中的索引位置，<code>hashcode()</code>只在散列表中有用，在其他类中并没有用。</p>
 <ul>
